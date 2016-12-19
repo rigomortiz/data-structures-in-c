@@ -6,11 +6,15 @@
 void init_push(stack *stack1){
     stack1->stack_adt = NULL;
     stack1->size = 0;
-    stack1->print = print;
     stack1->push = push;
     stack1->pop = pop;
+    stack1->peek = peek;
 }
 
+/**
+ *
+ * @param stack1
+ */
 void destroy_push(stack *stack1){
     long double i = 0, l = stack1->size;
     for (i = 0; i < l; i++) {
@@ -70,48 +74,29 @@ int push(stack *this_stack, DATA d, void (*callback)(DATA))
 
 /**
  *
+ * @param pila
+ * @param funcionTop
+ * @return
  */
-void print(void){
-    printf("hello");
-}
-
-/*
- int NelementosPila(TOPE pila){
-    int elementos =0;
-    if(pila == NULL){
-        return elementos;
-    }else{
-        while(pila != NULL){
-            elementos++;
-            pila = pila->siguiente;
-        }
-    }
-    return elementos;
-}
-
-int vaciaPila(TOPE pila)
+DATA *peek(stack *this_stack)
 {
-    return (pila == NULL);
-}
-
-
-DATA *valorPop( pstack *pila, function funcion )
-{
-    TOPE p = *pila;
-    if(!vaciaPila(p)){
-    	DATOS *dn = p->datos;
-        //CODE HERE
-        funcionValorPop(p->datos);
-        //*d = *dn;
-        //END
-        *pila = p->siguiente;
-        free(p);
+    pstack p = this_stack->stack_adt;
+    if(this_stack->size > 0){
+        DATA *dn = p->data;
         return dn;
     }else {
         return NULL;
     }
 }
 
+/**
+ *
+ */
+void print(void){
+    printf("hello");
+}
+
+/*
 
 //Devuelve el valor del tope de la pila sin sacarlo; ademas de una pila como 
 //argumento es necesario 2 argumentos mas una estructura tipo atos y una 

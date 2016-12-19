@@ -29,19 +29,18 @@ struct Stack{
     long double size;
     int (*push)(stack *this_stack, DATA d, void (*callback)(DATA));
     int (*pop)(stack *this_stack, void (*callback)(DATA));
-    void (*peek)(void);
-    void (*print)(void);
-    void (*remove)(void);
+    DATA *(*peek)(stack *this_stack);
+    void (*remove)(stack *this_stack);
 };
 /*____________________________________________________________________________
   ============================================================================*/
 
 /*============================================================================*/
-int pop(stack *this_stack, void (*callback)(DATA));
-int push(stack *this_stack, DATA d, void (*callback)(DATA));
-void print(void);
 void init_push(stack *stack1);
 void destroy_push(stack *stack1);
+int pop(stack *this_stack, void (*callback)(DATA));
+int push(stack *this_stack, DATA d, void (*callback)(DATA));
+DATA *peek(stack *this_stack);
 
 
 int pushMultiple(pstack *pila, void (*callback)(void), int numero,... );
@@ -58,11 +57,6 @@ int vaciaPila(pstack pila);//devuelve un 0 si la pila esta vacia
 /* 
  * [===========================================================================]
  * Ejemplo de funciones como argumento
-void funcionPush(DATA DATANuevos)//insertar en la pila
-{
-	//myStruct *s = DATANuevos;
-    //printf("DATA insertados; Uchar : %c ushort: %d.\n", s->uchar, s->ushort );
-}
 void funcionValorPop(DATA DATAEliminados)//muestra y elimina el top de la pila
 {
 	//myStruct *s = DATAEliminados;

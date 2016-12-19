@@ -25,6 +25,10 @@ int main(int argc, char** argv)
         n[i].number = i*i;
         stack_numeros.push(self, &n[i], callback_push);
     }
+
+    struct_number *s_tmp = (struct_number *)stack_numeros.peek(self);
+
+    printf("Peek:%d\n", s_tmp->number);
     printf("Size:%0.0Lf\n", stack_numeros.size);
 
     destroy_push(self);
