@@ -1,0 +1,1 @@
+CMake: 3.6.2@/home/regoeco/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/163.7743.47/bin/cmake/bin/cmake

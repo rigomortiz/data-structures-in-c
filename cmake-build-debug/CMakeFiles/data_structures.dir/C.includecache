@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/regoeco/Documentos/projects/data-structures-in-C/stack/main.c
+stdio.h
+-
+stdlib.h
+-
+stack.h
+/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h
+
+/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c
+stack.h
+/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h
+
+/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h
+stdio.h
+-
+stdlib.h
+-
+stdarg.h
+-
+

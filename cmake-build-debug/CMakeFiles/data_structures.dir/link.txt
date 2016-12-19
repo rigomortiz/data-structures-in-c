@@ -1,0 +1,1 @@
+/usr/bin/cc  -g   CMakeFiles/data_structures.dir/stack/main.c.o CMakeFiles/data_structures.dir/stack/stack.c.o  -o data_structures 
