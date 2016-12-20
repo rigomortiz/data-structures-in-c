@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/regoeco/Documentos/projects/data-structures-in-C/stack/main.c" "/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/data_structures.dir/stack/main.c.o"
-  "/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c" "/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/data_structures.dir/stack/stack.c.o"
+  "/home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c" "/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/data_structures.dir/queue/main.c.o"
+  "/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.c" "/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/data_structures.dir/queue/queue.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

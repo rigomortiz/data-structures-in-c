@@ -123,59 +123,59 @@ data_structures/fast:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/build
 .PHONY : data_structures/fast
 
-stack/main.o: stack/main.c.o
+queue/main.o: queue/main.c.o
 
-.PHONY : stack/main.o
-
-# target to build an object file
-stack/main.c.o:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/main.c.o
-.PHONY : stack/main.c.o
-
-stack/main.i: stack/main.c.i
-
-.PHONY : stack/main.i
-
-# target to preprocess a source file
-stack/main.c.i:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/main.c.i
-.PHONY : stack/main.c.i
-
-stack/main.s: stack/main.c.s
-
-.PHONY : stack/main.s
-
-# target to generate assembly for a file
-stack/main.c.s:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/main.c.s
-.PHONY : stack/main.c.s
-
-stack/stack.o: stack/stack.c.o
-
-.PHONY : stack/stack.o
+.PHONY : queue/main.o
 
 # target to build an object file
-stack/stack.c.o:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.o
-.PHONY : stack/stack.c.o
+queue/main.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.o
+.PHONY : queue/main.c.o
 
-stack/stack.i: stack/stack.c.i
+queue/main.i: queue/main.c.i
 
-.PHONY : stack/stack.i
+.PHONY : queue/main.i
 
 # target to preprocess a source file
-stack/stack.c.i:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.i
-.PHONY : stack/stack.c.i
+queue/main.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.i
+.PHONY : queue/main.c.i
 
-stack/stack.s: stack/stack.c.s
+queue/main.s: queue/main.c.s
 
-.PHONY : stack/stack.s
+.PHONY : queue/main.s
 
 # target to generate assembly for a file
-stack/stack.c.s:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.s
-.PHONY : stack/stack.c.s
+queue/main.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.s
+.PHONY : queue/main.c.s
+
+queue/queue.o: queue/queue.c.o
+
+.PHONY : queue/queue.o
+
+# target to build an object file
+queue/queue.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/queue.c.o
+.PHONY : queue/queue.c.o
+
+queue/queue.i: queue/queue.c.i
+
+.PHONY : queue/queue.i
+
+# target to preprocess a source file
+queue/queue.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/queue.c.i
+.PHONY : queue/queue.c.i
+
+queue/queue.s: queue/queue.c.s
+
+.PHONY : queue/queue.s
+
+# target to generate assembly for a file
+queue/queue.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/queue.c.s
+.PHONY : queue/queue.c.s
 
 # Help Target
 help:
@@ -186,12 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... data_structures"
-	@echo "... stack/main.o"
-	@echo "... stack/main.i"
-	@echo "... stack/main.s"
-	@echo "... stack/stack.o"
-	@echo "... stack/stack.i"
-	@echo "... stack/stack.s"
+	@echo "... queue/main.o"
+	@echo "... queue/main.i"
+	@echo "... queue/main.s"
+	@echo "... queue/queue.o"
+	@echo "... queue/queue.i"
+	@echo "... queue/queue.s"
 .PHONY : help
 
 

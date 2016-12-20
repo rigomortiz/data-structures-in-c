@@ -84,13 +84,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/stack/main.c">
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c">
 			<Option target="data_structures"/>
 		</Unit>
-		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c">
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.c">
 			<Option target="data_structures"/>
 		</Unit>
-		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h">
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.h">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/CMakeLists.txt">

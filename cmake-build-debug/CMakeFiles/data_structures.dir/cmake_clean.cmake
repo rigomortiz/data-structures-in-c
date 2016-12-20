@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/data_structures.dir/stack/main.c.o"
-  "CMakeFiles/data_structures.dir/stack/stack.c.o"
+  "CMakeFiles/data_structures.dir/queue/main.c.o"
+  "CMakeFiles/data_structures.dir/queue/queue.c.o"
   "data_structures.pdb"
   "data_structures"
 )
