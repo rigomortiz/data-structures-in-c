@@ -56,3 +56,6 @@ dkms.conf
 .idea/vcs.xml
 .idea/workspace.xml
 cmake-build-debug/CMakeFiles/CMakeTmp/
+cmake-build-debug/CMakeFiles/data_structures.dir/queue/
+cmake-build-debug/CMakeFiles/data_structures.dir/stack/
+list/
