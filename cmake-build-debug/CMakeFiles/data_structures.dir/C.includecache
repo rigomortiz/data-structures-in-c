@@ -6,19 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/regoeco/Documentos/projects/data-structures-in-C/stack/main.c
+/home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c
 stdio.h
 -
 stdlib.h
 -
-stack.h
-/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h
+queue.h
+/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.h
 
-/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c
-stack.h
-/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h
+/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.c
+queue.h
+/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.h
 
-/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h
+/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.h
 stdio.h
 -
 stdlib.h
