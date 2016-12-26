@@ -25,8 +25,10 @@ int main(){
 
 
     b.insert_multiple(&b, NULL, order_callback, 10,&d[0], &d[1], &d[2], &d[3], &d[4], &d[5], &d[6], &d[7], &d[8], &d[9]);
-    printf("Inorder:");
-    b.print(&b).inorder(print_callback);
+    printf("Inorder DES:");
+    b.print(&b).inorder(print_callback).des();
+    printf("\nInorder ASC:");
+    b.print(&b).inorder(print_callback).asc();
     printf("\nPostorder:");
     b.print(&b).postorder(print_callback);
     printf("\nPreorder:");

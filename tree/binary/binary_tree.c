@@ -318,26 +318,100 @@ ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
     b = this_binary_tree;
 
 
-    void inorder(const void(*callback)(const void* d)) {
-        stack1.push(&stack1, b->binary_tree_adt, NULL);
+    Inorder inorder( const void(*callback)(const void* d)) {
+         static Inorder inorder;
+         static const void(*f)(const void* d);
+        f = callback;
 
-        while( stack1.size > 0 ){
-            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
-            stack1.pop(&stack1, NULL);
+         void asc(void){
+             stack1.push(&stack1, b->binary_tree_adt, NULL);
+             pbinary_tree_adt pbinary_tree_adt1 = b->binary_tree_adt;
+             pbinary_tree_adt tmp;
+             while( stack1.size > 0 ){
+                 if(pbinary_tree_adt1->left_leaf != NULL){
+                     pbinary_tree_adt1 = (pbinary_tree_adt)pbinary_tree_adt1->left_leaf;
+                     stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                     continue;
+                 } else {
+                     tmp = (pbinary_tree_adt)stack1.peek(&stack1);
+                     if(f != NULL)
+                         f(tmp->data);
+                     stack1.pop(&stack1, NULL);
+                 }
 
-            if(callback != NULL)
-                callback(pbinary_tree_adt1->data);
+                 if(pbinary_tree_adt1->right_leaf != NULL){
+                     pbinary_tree_adt1 = (pbinary_tree_adt)pbinary_tree_adt1->right_leaf;
+                     stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                 } else{
+                     while(stack1.size >0) {
+                         pbinary_tree_adt1 = (pbinary_tree_adt) stack1.peek(&stack1);
+                         if (pbinary_tree_adt1->right_leaf != NULL) {
+                             pbinary_tree_adt1 = (pbinary_tree_adt) pbinary_tree_adt1->right_leaf;
+                             tmp = (pbinary_tree_adt)stack1.peek(&stack1);
+                             if(f != NULL)
+                                 f(tmp->data);
+                             stack1.pop(&stack1, NULL);
+                             stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                             break;
+                         } else {
+                             tmp = (pbinary_tree_adt) stack1.peek(&stack1);
+                             if (f != NULL)
+                                 f(tmp->data);
+                             stack1.pop(&stack1, NULL);
+                         }
+                     }
+                 }
+             }
+             destroyStack(&stack1);
+         }
+         void des(void){
+             stack1.push(&stack1, b->binary_tree_adt, NULL);
+             pbinary_tree_adt pbinary_tree_adt1 = b->binary_tree_adt;
+             pbinary_tree_adt tmp;
+             while( stack1.size > 0 ){
+                 if(pbinary_tree_adt1->right_leaf != NULL){
+                     pbinary_tree_adt1 = (pbinary_tree_adt)pbinary_tree_adt1->right_leaf;
+                     stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                     continue;
+                 } else {
+                     tmp = (pbinary_tree_adt)stack1.peek(&stack1);
+                     if(f != NULL)
+                         f(tmp->data);
+                     stack1.pop(&stack1, NULL);
+                 }
 
-            if(pbinary_tree_adt1->right_leaf != NULL)
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+                 if(pbinary_tree_adt1->left_leaf != NULL){
+                     pbinary_tree_adt1 = (pbinary_tree_adt)pbinary_tree_adt1->left_leaf;
+                     stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                 } else{
+                     while(stack1.size >0) {
+                         pbinary_tree_adt1 = (pbinary_tree_adt) stack1.peek(&stack1);
+                         if (pbinary_tree_adt1->left_leaf != NULL) {
+                             pbinary_tree_adt1 = (pbinary_tree_adt) pbinary_tree_adt1->left_leaf;
+                             tmp = (pbinary_tree_adt)stack1.peek(&stack1);
+                             if(f != NULL)
+                                 f(tmp->data);
+                             stack1.pop(&stack1, NULL);
+                             stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                             break;
+                         } else {
+                             tmp = (pbinary_tree_adt) stack1.peek(&stack1);
+                             if (f != NULL)
+                                 f(tmp->data);
+                             stack1.pop(&stack1, NULL);
+                         }
+                     }
+                 }
+             }
+             destroyStack(&stack1);
+         }
 
-
-            if(pbinary_tree_adt1->left_leaf != NULL)
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
-        }
-        destroyStack(&stack1);
+         inorder.asc = asc;
+         inorder.des = des;
+         return inorder;
     }
 
+    //NID: NODO RAIZ, NODO IZQUIERDO, NODO DERECHO
     void preorder(const void(*callback)(const void* d)) {
         stack1.push(&stack1, b->binary_tree_adt, NULL);
         while( stack1.size > 0 ){

@@ -13,12 +13,17 @@
  *
  *      N
  *   /    \
- *  L       R
+ *  I      D
  *
- *  PREORDEN: NLR
+ *  PREORDEN: NID
  *  1.- Visita el nodo raíz N
  *  2.- Recorrer el subárbol izquierdo I en preorden
  *  3.- Recorrer el subárbol derecho D en preorden
+ *
+ *  ENORDEN IND
+ *  1.- Recorrer el subárbol izquierdo I en enorden
+ *  2.- Visitar el nodo raíz N
+ *  3.- Recorrer el subárbol derecho D en enorden
  *
  *
  */
@@ -34,6 +39,11 @@ extern "C" {
 #endif
 typedef struct BinaryTree BinaryTree;
 
+typedef struct{
+    void (*asc)(void);
+    void (*des)(void);
+}Inorder;
+
 typedef struct {
     void** (*inorder)(void);
     void** (*postorder)(void);
@@ -41,7 +51,7 @@ typedef struct {
 }ChainingGet;
 
 typedef struct {
-    void (*inorder)(const void(*callback_insert)(const void* d));
+    Inorder (*inorder)(const void(*callback)(const void* d));
     void (*postorder)(const void(*callback_insert)(const void* d));
     void (*preorder)(const void(*callback_insert)(const void* d));
 }ChainingPrint;
