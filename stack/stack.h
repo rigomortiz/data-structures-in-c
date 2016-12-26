@@ -7,42 +7,35 @@
 
 #ifdef	__cplusplus
 extern "C" {
-    #endif
-    /*============================================================================*/
-    typedef const char *string;
-    typedef void *DATA;
-    typedef struct Stack_ADT stack_adt;
-    typedef stack_adt *pstack, ELEMENT;
-    typedef struct Stack stack;
+#endif
+typedef struct Stack Stack;
 
-    struct Stack_ADT{
-        DATA data;
-        struct Stack_ADT *next;
-    };
+typedef struct Stack_ADT{
+    void* data;
+    struct Stack_ADT *next;
+}*pstack, ELEMENT_STACK;
 
-    struct Stack{
-        pstack stack_adt;
-        long double size;
-        int (*push)(stack *this_stack, DATA d, void (*callback)(DATA));
-        int (*pop)(stack *this_stack, void (*callback)(DATA));
-        DATA *(*peek)(stack *this_stack);
-        int (*empty)(stack *this_stack);
-        void (*print)(stack *this_stack, void (*callback)(DATA));
-        int (*push_multiple)(stack *this_stack, void (*callback)(DATA), int count, ... );
-    };
+struct Stack{
+    pstack stack_adt;
+    long double size;
+    int (*push)(Stack *this_stack, void* d, const void (*callback)(const void*));
+    int (*pop)(Stack *this_stack, const void (*callback)(const void*));
+    void** (*peek)(Stack *this_stack);
+    int (*empty)(Stack *this_stack);
+    void (*print)(Stack *this_stack, const void (*callback)(const void*));
+    int (*push_multiple)(Stack *this_stack, const void (*callback)(const void*), int count, ... );
+};
 
-    void init_stack(stack *stack1);
-    void destroy_stack(stack *stack1);
-    int pop(stack *this_stack, void (*callback)(DATA));
-    int push(stack *this_stack, DATA d, void (*callback)(DATA));
-    DATA *peek(stack *this_stack);
-    int empty(stack *this_stack);
-    void print(stack *this_stack, void (*callback)(DATA));
-    int push_multiple(stack *this_stack, void (*callback)(DATA), int count, ... );
-    /*____________________________________________________________________________
-      ============================================================================*/
+Stack newStack();
+void destroyStack(Stack *stack1);
+static int _pop_stack(Stack *this_stack, const void (*callback)(const void*));
+static int _push_stack(Stack *this_stack, void* d, const void (*callback)(const void*));
+static void* *_peek_stack(Stack *this_stack);
+static int _empty_stack(Stack *this_stack);
+static void _print_stack(Stack *this_stack, const void (*callback)(const void*));
+static int _push_multiple_stack(Stack *this_stack, const void (*callback)(const void*), int count, ... );
 
-    #ifdef	__cplusplus
+#ifdef	__cplusplus
 }
 #endif
 #endif

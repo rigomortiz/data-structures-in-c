@@ -1,28 +1,48 @@
 #include "binary_tree.h"
+#include "../../stack/stack.h"
 
-void init_stack(binary_tree *this_binary_tree){
-    this_binary_tree->binary_tree_adt = NULL;
-    this_binary_tree->number_elements = 0;
-    this_binary_tree->delete = delete;
-    this_binary_tree->empty = empty;
-    this_binary_tree->insert = insert;
-    this_binary_tree->insert_multiple = insert_multiple;
-    this_binary_tree->print = print;
-    this_binary_tree->search = search;
-    this_binary_tree->get = get;
+/**
+ * 
+ * @return BinaryTree
+ */
+BinaryTree newBinaryTree(){
+    BinaryTree this_binary_tree;
+    this_binary_tree.binary_tree_adt = NULL;
+    this_binary_tree.number_elements = 0;
+    this_binary_tree.delete = _delete_binary_tree;
+    this_binary_tree.empty = _empty_binary_tree;
+    this_binary_tree.insert = _insert_binary_tree;
+    this_binary_tree.insert_multiple = _insert_multiple_binary_tree;
+    this_binary_tree.print = _print_binary_tree;
+    this_binary_tree.search = _search_binary_tree;
+    this_binary_tree.get = _get_binary_tree;
+    return this_binary_tree;
 }
-void destroy_stack(binary_tree *this_binary_tree){
+
+/**
+ * 
+ * @param this_binary_tree 
+ */
+void destroyBinaryTree(BinaryTree *this_binary_tree){
     this_binary_tree->empty(this_binary_tree);
 }
 
-int insert(binary_tree *this_binary_tree, DATA data_to_insert, void(*callback_insert)(DATA d), int(*callback_order)(DATA new, DATA inserted) ){
+/**
+ * 
+ * @param this_binary_tree 
+ * @param data_to_insert 
+ * @param callback_insert 
+ * @param callback_order 
+ * @return 
+ */
+int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, const void(*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted) ){
 
     int r;
     if( this_binary_tree->binary_tree_adt == NULL)
     {
         // CODIGO AQUI --->
         pbinary_tree_adt new;
-        new = (pbinary_tree_adt)malloc(sizeof(ELEMENT));
+        new = (pbinary_tree_adt)malloc(sizeof(ELEMENT_BINARY_TREE));
         if(callback_insert != NULL)
             callback_insert(data_to_insert);
         new->data = data_to_insert;
@@ -43,7 +63,7 @@ int insert(binary_tree *this_binary_tree, DATA data_to_insert, void(*callback_in
                     tmp = tmp->left_leaf;
                 }else{
                     // CODIGO AQUI --->
-                    pbinary_tree_adt new = (pbinary_tree_adt)malloc(sizeof(ELEMENT));
+                    pbinary_tree_adt new = (pbinary_tree_adt)malloc(sizeof(ELEMENT_BINARY_TREE));
                     if(callback_insert != NULL)
                         callback_insert(data_to_insert);
                     new->data = data_to_insert;
@@ -62,14 +82,14 @@ int insert(binary_tree *this_binary_tree, DATA data_to_insert, void(*callback_in
                     tmp = tmp->right_leaf;
                 }else{
                     // CODIGO AQUI --->
-                    pbinary_tree_adt new = (pbinary_tree_adt)malloc(sizeof(ELEMENT));
+                    pbinary_tree_adt new = (pbinary_tree_adt)malloc(sizeof(ELEMENT_BINARY_TREE));
                     if(callback_insert != NULL)
                         callback_insert(data_to_insert);
                     new->data = data_to_insert;
                     new->right_leaf  = NULL;
                     new->left_leaf  = NULL;
                     new->repeat = 0;
-                    tmp->left_leaf = new;//asignacion a lista el primer elemento
+                    tmp->right_leaf = new;//asignacion a lista el primer elemento
                     // <---------------
                     this_binary_tree->number_elements++;
                     return 1;
@@ -87,73 +107,132 @@ int insert(binary_tree *this_binary_tree, DATA data_to_insert, void(*callback_in
 
 }
 
-int insert_multiple(binary_tree *this_binary_tree, void (*callback_insert)(DATA d), void(*callback_order)(DATA new, DATA inserted),  int count, ...){
+/**
+ *
+ * @param this_binary_tree
+ * @param callback_insert
+ * @param callback_order
+ * @param count
+ * @return
+ */
+int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, const void (*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted),  int count, ...){
     int i = 0;
     int r = 1;
     va_list lt;
-    va_start(lt, numero);
+    va_start(lt, count);
 
     for (i = 0;i<count;i++)
-        r = r && this_binary_tree->insert( this_binary_tree, va_arg(lt, DATA), callback_insert, callback_order);
+        r = r && this_binary_tree->insert( this_binary_tree, va_arg(lt, void*), callback_insert, callback_order);
     va_end(lt);
 
     return r;
 }
 
-chaining_get get(binary_tree *this_binary_tree){
-    chaining_get methods;
-    DATA* _inorder(void (*callback)(DATA d, int r), pbinary_tree_adt hijo)
-    {
-        if(hijo != NULL){
-            _inorder(callback, hijo->left_leaf);
-            callback(hijo->data, 1);
-            _inorder(callback, hijo->right_leaf);
+/**
+ *
+ * @param _this_binary_tree
+ * @param v
+ * @return
+ */
+ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree){
+    ChainingGet methods;//Method chaining
+    //DATA STACK
+    typedef struct{ pbinary_tree_adt ptb; }struct_ptb;
+
+    //INTERFACE
+    // void** inorder(void);
+    // void** preorder(void);
+    // void** postorder(void);
+
+    static Stack stack1;
+    static const BinaryTree* b;//copy BinaryTree
+
+
+    stack1 = newStack();
+    b = this_binary_tree;
+
+    void** inorder(void) {
+        int i = 0;
+        //void* *array = calloc((size_t)_this_binary_tree->number_elements, sizeof(void*));
+
+        stack1.push(&stack1, b->binary_tree_adt, NULL);
+
+        while( stack1.size > 0 ){
+            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+            stack1.pop(&stack1, NULL);
+
+
+//            array[i++] = pbinary_tree_adt1->data;
+
+            if(pbinary_tree_adt1->right_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+
+
+            if(pbinary_tree_adt1->left_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
+            printf("%d-->",(int)pbinary_tree_adt1->data);
+
         }
-        void *s = NULL;
-        return s;
+
+        destroyStack(&stack1);
+
+        return NULL;
     }
 
-    DATA* _preorder(void (*callback)(DATA d, int r),  pbinary_tree_adt hijo)
-    {
-        if(hijo != NULL){
-            callback(hijo->data, 1);
-            _preorder(callback, hijo->left_leaf);
-            _preorder(callback, hijo->right_leaf);
+    void** preorder(void) {
+        int i = 0;
+        //void* *array = calloc((size_t)_this_binary_tree->number_elements, sizeof(void*));
+
+        stack1.push(&stack1, b->binary_tree_adt, NULL);
+        while( stack1.size > 0 ){
+            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+            stack1.pop(&stack1, NULL);
+            //array[i++] = pbinary_tree_adt1->data;
+            printf("%d-->",(int)pbinary_tree_adt1->data);
+
+            if(pbinary_tree_adt1->right_leaf != NULL){
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+            }
+            if(pbinary_tree_adt1->left_leaf != NULL){
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
+            }
         }
-        void *s = NULL;
-        return s;
+
+        destroyStack(&stack1);
+        return NULL;
     }
 
-    DATA* _postorder(void (*callback)(DATA d, int r),  pbinary_tree_adt hijo)
-    {
-        if(hijo != NULL){
-            _postorder(callback, hijo->left_leaf);
-            _postorder(callback, hijo->right_leaf);
-            callback(hijo->data,1);
+    void** postorder(void) {
+        int i = 0;
+        //void** array = calloc((size_t)_this_binary_tree->number_elements, sizeof(void*));
+
+        stack1.push(&stack1, b->binary_tree_adt, NULL);
+        while( stack1.size > 0 ){
+            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+            stack1.pop(&stack1, NULL);
+
+            // printf("%d-->",(int)pbinary_tree_adt1->data);
+            //Postorder:60-->70-->20-->40-->50-->30-->10-->
+
+
+            if(pbinary_tree_adt1->left_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
+
+            // printf("%d-->",(int)pbinary_tree_adt1->data);
+
+
+            if(pbinary_tree_adt1->right_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+
+            printf("%d-->",(int)pbinary_tree_adt1->data);
+
+
+            //array[i++] = pbinary_tree_adt1->data;
+
         }
-        void *s = NULL;
-        return s;
-    }
 
-
-    DATA* inorder(void (*callback)(DATA d, int r))
-    {
-        if(this_binary_tree->number_elements > 0)
-            return _inorder(callback, this_binary_tree->binary_tree_adt);
-        else return NULL;
-    }
-    DATA* preorder(void (*callback)(DATA d, int r))
-    {
-        if(this_binary_tree->number_elements > 0)
-            return _preorder(callback, this_binary_tree->binary_tree_adt);
-        else return NULL;
-    }
-
-    DATA* postorder(void (*callback)(DATA d, int r))
-    {
-        if(this_binary_tree->number_elements > 0)
-            return _postorder(callback, this_binary_tree->binary_tree_adt);
-        else return NULL;
+        destroyStack(&stack1);
+        return NULL;
     }
 
     methods.inorder = inorder;
@@ -163,13 +242,35 @@ chaining_get get(binary_tree *this_binary_tree){
     return methods;
 }
 
-int delete(binary_tree *this_binary_tree, DATA d, void (*callback)(DATA)){
+/**
+ *
+ * @param this_binary_tree
+ * @param d
+ * @param callback
+ * @return
+ */
+int _delete_binary_tree(BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*)){
 
 }
 
-int search(binary_tree *this_binary_tree, DATA d, void (*callback)(DATA));
+/**
+ *
+ * @param this_binary_tree
+ * @param d
+ * @param callback
+ * @return
+ */
+int _search_binary_tree(const BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*)){
+    return 0;
+}
 
-int empty(binary_tree *this_binary_tree){
+/**
+ *
+ * @param this_binary_tree
+ * @return
+ */
+int _empty_binary_tree(BinaryTree *this_binary_tree){
+    /*
     int _empty(pbinary_tree_adt hijo ){
         if( hijo != NULL){
             _empty(hijo->left_leaf);
@@ -189,7 +290,95 @@ int empty(binary_tree *this_binary_tree){
 
     } else
         return 0;
-
+    */
+    return 1;
 }
 
-void print(binary_tree *this_binary_tree, string type, void (*callback)(DATA));
+/**
+ *
+ * @param this_binary_tree
+ * @param callback
+ */
+
+ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
+    static ChainingPrint methods;//Method chaining
+    //DATA STACK
+    typedef struct{ pbinary_tree_adt ptb; }struct_ptb;
+
+    //INTERFACE
+    //void inorder(const void(*callback)(const void* d));
+    //void preorder(const void(*callback)(const void* d));
+    //void postorder(const void(*callback)(const void* d));
+
+    static Stack stack1;
+    static const BinaryTree* b;//copy BinaryTree
+
+
+    stack1 = newStack();
+    b = this_binary_tree;
+
+
+    void inorder(const void(*callback)(const void* d)) {
+        stack1.push(&stack1, b->binary_tree_adt, NULL);
+
+        while( stack1.size > 0 ){
+            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+            stack1.pop(&stack1, NULL);
+
+            if(callback != NULL)
+                callback(pbinary_tree_adt1->data);
+
+            if(pbinary_tree_adt1->right_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+
+
+            if(pbinary_tree_adt1->left_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
+        }
+        destroyStack(&stack1);
+    }
+
+    void preorder(const void(*callback)(const void* d)) {
+        stack1.push(&stack1, b->binary_tree_adt, NULL);
+        while( stack1.size > 0 ){
+            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+            stack1.pop(&stack1, NULL);
+
+            if(callback != NULL)
+                callback(pbinary_tree_adt1->data);
+
+            if(pbinary_tree_adt1->right_leaf != NULL){
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+            }
+            if(pbinary_tree_adt1->left_leaf != NULL){
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
+            }
+        }
+        destroyStack(&stack1);
+    }
+
+    void postorder(const void(*callback)(const void* d)) {
+        stack1.push(&stack1, b->binary_tree_adt, NULL);
+        while( stack1.size > 0 ){
+            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+            stack1.pop(&stack1, NULL);
+            if(callback != NULL)
+                callback(pbinary_tree_adt1->data);
+
+            if(pbinary_tree_adt1->left_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
+
+            if(pbinary_tree_adt1->right_leaf != NULL)
+                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
+        }
+
+        destroyStack(&stack1);
+    }
+
+
+    methods.inorder = inorder;
+    methods.postorder = postorder;
+    methods.preorder = preorder;
+
+    return methods;
+}

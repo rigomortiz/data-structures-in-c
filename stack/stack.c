@@ -1,24 +1,27 @@
 #include "stack.h"
+
 /**
  *
- * @param stack1
+ * @return Stack
  */
-void init_stack(stack *stack1){
-    stack1->stack_adt = NULL;
-    stack1->size = 0;
-    stack1->push = push;
-    stack1->pop = pop;
-    stack1->peek = peek;
-    stack1->empty = empty;
-    stack1->print = print;
-    stack1->push_multiple = push_multiple;
+Stack newStack(){
+    Stack stack1;
+    stack1.stack_adt = NULL;
+    stack1.size = 0;
+    stack1.push = _push_stack;
+    stack1.pop = _pop_stack;
+    stack1.peek = _peek_stack;
+    stack1.empty = _empty_stack;
+    stack1.print = _print_stack;
+    stack1.push_multiple = _push_multiple_stack;
+    return stack1;
 }
 
 /**
  *
  * @param stack1
  */
-void destroy_stack(stack *stack1){
+void destroyStack(Stack *stack1){
     stack1->empty(stack1);
 }
 
@@ -26,13 +29,13 @@ void destroy_stack(stack *stack1){
  *
  * @details Pushing (storing) an element on the stack.
  * @param this_stack stack self
- * @param d DATA
+ * @param d void*
  * @param function_push function to execute
  * @return int
  */
-int push(stack *this_stack, DATA d, void (*callback)(DATA))
+int _push_stack(Stack *this_stack, void* d, const void (*callback)(const void*))
 {
-    pstack pstack_new = (pstack)malloc(sizeof(ELEMENT));
+    pstack pstack_new = (pstack)malloc(sizeof(ELEMENT_STACK));
     if(pstack_new != NULL){
         //CODE HERE
         if(callback != NULL)
@@ -55,7 +58,7 @@ int push(stack *this_stack, DATA d, void (*callback)(DATA))
  * @param function_pop function to execute
  * @return int
  */
-int pop(stack *this_stack, void (*callback)(DATA))
+int _pop_stack(Stack *this_stack, const void (*callback)(const void*))
 {
     pstack p = this_stack->stack_adt;
     if(this_stack->size > 0){
@@ -72,15 +75,14 @@ int pop(stack *this_stack, void (*callback)(DATA))
 
 /**
  *
- * @param pila
- * @param funcionTop
+ * @param this_stack
  * @return
  */
-DATA *peek(stack *this_stack)
+void* *_peek_stack(Stack *this_stack)
 {
     pstack p = this_stack->stack_adt;
     if(this_stack->size > 0){
-        DATA *dn = p->data;
+        void* *dn = p->data;
         return dn;
     }else {
         return NULL;
@@ -89,10 +91,10 @@ DATA *peek(stack *this_stack)
 
 /**
  *
- * @param this_stack *stack
+ * @param this_Stack
  * @return
  */
-int empty(stack *this_stack)
+int _empty_stack(Stack *this_stack)
 {
     if(this_stack->size > 0){
         long double i, l = this_stack->size;
@@ -110,9 +112,9 @@ int empty(stack *this_stack)
  * @param this_stack
  * @param callback
  */
-void print(stack *this_stack, void (*callback)(DATA))
+void _print_stack(Stack *this_stack, const  void (*callback)(const void*))
 {
-    stack tmp = *this_stack;
+    Stack tmp = *this_stack;
     if(tmp.size > 0){
         while(tmp.stack_adt != NULL){
             if(callback != NULL){
@@ -133,7 +135,7 @@ void print(stack *this_stack, void (*callback)(DATA))
  * @param count
  * @return
  */
-int push_multiple(stack *this_stack, void (*callback)(DATA), int count, ... )
+int _push_multiple_stack(Stack *this_stack, const void (*callback)(const void*), int count, ... )
 {
     int i=0;
     int r=1;
@@ -141,7 +143,7 @@ int push_multiple(stack *this_stack, void (*callback)(DATA), int count, ... )
     va_start(list, count);
 
     for(i=0; i<count; i++){
-        r = r && this_stack->push(this_stack, va_arg(list, DATA), callback);
+        r = r && this_stack->push(this_stack, va_arg(list, void*), callback);
     }
     va_end(list);
     return r;

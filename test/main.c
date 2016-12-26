@@ -7,7 +7,6 @@ typedef struct Chaining chaining;
 typedef struct Class class;
 
 struct Chaining {
-    int r;
     char* (*letter)(char);
     int (*number)(int);
 };
@@ -18,7 +17,6 @@ struct Class{
 };
 
 // Methods interface
-
 chaining repeat(int);
 int number(int n);
 char* letter(char c);
@@ -32,21 +30,21 @@ int main(){
     class d;
     init(&d);
 
-    printf("%d", d.repeat(2).number(2));
+    printf("%d", d.repeat(2).number(8));
+
+
+
     return 1;
 }
 
 
 chaining repeat(int r) {
     chaining s;
-
-
 // Methods implementation
+
     int number(int n){
-        if(n == 1){
-            return 1*r;
-        }else
-            return 2*r;
+        printf("jjjjj");
+        return 1*r*n;
     }
     char* letter(char c) {
         if(c == 'a'){
@@ -56,10 +54,8 @@ chaining repeat(int r) {
     }
 
 
-    s.r = r;
     s.letter  = letter;
     s.number = number;
-
 
     return s;
 }

@@ -2,25 +2,27 @@
 
 /**
  *
- * @param queue1
+ * @return Queue
  */
-void init_queue(queue *queue1){
-    queue1->queue_adt = NULL;
-    queue1->final = NULL;
-    queue1->size = 0;
-    queue1->enqueue = enqueue;
-    queue1->dequeue = dequeue;
-    queue1->peek = peek;
-    queue1->empty = empty;
-    queue1->print = print;
-    queue1->enqueue_multiple = enqueue_multiple;
+Queue newQueue(){
+    Queue q;
+    q.queue_adt = NULL;
+    q.final = NULL;
+    q.size = 0;
+    q.enqueue = _enqueue_queue;
+    q.dequeue = _dequeue_queue;
+    q.peek = _peek_queue;
+    q.empty = _empty_queue;
+    q.print = _print_queue;
+    q.enqueue_multiple = _enqueue_multiple_queue;
+    return q;
 }
 
 /**
  *
  * @param queue1
  */
-void destroy_queue(queue *queue1){
+void destroyQueue(Queue *queue1){
     long double i = 0, l = queue1->size;
     for (i = 0; i < l; i++) {
         queue1->dequeue(queue1, NULL);
@@ -34,10 +36,10 @@ void destroy_queue(queue *queue1){
  * @param callback
  * @return
  */
-int enqueue(queue *this_queue, DATA d, void (*callback)(DATA))
+int _enqueue_queue(Queue *this_queue, const void* d, void (*callback)(const void*))
 {
     pqueue new;
-    new = (pqueue)malloc(sizeof(ELEMENT));
+    new = (pqueue)malloc(sizeof(ELEMENT_QUEUE));
     if(new != NULL){
         //CODE HERE
         if(callback != NULL)
@@ -63,7 +65,7 @@ int enqueue(queue *this_queue, DATA d, void (*callback)(DATA))
  * @param callback
  * @return
  */
-int dequeue(queue *this_queue, void (*callback)(DATA))
+int _dequeue_queue(Queue *this_queue, const void (*callback)(const void*))
 {
     pqueue p = this_queue->queue_adt;
     if(this_queue->size > 0){
@@ -83,11 +85,11 @@ int dequeue(queue *this_queue, void (*callback)(DATA))
  * @param this_queue
  * @return
  */
-DATA *peek(queue *this_queue)
+void* *_peek_queue(Queue *this_queue)
 {
     pqueue p = this_queue->queue_adt;
     if(this_queue->size > 0){
-        DATA *dn = p->data;
+        void* *dn = p->data;
         return dn;
     }else {
         return NULL;
@@ -99,7 +101,7 @@ DATA *peek(queue *this_queue)
  * @param this_queue
  * @return
  */
-int empty(queue *this_queue){
+int _empty_queue(Queue *this_queue){
     if(this_queue->size > 0){
         long double i, l = this_queue->size;
         for (i = 0; i < l ; ++i) {
@@ -116,9 +118,9 @@ int empty(queue *this_queue){
  * @param this_queue
  * @param callback
  */
-void print(queue *this_queue, void (*callback)(DATA)){
+void _print_queue(Queue *this_queue, const void (*callback)(const void*)){
     if( this_queue->size > 0){
-        queue tmp = *this_queue;
+        Queue tmp = *this_queue;
         while(tmp.queue_adt != NULL){
             if( callback != NULL)
                 callback(tmp.queue_adt->data);
@@ -138,14 +140,14 @@ void print(queue *this_queue, void (*callback)(DATA)){
  * @param count
  * @return
  */
-int enqueue_multiple(queue *this_queuek, void (*callback)(DATA), int count, ... ){
+int _enqueue_multiple_queue(Queue *this_queuek, const void (*callback)(const void*), int count, ... ){
     int i=0;
     int r=1;
     va_list list;
     va_start(list, count);
 
     for(i=0; i<count; i++){
-        r = r && this_queuek->enqueue(this_queuek, va_arg(list, DATA), callback);
+        r = r && this_queuek->enqueue(this_queuek, va_arg(list, void*), callback);
     }
     va_end(list);
     return r;

@@ -2,49 +2,61 @@
 #include <stdlib.h>
 #include "queue.h"
 int main(int, char**);
-void callback_enqueue(DATA);
-void callback_dequeue(DATA);
-void callback_print(DATA d);
 
+//INTERFACE OF CALLBACKS
+const void callback_enqueue(const void*);
+const void callback_dequeue(const void*);
+const void callback_print(const void* d);
+
+//void* STRUCTURE OF QUEUE
 typedef struct {
     int number;
 } struct_number;
 
+//MAIN
 int main(int argc, char** argv)
 {
+    //DATA TO INSERT
     struct_number n[10];
     int i = 0;
-    queue queue_numeros, *self = &queue_numeros;
-    init_queue(self);
+
+    //INSTANCE
+    Queue queue_numeros = newQueue();
+
+    //ENQUEUE DATA
     for(i=0; i<10; i++){
         n[i].number = i*i;
-        queue_numeros.enqueue(self, &n[i], callback_enqueue);
+        queue_numeros.enqueue(&queue_numeros, &n[i], callback_enqueue);
     }
 
-    struct_number *s_tmp = (struct_number *)queue_numeros.peek(self);
-
+    //PEEK DATA
+    struct_number *s_tmp = (struct_number *)queue_numeros.peek(&queue_numeros);
     printf("Peek:%d\n", s_tmp->number);
+
+    //SIZE QUEUE
     printf("Size:%0.0Lf\n", queue_numeros.size);
 
-    queue_numeros.print(self, callback_print);
-
-    destroy_queue(self);
+    //PRINT QUEUE
+    queue_numeros.print(&queue_numeros, callback_print);
+    
+    //DESTROY QUEUE
+    destroyQueue(&queue_numeros);
     printf("Size:%0.0Lf\n", queue_numeros.size);
     return (EXIT_SUCCESS);
 }
 
-void callback_enqueue(DATA new_data) {
+const void callback_enqueue(const void* new_data) {
     struct_number *s = new_data;
     printf("Data to insert: %d.\n", s->number);
 }
 
-void callback_dequeue(DATA delete_data)
+const void callback_dequeue(const void *delete_data)
 {
     struct_number *s = delete_data;
     printf("Data to delete:  %d.\n", s->number);
 }
 
-void callback_print(DATA d)
+const void callback_print(const void* d)
 {
     struct_number *s = d;
     printf("(%d) --> ",s->number);

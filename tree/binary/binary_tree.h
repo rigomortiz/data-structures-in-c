@@ -1,3 +1,27 @@
+/**
+ * PROFUNDIDAD
+ * En el recorrido en profundidad, el proceso exige un camino desde el raíz a través de un
+ * hijo, al descendiente más lejano del primer hijo antes de proseguir a un segundo hijo. En otras
+ * palabras, en el recorrido en profundidad, todos los descendientes de un hijo se procesan antes
+ * del siguiente hijo.
+ *
+ * ANCHURA
+ * En el recorrido en anchura, el proceso se realiza horizontalmente desde el raíz a todos
+ * sus hijos, a continuación a los hijos de sus hijos y así sucesivamente hasta que todos los nodos
+ * han sido procesados. En el recorrido en anchura, cada nivel se procesa totalmente antes de que
+ * comience el siguiente nivel.
+ *
+ *      N
+ *   /    \
+ *  L       R
+ *
+ *  PREORDEN: NLR
+ *  1.- Visita el nodo raíz N
+ *  2.- Recorrer el subárbol izquierdo I en preorden
+ *  3.- Recorrer el subárbol derecho D en preorden
+ *
+ *
+ */
 #ifndef BINARY_TREE_H_
 #define BINARY_TREE_H_
 
@@ -8,62 +32,56 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    typedef const char *string;
-    typedef void *DATA;
-    typedef struct Binary_Tree_ADT binary_tree_adt, node;
-    typedef binary_tree_adt *pbinary_tree_adt, pnode, ELEMENT;
-    typedef struct Binary_Tree binary_tree;
-    typedef struct Chaining_Get chaining_get;
+typedef struct BinaryTree BinaryTree;
 
+typedef struct {
+    void** (*inorder)(void);
+    void** (*postorder)(void);
+    void** (*preorder)(void);
+}ChainingGet;
 
-    struct Chaining_Get {
-        DATA * (*inorder)(void (*callback)(DATA d, int r));
-        DATA * (*postorder)(void (*callback)(DATA d, int r));
-        DATA * (*preorder)(void (*callback)(DATA d, int r));
-    };
+typedef struct {
+    void (*inorder)(const void(*callback_insert)(const void* d));
+    void (*postorder)(const void(*callback_insert)(const void* d));
+    void (*preorder)(const void(*callback_insert)(const void* d));
+}ChainingPrint;
 
-    struct Binary_Tree_ADT{
-        DATA data;
-        double long repeat;
-        struct Binary_Tree_ADT *left_leaf;
-        struct Binary_Tree_ADT *right_leaf;
-    };
+typedef struct {
+    void* data;
+    double long repeat;
+    struct Binary_Tree_ADT *left_leaf;
+    struct Binary_Tree_ADT *right_leaf;
+}*pbinary_tree_adt, ELEMENT_BINARY_TREE ;
 
-    struct Binary_Tree{
-        pbinary_tree_adt binary_tree_adt;
-        long double number_elements;
+struct BinaryTree{
+    pbinary_tree_adt binary_tree_adt;
+    long unsigned int number_elements;
 
-        int (*insert)(binary_tree *this_binary_tree, DATA data_to_insert, void (*callback_insert)(DATA d), int (*callback_order)(DATA new, DATA inserted) );
-        int (*insert_multiple)(binary_tree *this_binary_tree, void (*callback_insert)(DATA d), void(*callback_order)(DATA new, DATA inserted),  int count, ...);
-        chaining_get (*get)(binary_tree *this);
-        void (*print)(binary_tree *this_binary_tree, string type, void (*callback)(DATA));
+    int (*insert)(BinaryTree *this_binary_tree, const void* data_to_insert, const  void (*callback_insert)(const void* d), int (*callback_order)(const void* new, const void* inserted) );
+    int (*insert_multiple)(BinaryTree *this_binary_tree, const void (*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted),  int count, ...);
+    ChainingGet (*get)(const BinaryTree* this_binary_tree);
+    ChainingPrint (*print)(const BinaryTree* this_binary_tree);
+    //void (*print)(const BinaryTree* this_binary_tree, const void (*callback)(const void*));
 
-        int (*delete)(binary_tree *this_binary_tree, DATA d, void (*callback)(DATA));
-        int (*search)(binary_tree *this_binary_tree, DATA d, void (*callback)(DATA));
-        int (*empty)(binary_tree *this_binary_tree);
-    };
+    int (*delete)(BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*));
+    int (*search)(const BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*));
+    int (*empty)(BinaryTree *this_binary_tree);
+};
 
-    void init_stack(binary_tree *this_binary_tree);
-    void destroy_stack(binary_tree *this_binary_tree);
+BinaryTree newBinaryTree();
+void destroyBinaryTree(BinaryTree *this_binary_tree);
+static int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, const void (*callback_insert)(const void* d), const int (*callback_order)(const void* new, const void* inserted) );
+static int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, const void (*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted),  int count, ...);
+static ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree);
+static ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree);
+//static void _print_binary_tree(const BinaryTree *this_binary_tree, const void (*callback)(const void*));
+static int _delete_binary_tree(BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*));
+static int _search_binary_tree(const BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*));
+static int _empty_binary_tree(BinaryTree *this_binary_tree);
 
-    int insert(binary_tree *this_binary_tree, DATA data_to_insert, void (*callback_insert)(DATA d), int (*callback_order)(DATA new, DATA inserted) );
-    int insert_multiple(binary_tree *this_binary_tree, void (*callback_insert)(DATA d), void(*callback_order)(DATA new, DATA inserted),  int count, ...);
-    chaining_get get(binary_tree *this);
-    void print(binary_tree *this_binary_tree, string type, void (*callback)(DATA));
-    int delete(binary_tree *this_binary_tree, DATA d, void (*callback)(DATA));
-    int search(binary_tree *this_binary_tree, DATA d, void (*callback)(DATA));
-    int empty(binary_tree *this_binary_tree);
-
-    int _empty(pbinary_tree_adt hijo;
-    DATA* _inorder(void (*callback)(DATA d, int r), pbinary_tree_adt hijo);
-    DATA* _preorder(void (*callback)(DATA d, int r),  pbinary_tree_adt hijo);
-    DATA* _postorder(void (*callback)(DATA d, int r),  pbinary_tree_adt hijo);
-    DATA* inorder(void (*callback)(DATA d, int r));
-    DATA* preorder(void (*callback)(DATA d, int r));
-    DATA* postorder(void (*callback)(DATA d, int r));
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* ARBOLBINARIO_H_ */
+#endif /* BINARY_TREE_H_ */
