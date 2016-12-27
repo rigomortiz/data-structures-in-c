@@ -29,10 +29,21 @@ int main(){
     b.print(&b).inorder(print_callback).des();
     printf("\nInorder ASC:");
     b.print(&b).inorder(print_callback).asc();
-    printf("\nPostorder:");
-    b.print(&b).postorder(print_callback);
-    printf("\nPreorder:");
-    b.print(&b).preorder(print_callback);
+    printf("\nPreorder left:");
+    b.print(&b).preorder(print_callback).left();
+    printf("\nPreorder right:");
+    b.print(&b).preorder(print_callback).right();
+    printf("\nPostorder left:");
+    b.print(&b).postorder(print_callback).left();
+    printf("\nPostorder right:");
+    b.print(&b).postorder(print_callback).right();
+
+    printf("\nSize:%ld", b.number_elements);
+    destroyBinaryTree(&b);
+    printf("\nSize:%ld", b.number_elements);
+
+    printf("\nPostorder right:");
+    b.print(&b).inorder(print_callback).asc();
 
     return 1;
 }

@@ -25,7 +25,10 @@
  *  2.- Visitar el nodo raíz N
  *  3.- Recorrer el subárbol derecho D en enorden
  *
- *
+ *  POSTORDEN IDN
+ *  1.- Recorrer el subárbol derecho D en postorden
+ *  2.- Recorrer el subárbol izquierdo I en postorden
+ *  3.- Visitar el nodo raíz N
  */
 #ifndef BINARY_TREE_H_
 #define BINARY_TREE_H_
@@ -44,6 +47,16 @@ typedef struct{
     void (*des)(void);
 }Inorder;
 
+typedef struct{
+    void (*left)(void);
+    void (*right)(void);
+}Preorder;
+
+typedef struct{
+    void (*left)(void);
+    void (*right)(void);
+}Postorder;
+
 typedef struct {
     void** (*inorder)(void);
     void** (*postorder)(void);
@@ -52,8 +65,8 @@ typedef struct {
 
 typedef struct {
     Inorder (*inorder)(const void(*callback)(const void* d));
-    void (*postorder)(const void(*callback_insert)(const void* d));
-    void (*preorder)(const void(*callback_insert)(const void* d));
+    Postorder (*postorder)(const void(*callback_insert)(const void* d));
+    Preorder (*preorder)(const void(*callback_insert)(const void* d));
 }ChainingPrint;
 
 typedef struct {
