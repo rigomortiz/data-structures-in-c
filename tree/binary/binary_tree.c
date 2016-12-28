@@ -9,6 +9,7 @@ BinaryTree newBinaryTree(){
     BinaryTree this_binary_tree;
     this_binary_tree.binary_tree_adt = NULL;
     this_binary_tree.number_elements = 0;
+    this_binary_tree.depth = 0;
     this_binary_tree.delete = _delete_binary_tree;
     this_binary_tree.empty = _empty_binary_tree;
     this_binary_tree.insert = _insert_binary_tree;
@@ -38,19 +39,20 @@ void destroyBinaryTree(BinaryTree *this_binary_tree){
 int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, const void(*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted) ){
 
     int r;
+    //first element
     if( this_binary_tree->binary_tree_adt == NULL)
     {
-        // CODIGO AQUI --->
         pbinary_tree_adt new;
         new = (pbinary_tree_adt)malloc(sizeof(ELEMENT_BINARY_TREE));
         if(callback_insert != NULL)
             callback_insert(data_to_insert);
-        new->data = data_to_insert;
+        new->father = NULL;
+        new->data = (void*)data_to_insert;
         new->right_leaf  = NULL;
         new->left_leaf  = NULL;
         new->repeat = 0;
-        this_binary_tree->binary_tree_adt = new;//asignacion a lista el primer elemento
-        // <---------------
+        new->level = 0;
+        this_binary_tree->binary_tree_adt = new;
         this_binary_tree->number_elements++;
         return 1;
     }else{
@@ -60,18 +62,21 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
             // less
             if( r == -1) {
                 if( tmp->left_leaf != NULL){
-                    tmp = tmp->left_leaf;
+                    tmp = (pbinary_tree_adt)tmp->left_leaf;
                 }else{
-                    // CODIGO AQUI --->
                     pbinary_tree_adt new = (pbinary_tree_adt)malloc(sizeof(ELEMENT_BINARY_TREE));
                     if(callback_insert != NULL)
                         callback_insert(data_to_insert);
-                    new->data = data_to_insert;
+                    new->data = (void*)data_to_insert;
                     new->right_leaf  = NULL;
                     new->left_leaf  = NULL;
                     new->repeat = 0;
-                    tmp->left_leaf = new;//asignacion a lista el primer elemento
-                    // <---------------
+                    tmp->left_leaf = new;
+                    new->father = tmp;
+                    new->level = tmp->level + 1;
+                    if(new->level > this_binary_tree->depth){
+                        this_binary_tree->depth = new->level;
+                    }
                     this_binary_tree->number_elements++;
                     return 1;
                 }
@@ -81,26 +86,28 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
                 if( tmp->right_leaf != NULL){
                     tmp = tmp->right_leaf;
                 }else{
-                    // CODIGO AQUI --->
                     pbinary_tree_adt new = (pbinary_tree_adt)malloc(sizeof(ELEMENT_BINARY_TREE));
                     if(callback_insert != NULL)
                         callback_insert(data_to_insert);
-                    new->data = data_to_insert;
+                    new->data = (void*)data_to_insert;
                     new->right_leaf  = NULL;
                     new->left_leaf  = NULL;
                     new->repeat = 0;
-                    tmp->right_leaf = new;//asignacion a lista el primer elemento
-                    // <---------------
+                    tmp->right_leaf = new;
+                    new->father = tmp;
+                    new->level = tmp->level + 1;
+                    if(new->level > this_binary_tree->depth){
+                        this_binary_tree->depth = new->level;
+                    }
                     this_binary_tree->number_elements++;
                     return 1;
                 }
             }
             // equal
             else if (r == 0) {
-                this_binary_tree->binary_tree_adt->repeat++;
+                tmp->repeat++;
                 break;
             }
-
         }
         return 1;
     }
@@ -135,105 +142,228 @@ int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, const void (*call
  * @return
  */
 ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree){
-    ChainingGet methods;//Method chaining
+    static ChainingGet methods;//Method chaining
     //DATA STACK
     typedef struct{ pbinary_tree_adt ptb; }struct_ptb;
-
-    //INTERFACE
-    // void** inorder(void);
-    // void** preorder(void);
-    // void** postorder(void);
-
-    static Stack stack1;
     static const BinaryTree* b;//copy BinaryTree
-
-
-    stack1 = newStack();
     b = this_binary_tree;
 
-    void** inorder(void) {
-        int i = 0;
-        //void* *array = calloc((size_t)_this_binary_tree->number_elements, sizeof(void*));
+    PreorderGet preorder() {
+        static PreorderGet preorder;
 
-        stack1.push(&stack1, b->binary_tree_adt, NULL);
-
-        while( stack1.size > 0 ){
-            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
-            stack1.pop(&stack1, NULL);
-
-
-//            array[i++] = pbinary_tree_adt1->data;
-
-            if(pbinary_tree_adt1->right_leaf != NULL)
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
-
-
-            if(pbinary_tree_adt1->left_leaf != NULL)
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
-            printf("%d-->",(int)pbinary_tree_adt1->data);
-
+        //NID: NODO RAIZ, NODO IZQUIERDO, NODO DERECHO
+        void** left(void){
+            if(b->number_elements > 0) {
+                int i = 0;
+                void ** datas = calloc(sizeof(void*), b->number_elements);
+                static Stack stack1;
+                stack1 = newStack();
+                stack1.push(&stack1, b->binary_tree_adt, NULL);
+                while (stack1.size > 0) {
+                    pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt) stack1.peek(&stack1);
+                    stack1.pop(&stack1, NULL);
+                    datas[i++] = pbinary_tree_adt1->data;
+                    if (pbinary_tree_adt1->right_leaf != NULL) {
+                        stack1.push(&stack1, (void *) pbinary_tree_adt1->right_leaf, NULL);
+                    }
+                    if (pbinary_tree_adt1->left_leaf != NULL) {
+                        stack1.push(&stack1, (void *) pbinary_tree_adt1->left_leaf, NULL);
+                    }
+                }
+                destroyStack(&stack1);
+                return datas;
+            }else
+                return NULL;
         }
 
-        destroyStack(&stack1);
+        //DIN: NODO DERECHO, NODOD IZQUIERDO, NODOD RAIZ
+        void** right(void) {
+            if (b->number_elements > 0) {
+                int i = 0;
+                void ** datas = calloc(sizeof(void*), b->number_elements);
+                pbinary_tree_adt currentNode = NULL;
+                static Stack stack1;
+                stack1 = newStack();
+                stack1.push(&stack1, b->binary_tree_adt, NULL);
+                pbinary_tree_adt prev = NULL;
 
-        return NULL;
+                while (stack1.size > 0) {
+                    currentNode = (pbinary_tree_adt) stack1.peek(&stack1);
+                    /* case 1. We are nmoving down the tree. */
+                    if (prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode) {
+                        if (currentNode->right_leaf)
+                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                        else if (currentNode->left_leaf)
+                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                        else {
+                            /* If node is leaf node */
+                            datas[i++] = currentNode->data;
+                            stack1.pop(&stack1, NULL);
+                        }
+                    }
+                    /* case 2. We are moving up the tree from left child */
+                    if (currentNode->right_leaf == prev) {
+                        if (currentNode->left_leaf)
+                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                        else {
+                            datas[i++] = currentNode->data;
+                            stack1.pop(&stack1, NULL);
+                        }
+                    }
+                    /* case 3. We are moving up the tree from right child */
+                    if (currentNode->left_leaf == prev) {
+                        datas[i++] = currentNode->data;
+                        stack1.pop(&stack1, NULL);
+                    }
+                    prev = currentNode;
+                }
+
+                destroyStack(&stack1);
+                return datas;
+            }else return NULL;
+        }
+        preorder.left = left;
+        preorder.right = right;
+        return preorder;
     }
 
-    void** preorder(void) {
-        int i = 0;
-        //void* *array = calloc((size_t)_this_binary_tree->number_elements, sizeof(void*));
+    InorderGet inorder() {
+        static InorderGet inorder;
 
-        stack1.push(&stack1, b->binary_tree_adt, NULL);
-        while( stack1.size > 0 ){
-            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
-            stack1.pop(&stack1, NULL);
-            //array[i++] = pbinary_tree_adt1->data;
-            printf("%d-->",(int)pbinary_tree_adt1->data);
-
-            if(pbinary_tree_adt1->right_leaf != NULL){
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
-            }
-            if(pbinary_tree_adt1->left_leaf != NULL){
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
-            }
+        //IND: NODO IZQUIERDO, NODO RAIZ, NODO DERECHO
+        void** asc(void){
+            if(b->number_elements > 0){
+                int i = 0;
+                void** datas = calloc(sizeof(void*), b->number_elements);
+                static Stack stack1;
+                stack1 = newStack();
+                pbinary_tree_adt pbinary_tree_adt1 = b->binary_tree_adt;
+                while(stack1.size > 0 || pbinary_tree_adt1 ){
+                    if(pbinary_tree_adt1){
+                        stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                        pbinary_tree_adt1 = (pbinary_tree_adt)pbinary_tree_adt1->left_leaf;
+                    }
+                    else {
+                        pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+                        stack1.pop(&stack1, NULL);
+                        datas[i++] = pbinary_tree_adt1->data;
+                        pbinary_tree_adt1 =(pbinary_tree_adt) pbinary_tree_adt1->right_leaf;
+                    }
+                }
+                destroyStack(&stack1);
+                return datas;
+            }return NULL;
         }
 
-        destroyStack(&stack1);
-        return NULL;
-    }
-
-    void** postorder(void) {
-        int i = 0;
-        //void** array = calloc((size_t)_this_binary_tree->number_elements, sizeof(void*));
-
-        stack1.push(&stack1, b->binary_tree_adt, NULL);
-        while( stack1.size > 0 ){
-            pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
-            stack1.pop(&stack1, NULL);
-
-            // printf("%d-->",(int)pbinary_tree_adt1->data);
-            //Postorder:60-->70-->20-->40-->50-->30-->10-->
-
-
-            if(pbinary_tree_adt1->left_leaf != NULL)
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->left_leaf, NULL);
-
-            // printf("%d-->",(int)pbinary_tree_adt1->data);
-
-
-            if(pbinary_tree_adt1->right_leaf != NULL)
-                stack1.push(&stack1,(void*)pbinary_tree_adt1->right_leaf, NULL);
-
-            printf("%d-->",(int)pbinary_tree_adt1->data);
-
-
-            //array[i++] = pbinary_tree_adt1->data;
-
+        //DNI: NODO DERECHO, NODO RAIZ, NODO IZQUIERDO
+        void** des(void){
+            if(b->number_elements > 0){
+                int i = 0;
+                void **datas = calloc(sizeof(void*), b->number_elements);
+                static Stack stack1;
+                stack1 = newStack();
+                pbinary_tree_adt pbinary_tree_adt1 = b->binary_tree_adt;
+                while(stack1.size > 0 || pbinary_tree_adt1 ){
+                    if(pbinary_tree_adt1){
+                        stack1.push(&stack1, pbinary_tree_adt1, NULL);
+                        pbinary_tree_adt1 = (pbinary_tree_adt)pbinary_tree_adt1->right_leaf;
+                    }
+                    else {
+                        pbinary_tree_adt1 = (pbinary_tree_adt)stack1.peek(&stack1);
+                        stack1.pop(&stack1, NULL);
+                        datas[i++] = pbinary_tree_adt1->data;
+                        pbinary_tree_adt1 =(pbinary_tree_adt) pbinary_tree_adt1->left_leaf;
+                    }
+                }
+                destroyStack(&stack1);
+                return datas;
+            }else
+                return NULL;
         }
 
-        destroyStack(&stack1);
-        return NULL;
+        inorder.asc = asc;
+        inorder.des = des;
+        return inorder;
     }
+
+    PostorderGet postorder() {
+        static PostorderGet postorder;
+
+        //IDN: NODO IZQUIERDO, NODO DERECHO, NODO RAIZ
+        void** left(void){
+            if(b->number_elements > 0) {
+                int i = 0;
+                void** datas = calloc(sizeof(void*), b->number_elements);
+                pbinary_tree_adt currentNode = NULL;
+                static Stack stack1;
+                stack1 = newStack();
+                stack1.push(&stack1, b->binary_tree_adt, NULL);
+                pbinary_tree_adt prev = NULL;
+
+                while (stack1.size > 0) {
+                    currentNode = (pbinary_tree_adt) stack1.peek(&stack1);
+                    /* case 1. We are nmoving down the tree. */
+                    if (prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode) {
+                        if (currentNode->left_leaf)
+                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                        else if (currentNode->right_leaf)
+                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                        else {
+                            /* If node is leaf node */
+                            datas[i++] = currentNode->data;
+                            stack1.pop(&stack1, NULL);
+                        }
+                    }
+                    /* case 2. We are moving up the tree from left child */
+                    if (currentNode->left_leaf == prev) {
+                        if (currentNode->right_leaf)
+                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                        else {
+                            datas[i++] = currentNode->data;
+                            stack1.pop(&stack1, NULL);
+                        }
+                    }
+                    /* case 3. We are moving up the tree from right child */
+                    if (currentNode->right_leaf == prev) {
+                        datas[i++] = currentNode->data;
+                        stack1.pop(&stack1, NULL);
+                    }
+                    prev = currentNode;
+                }
+                destroyStack(&stack1);
+                return datas;
+            }else
+                return NULL;
+        }
+
+        //NDI: NODO RAIZ, NODO DERECHO, NODO IZQUIERDO
+        void** right(void){
+            if(b->number_elements > 0) {
+                int i = 0;
+                void** datas = calloc(sizeof(void*), b->number_elements);
+                static Stack stack1;
+                stack1 = newStack();
+                stack1.push(&stack1, b->binary_tree_adt, NULL);
+                while (stack1.size > 0) {
+                    pbinary_tree_adt pbinary_tree_adt1 = (pbinary_tree_adt) stack1.peek(&stack1);
+                    stack1.pop(&stack1, NULL);
+                    datas[i++] = pbinary_tree_adt1->data;
+                    if (pbinary_tree_adt1->left_leaf != NULL)
+                        stack1.push(&stack1, (void *) pbinary_tree_adt1->left_leaf, NULL);
+                    if (pbinary_tree_adt1->right_leaf != NULL)
+                        stack1.push(&stack1, (void *) pbinary_tree_adt1->right_leaf, NULL);
+                }
+                destroyStack(&stack1);
+                return datas;
+            }else
+                return NULL;
+        }
+
+        postorder.left = left;
+        postorder.right = right;
+        return postorder;
+    }
+
 
     methods.inorder = inorder;
     methods.postorder = postorder;
@@ -260,8 +390,28 @@ int _delete_binary_tree(BinaryTree *this_binary_tree, const void* d, const void 
  * @param callback
  * @return
  */
-int _search_binary_tree(const BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*)){
-    return 0;
+pbinary_tree_adt _search_binary_tree(const BinaryTree *this_binary_tree, const void* d, int (*callback)(const void* d1, const void* d2)){
+
+    if(this_binary_tree->number_elements>0){
+        pbinary_tree_adt pb = this_binary_tree->binary_tree_adt;
+        int i = 0;
+        while(pb != NULL){
+            i = callback(d, pb->data);
+            //mayor
+            if( i == 1 ){
+                pb = pb->right_leaf;
+            }//menor
+            else if( i == -1 ){
+                pb = pb->left_leaf;
+            }
+            //igual
+            else if( i == 0){
+                return pb;
+            }
+        }
+    }
+    else
+        return NULL;
 }
 
 /**
@@ -325,8 +475,8 @@ ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
     static const BinaryTree* b;//copy BinaryTree
     b = this_binary_tree;
 
-    Preorder preorder(const void(*callback)(const void* d)) {
-        static Preorder preorder;
+    PreorderPrint preorder(const void(*callback)(const void* d)) {
+        static PreorderPrint preorder;
         static const void(*f)(const void* d);
         f = callback;
 
@@ -405,8 +555,8 @@ ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
         return preorder;
     }
 
-    Inorder inorder( const void(*callback)(const void* d)) {
-        static Inorder inorder;
+    InorderPrint inorder( const void(*callback)(const void* d)) {
+        static InorderPrint inorder;
         static const void(*f)(const void* d);
         f = callback;
 
@@ -461,9 +611,8 @@ ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
         return inorder;
     }
 
-
-    Postorder postorder(const void(*callback)(const void* d)) {
-        static Postorder postorder;
+    PostorderPrint postorder(const void(*callback)(const void* d)) {
+        static PostorderPrint postorder;
         static const void(*f)(const void* d);
         f = callback;
 
@@ -543,10 +692,29 @@ ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
         return postorder;
     }
 
-
     methods.inorder = inorder;
     methods.postorder = postorder;
     methods.preorder = preorder;
 
     return methods;
 }
+
+/**
+		134
+	   /   \
+	  87  145
+	 /  \
+	1   89
+	 \    \
+	 23   90
+	/  \
+   12  45
+	  /
+	 27
+
+global int i = 0;
+ p = NODO
+ if(p)
+
+
+*/

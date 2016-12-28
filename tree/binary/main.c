@@ -5,6 +5,7 @@
 #include "binary_tree.h"
 const int order_callback(const void* new, const void* inserted);
 const void print_callback(const void* d);
+int search_callback(const void* data_search, const void* data_inserted);
 typedef struct {
     int num;
 }data_struct;
@@ -38,12 +39,30 @@ int main(){
     printf("\nPostorder right:");
     b.print(&b).postorder(print_callback).right();
 
-    printf("\nSize:%ld", b.number_elements);
-    destroyBinaryTree(&b);
-    printf("\nSize:%ld", b.number_elements);
+    data_struct d_new, d2_new ;
+    d_new.num = 567, d2_new.num = 2;
+    b.insert_multiple(&b, NULL, order_callback, 2, &d_new, &d2_new);
 
-    printf("\nPostorder right:");
-    b.print(&b).inorder(print_callback).asc();
+    printf("\nSize:%ld\n", b.number_elements);
+    data_struct** data_struct1 = (data_struct**)b.get(&b).inorder().asc();
+    int i = 0;
+    for(i=0; i<b.number_elements; i++){
+        printf("%d-", data_struct1[i]->num);
+    }
+
+    printf("\nDepth:%ld", b.depth);
+
+    data_struct s;
+    s.num = 2;
+    printf("\nFind 2: %s", b.search(&b, &s, search_callback)!=NULL?"yes":"no" );
+    s.num = 31;
+    printf("\nFind 2: %s", b.search(&b, &s, search_callback)!=NULL?"yes":"no" );
+
+
+
+    destroyBinaryTree(&b);
+    free(data_struct1);
+    printf("\nSize:%ld", b.number_elements);
 
     return 1;
 }
@@ -51,6 +70,18 @@ int main(){
 const int order_callback(const void* new, const void* inserted){
     const data_struct *n = (data_struct*) new;
     const data_struct *i = (data_struct*) inserted;
+    if(n->num > i->num){
+        return  1;
+    }else if(n->num < i->num){
+        return -1;
+    }else if(n->num == i->num){
+        return 0;
+    }
+}
+
+int search_callback(const void* data_search, const void* data_inserted){
+    const data_struct *n = (data_struct*) data_search;
+    const data_struct *i = (data_struct*) data_inserted;
     if(n->num > i->num){
         return  1;
     }else if(n->num < i->num){
