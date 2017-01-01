@@ -138,7 +138,7 @@ void Grafo::imprimirCamino2(ListaDoble *l)
     
 }
 void Grafo::imprimirCamino(){
-    /*
+    /*¿¿
     StructListaCaminos **nodo, **sub_nodo;
     ListaDoble *lista = this->camino;
     if(nodo != NULL ){

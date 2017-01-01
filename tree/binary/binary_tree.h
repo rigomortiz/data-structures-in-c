@@ -36,12 +36,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <search.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 typedef struct BinaryTree BinaryTree;
-
+typedef struct BinaryTreeADT* PBinaryTreeADT;
 typedef struct{
     void (*asc)(void);
     void (*des)(void);
@@ -79,45 +80,46 @@ typedef struct {
 }ChainingGet;
 
 typedef struct {
-    InorderPrint (*inorder)(const void(*callback)(const void* d));
-    PostorderPrint (*postorder)(const void(*callback_insert)(const void* d));
-    PreorderPrint (*preorder)(const void(*callback_insert)(const void* d));
+    InorderPrint (*inorder)(void(*callback)(const void* d));
+    PostorderPrint (*postorder)(void(*callback_insert)(const void* d));
+    PreorderPrint (*preorder)(void(*callback_insert)(const void* d));
 }ChainingPrint;
 
-typedef struct Binary_Tree_ADT{
+typedef struct BinaryTreeADT{
     void* data;
     unsigned long int repeat;
     unsigned long int level;
-    struct Binary_Tree_ADT *father;
-    struct Binary_Tree_ADT *left_leaf;
-    struct Binary_Tree_ADT *right_leaf;
-}*pbinary_tree_adt, ELEMENT_BINARY_TREE ;
+    PBinaryTreeADT father;
+    PBinaryTreeADT left_leaf;
+    PBinaryTreeADT right_leaf;
+} ELEMENT_BINARY_TREE;
 
-struct BinaryTree{
-    pbinary_tree_adt binary_tree_adt;
+typedef struct{
+    PBinaryTreeADT (*get)(void);
+    int (*remove)(void);
+}Find;
+
+typedef struct BinaryTree{
+    PBinaryTreeADT binary_tree_adt;
     long unsigned int number_elements;
     unsigned long int depth;
 
-    int (*insert)(BinaryTree *this_binary_tree, const void* data_to_insert, const  void (*callback_insert)(const void* d), int (*callback_order)(const void* new, const void* inserted) );
-    int (*insert_multiple)(BinaryTree *this_binary_tree, const void (*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted),  int count, ...);
+    int (*insert)(BinaryTree *this_binary_tree, const void* data_to_insert, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted) );
+    int (*insert_multiple)(BinaryTree *this_binary_tree, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted),  int count, ...);
+    Find (*find)(BinaryTree *this_binary_tree, const void* d, int(*callback)(const void* d1, const void* d2));
+    int (*empty)(BinaryTree *this_binary_tree);
     ChainingGet (*get)(const BinaryTree* this_binary_tree);
     ChainingPrint (*print)(const BinaryTree* this_binary_tree);
-    //void (*print)(const BinaryTree* this_binary_tree, const void (*callback)(const void*));
-
-    int (*delete)(BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*));
-    pbinary_tree_adt (*search)(const BinaryTree *this_binary_tree, const void* d, int (*callback)(const void* d1, const void* d2));
-    int (*empty)(BinaryTree *this_binary_tree);
 };
 
 BinaryTree newBinaryTree();
 void destroyBinaryTree(BinaryTree *this_binary_tree);
-static int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, const void (*callback_insert)(const void* d), const int (*callback_order)(const void* new, const void* inserted) );
-static int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, const void (*callback_insert)(const void* d), const int(*callback_order)(const void* new, const void* inserted),  int count, ...);
+
+static int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted) );
+static int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted),  int count, ...);
 static ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree);
 static ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree);
-//static void _print_binary_tree(const BinaryTree *this_binary_tree, const void (*callback)(const void*));
-static int _delete_binary_tree(BinaryTree *this_binary_tree, const void* d, const void (*callback)(const void*));
-static pbinary_tree_adt _search_binary_tree(const BinaryTree *this_binary_tree, const void* d, int (*callback)(const void* d1, const void* d2));
+static Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int (*callback)(const void* d1, const void* d2));
 static int _empty_binary_tree(BinaryTree *this_binary_tree);
 
 

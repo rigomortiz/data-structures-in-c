@@ -85,11 +85,11 @@ int _dequeue_queue(Queue *this_queue, const void (*callback)(const void*))
  * @param this_queue
  * @return
  */
-void* *_peek_queue(Queue *this_queue)
+void* _peek_queue(Queue *this_queue)
 {
     pqueue p = this_queue->queue_adt;
     if(this_queue->size > 0){
-        void* *dn = p->data;
+        void* dn = p->data;
         return dn;
     }else {
         return NULL;

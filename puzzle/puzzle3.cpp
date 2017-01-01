@@ -1,4 +1,4 @@
-﻿#include "puzzle.h"
+﻿#include "puzzle3.h"
 Puzzle::Puzzle(int numero, int array[][])
 {
 	this->Struct = NULL;

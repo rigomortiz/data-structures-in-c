@@ -3,9 +3,10 @@
 //
 
 #include "binary_tree.h"
-const int order_callback(const void* new, const void* inserted);
-const void print_callback(const void* d);
+int order_callback(const void* new, const void* inserted);
+void print_callback(const void* d);
 int search_callback(const void* data_search, const void* data_inserted);
+int remove_callback(const void* data_remove, const void* data_inserted);
 typedef struct {
     int num;
 }data_struct;
@@ -54,9 +55,15 @@ int main(){
 
     data_struct s;
     s.num = 2;
-    printf("\nFind 2: %s", b.search(&b, &s, search_callback)!=NULL?"yes":"no" );
+    printf("\nFind 2: %s",   b.find(&b, &s, search_callback).get() !=NULL? "yes":"no" );
     s.num = 31;
-    printf("\nFind 2: %s", b.search(&b, &s, search_callback)!=NULL?"yes":"no" );
+    printf("\nFind 31: %s", b.find(&b, &s, search_callback).get() !=NULL? "yes":"no" );
+
+    //REMOVE
+    s.num = 1;
+    printf("\nRemove 1: %s", b.find(&b, &s, remove_callback).remove()==1?"yes":"no");
+    printf("\nInorder ASC:");
+    b.print(&b).inorder(print_callback).asc();
 
 
 
@@ -67,7 +74,7 @@ int main(){
     return 1;
 }
 
-const int order_callback(const void* new, const void* inserted){
+int order_callback(const void* new, const void* inserted){
     const data_struct *n = (data_struct*) new;
     const data_struct *i = (data_struct*) inserted;
     if(n->num > i->num){
@@ -91,7 +98,19 @@ int search_callback(const void* data_search, const void* data_inserted){
     }
 }
 
-const void print_callback(const void* d){
+int remove_callback(const void* data_remove, const void* data_inserted){
+    const data_struct *n = (data_struct*) data_remove;
+    const data_struct *i = (data_struct*) data_inserted;
+    if(n->num > i->num){
+        return  1;
+    }else if(n->num < i->num){
+        return -1;
+    }else if(n->num == i->num){
+        return 0;
+    }
+}
+
+void print_callback(const void* d){
     const data_struct *data = (data_struct*) d;
     printf(" %d ", data->num);
 }
