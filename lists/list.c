@@ -47,6 +47,7 @@ List newList(ListType listType, LinkType linkType){
         }
     }
 }
+
 InsertList _insert_list(List *this_binary_tree){
     InsertList insert;
     static  List* this;
@@ -318,7 +319,7 @@ GetList _get_list(List *list){
                 if(private->size > 0) {
                     SimpleADT simpleADT = private->listADT;
                     int i;
-                    for (i = 1; i < pos; simpleADT = simpleADT->next, i++);
+                    for (i = 0; i < pos; simpleADT = simpleADT->next, i++);
                     return simpleADT->data;
                 }else{
                     return data;
@@ -336,7 +337,7 @@ GetList _get_list(List *list){
         switch (this->linkType) {
             case SIMPLE: {
                 struct PrivateDataListSimple *private = (struct PrivateDataListSimple*)this->private;
-                static void** data;
+                void** data  = calloc(private->size , sizeof(void*));
                 unsigned int i = 0;
                 if(private->size > 0){
                     SimpleADT simpleADT = private->listADT;

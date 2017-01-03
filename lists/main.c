@@ -11,11 +11,9 @@ void callback_print(const void* d);
 typedef struct {
     int number;
 } struct_number;
-void gh(int *c);
 //MAIN
 int main(int argc, char** argv)
 {
-/*
     //DATA TO INSERT
     struct_number n[10];
     int i = 0;
@@ -29,7 +27,6 @@ int main(int argc, char** argv)
     }
     //list.insert(&list).pos(0, &n[9], NULL);
     //printf("\nSize:%ld", list.get_size(&list));
-
 
     //list.insert.top(data, callback)
 
@@ -49,17 +46,13 @@ int main(int argc, char** argv)
     for(i = 0; i<size; i++){
         printf("%d --> ", *d[i]);
     }
+    struct_number* data = (struct_number*) list.get(&list).pos(5);
+    printf("\nposition 5 = %d", *data);
+
 
     //list.print(&list, callback_print);
+    free(d);
     destroyList(&list);
-*/
-    int* i = calloc(3 , sizeof(int*));
-    gh(i);
-
-    printf("%d\n", i[0]);
-    printf("%d\n", *(i+1));
-    printf("%d\n", i[2]);
-    free(i);
 
     return (EXIT_SUCCESS);
 }
@@ -78,14 +71,4 @@ void callback_delete(const void* delete_data) {
 void callback_print(const void* d) {
     struct_number *s = d;
     printf("(%d) --> ",s->number);
-}
-
-void gh(int *h){
-    int i = 0;
-    int a = 10, b = 20, c= 30;
-
-    h[0] = a;
-    h[1] = b;
-    h[2] = c;
-
 }

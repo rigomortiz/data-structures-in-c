@@ -21,27 +21,26 @@ int main(int argc, char** argv)
     int i = 0;
 
     //INSTANCE
-    Queue queue_numeros = newQueue();
+    Queue queue = newQueue();
 
     //ENQUEUE DATA
     for(i=0; i<10; i++){
         n[i].number = i*i;
-        queue_numeros.enqueue(&queue_numeros, &n[i], callback_enqueue);
+        queue.enqueue(&queue, &n[i], callback_enqueue);
     }
 
     //PEEK DATA
-    struct_number *s_tmp = (struct_number *)queue_numeros.peek(&queue_numeros);
+    struct_number *s_tmp = (struct_number *)queue.peek(&queue);
     printf("Peek:%d\n", s_tmp->number);
 
     //SIZE QUEUE
-    printf("Size:%0.0Lf\n", queue_numeros.size);
+    printf("Size:%u\n", queue.get_size(&queue));
 
     //PRINT QUEUE
-    queue_numeros.print(&queue_numeros, callback_print);
+    queue.print(&queue, callback_print);
     
     //DESTROY QUEUE
-    destroyQueue(&queue_numeros);
-    printf("Size:%0.0Lf\n", queue_numeros.size);
+    destroyQueue(&queue);
     return (EXIT_SUCCESS);
 }
 

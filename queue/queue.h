@@ -9,33 +9,38 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-typedef struct{
+typedef struct QueueADT* QueueADT, ELEMENT_QUEUE;
+struct QueueADT{
     void* data;
-    struct Queue_ADT *next;
-}*pqueue, ELEMENT_QUEUE;
+    QueueADT next;
+};
 
+typedef struct PrivateDataQueue{
+    QueueADT final;
+    QueueADT queue_adt;
+    unsigned int size;
+};
 typedef struct Queue Queue;
 struct Queue{
-    pqueue final;
-    pqueue queue_adt;
-    long double size;
-    int (*enqueue)(Queue *this_queue, const void* d, void (*callback)(const void*));
-    int (*dequeue)(Queue *this_queue, const void (*callback)(const void*));
-    void* (*peek)(Queue *this_queue);
-    int (*empty)(Queue *this_queue);
-    void (*print)(Queue *this_queue, const void (*callback)(const void*));
-    int (*enqueue_multiple)(Queue *this_queue, const void (*callback)(const void*), int count, ... );
+    void* const private;
+    unsigned  int (*const get_size)(Queue *this);
+    int (*const enqueue)(Queue *this, const void* d, void (*callback)(const void*));
+    int (*const dequeue)(Queue *this, const void (*callback)(const void*));
+    void* (*const peek)(Queue *this);
+    int (*const empty)(Queue *this);
+    void (*const print)(Queue *this, const void (*callback)(const void*));
+    int (*const enqueue_multiple)(Queue *this, const void (*callback)(const void*), int count, ... );
 };
 
 Queue newQueue();
-void destroyQueue(Queue *queue1);
-static int _enqueue_queue(Queue *this_queue, const void* d, void (*callback)(const void*));
-static int _dequeue_queue(Queue *this_queue, const void (*callback)(const void*));
-static void* _peek_queue(Queue *this_queue);
-static int _empty_queue(Queue *this_queue);
-static void _print_queue(Queue *this_queue, const void (*callback)(const void*));
-static int _enqueue_multiple_queue(Queue *this_queuek, const void (*callback)(const void*), int count, ... );
+void destroyQueue(Queue *queue);
+static unsigned int _get_size(Queue *this);
+static int _enqueue_queue(Queue *this, const void* d, void (*callback)(const void*));
+static int _dequeue_queue(Queue *this, const void (*callback)(const void*));
+static void* _peek_queue(Queue *this);
+static int _empty_queue(Queue *this);
+static void _print_queue(Queue *this, const void (*callback)(const void*));
+static int _enqueue_multiple_queue(Queue *this, const void (*callback)(const void*), int count, ... );
 
 
 #ifdef	__cplusplus
