@@ -5,24 +5,29 @@
  * @return Stack
  */
 Stack newStack(){
-    Stack stack1;
-    stack1.stack_adt = NULL;
-    stack1.size = 0;
-    stack1.push = _push_stack;
-    stack1.pop = _pop_stack;
-    stack1.peek = _peek_stack;
-    stack1.empty = _empty_stack;
-    stack1.print = _print_stack;
-    stack1.push_multiple = _push_multiple_stack;
-    return stack1;
+    struct PrivateDataStack* p = malloc(sizeof(struct PrivateDataStack));
+    p->size = 0;
+    p->stack_adt = NULL;
+    Stack stack = {
+        .private = p,
+        .get_size = _get_size,
+        .empty = _empty_stack,
+        .peek = _peek_stack,
+        .pop = _pop_stack,
+        .print = _print_stack,
+        .push = _push_stack,
+        .push_multiple = _push_multiple_stack
+    };
+    return stack;
 }
 
 /**
  *
  * @param stack1
  */
-void destroyStack(Stack *stack1){
-    stack1->empty(stack1);
+void destroyStack(Stack *this){
+    this->empty(this);
+    free(this->private);
 }
 
 /**
@@ -33,18 +38,20 @@ void destroyStack(Stack *stack1){
  * @param function_push function to execute
  * @return int
  */
-int _push_stack(Stack *this_stack, void* d, const void (*callback)(const void*))
-{
-    pstack pstack_new = (pstack)malloc(sizeof(ELEMENT_STACK));
-    if(pstack_new != NULL){
+int _push_stack(Stack *this, void* d, void(*const callback)(const void*)) {
+    StackADT new;
+    struct PrivateDataStack *private = (struct PrivateDataStack*)this->private;
+
+    new = (StackADT)malloc(sizeof(ELEMENT_STACK));
+    if(new != NULL){
         //CODE HERE
         if(callback != NULL)
             callback(d);
         //END
-        pstack_new->data = d;
-        pstack_new->next = this_stack->stack_adt;
-        this_stack->stack_adt = pstack_new;
-        this_stack->size++;
+        new->data = d;
+        new->next = private->stack_adt;
+        private->stack_adt = new;
+        private->size++;
         return 1;
     }else {
         return 0;
@@ -58,17 +65,17 @@ int _push_stack(Stack *this_stack, void* d, const void (*callback)(const void*))
  * @param function_pop function to execute
  * @return int
  */
-int _pop_stack(Stack *this_stack, const void (*callback)(const void*))
-{
-    pstack p = this_stack->stack_adt;
-    if(this_stack->size > 0){
+int _pop_stack(Stack *this, void(*const callback)(const void*)) {
+    struct PrivateDataStack  *private = (struct PrivateDataStack*)this->private;
+    if(private->size > 0){
+        StackADT p = private->stack_adt;
         //CODE HERE
         if(callback != NULL)
             callback(p->data);
         //END
-        this_stack->stack_adt = p->next;
+        private->stack_adt = p->next;
         free(p);
-        this_stack->size--;
+        private->size--;
         return 1;
     }else return 0;
 }
@@ -78,12 +85,11 @@ int _pop_stack(Stack *this_stack, const void (*callback)(const void*))
  * @param this_stack
  * @return
  */
-void* *_peek_stack(Stack *this_stack)
-{
-    pstack p = this_stack->stack_adt;
-    if(this_stack->size > 0){
-        void* *dn = p->data;
-        return dn;
+void* _peek_stack(Stack *this) {
+    struct PrivateDataStack *private = (struct PrivateDataStack*)this->private;
+    if(private->size > 0){
+        StackADT p = private->stack_adt;
+        return p->data;
     }else {
         return NULL;
     }
@@ -94,12 +100,12 @@ void* *_peek_stack(Stack *this_stack)
  * @param this_Stack
  * @return
  */
-int _empty_stack(Stack *this_stack)
-{
-    if(this_stack->size > 0){
-        long double i, l = this_stack->size;
-        for (i = 0; i < l ; ++i) {
-            this_stack->pop(this_stack, NULL);
+int _empty_stack(Stack *this){
+    struct PrivateDataStack *private = (struct PrivateDataStack*)this->private;
+    if(private->size > 0){
+        unsigned int i, l = private->size;
+        for (i = 0; i < l ; i++) {
+            this->pop(this, NULL);
         }
         return 1;
     }else{
@@ -112,15 +118,15 @@ int _empty_stack(Stack *this_stack)
  * @param this_stack
  * @param callback
  */
-void _print_stack(Stack *this_stack, const  void (*callback)(const void*))
-{
-    Stack tmp = *this_stack;
-    if(tmp.size > 0){
-        while(tmp.stack_adt != NULL){
+void _print_stack(Stack *this, void(*const callback)(const void*)) {
+    struct PrivateDataStack *private = (struct PrivateDataStack*)this->private;
+    struct PrivateDataStack private_tmp = *private;
+    if(private_tmp.size > 0){
+        while(private_tmp.stack_adt != NULL){
             if(callback != NULL){
-                callback(tmp.stack_adt->data);
+                callback(private_tmp.stack_adt->data);
             }
-            tmp.stack_adt = tmp.stack_adt->next;
+            private_tmp.stack_adt = private_tmp.stack_adt->next;
         }
         printf(" NULL.\n");
     }else{
@@ -135,16 +141,25 @@ void _print_stack(Stack *this_stack, const  void (*callback)(const void*))
  * @param count
  * @return
  */
-int _push_multiple_stack(Stack *this_stack, const void (*callback)(const void*), int count, ... )
-{
+int _push_multiple_stack(Stack *this, void(*const callback)(const void*), int count, ... ) {
     int i=0;
     int r=1;
     va_list list;
     va_start(list, count);
 
     for(i=0; i<count; i++){
-        r = r && this_stack->push(this_stack, va_arg(list, void*), callback);
+        r = r && this->push(this, va_arg(list, void*), callback);
     }
     va_end(list);
     return r;
+}
+
+/**
+ *
+ * @param this
+ * @return
+ */
+unsigned int _get_size(Stack *this){
+    struct PrivateDataStack *private = (struct PrivateDataStack*)this->private;
+    return private->size;
 }

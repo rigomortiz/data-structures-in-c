@@ -44,14 +44,14 @@ int main(){
     d_new.num = 567, d2_new.num = 2;
     b.insert_multiple(&b, NULL, order_callback, 2, &d_new, &d2_new);
 
-    printf("\nSize:%ld\n", b.number_elements);
+    printf("\nSize:%d\n", b.get_num_elements(&b));
     data_struct** data_struct1 = (data_struct**)b.get(&b).inorder().asc();
     int i = 0;
-    for(i=0; i<b.number_elements; i++){
+    for(i=0; i<b.get_num_elements(&b); i++){
         printf("%d-", data_struct1[i]->num);
     }
 
-    printf("\nDepth:%ld", b.depth);
+    //printf("\nDepth:%ld", b.depth);
 
     data_struct s;
     s.num = 2;
@@ -69,7 +69,7 @@ int main(){
 
     destroyBinaryTree(&b);
     free(data_struct1);
-    printf("\nSize:%ld", b.number_elements);
+    printf("\nSize:%d", b.get_num_elements(&b));
 
     return 1;
 }

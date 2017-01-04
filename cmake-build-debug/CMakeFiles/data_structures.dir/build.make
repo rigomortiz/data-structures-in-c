@@ -57,28 +57,28 @@ include CMakeFiles/data_structures.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/data_structures.dir/flags.make
 
-CMakeFiles/data_structures.dir/queue/main.c.o: CMakeFiles/data_structures.dir/flags.make
-CMakeFiles/data_structures.dir/queue/main.c.o: ../queue/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/data_structures.dir/queue/main.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/queue/main.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c
+CMakeFiles/data_structures.dir/stack/stack.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/stack/stack.c.o: ../stack/stack.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/data_structures.dir/stack/stack.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/stack/stack.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c
 
-CMakeFiles/data_structures.dir/queue/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/queue/main.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c > CMakeFiles/data_structures.dir/queue/main.c.i
+CMakeFiles/data_structures.dir/stack/stack.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/stack/stack.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c > CMakeFiles/data_structures.dir/stack/stack.c.i
 
-CMakeFiles/data_structures.dir/queue/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/queue/main.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c -o CMakeFiles/data_structures.dir/queue/main.c.s
+CMakeFiles/data_structures.dir/stack/stack.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/stack/stack.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c -o CMakeFiles/data_structures.dir/stack/stack.c.s
 
-CMakeFiles/data_structures.dir/queue/main.c.o.requires:
+CMakeFiles/data_structures.dir/stack/stack.c.o.requires:
 
-.PHONY : CMakeFiles/data_structures.dir/queue/main.c.o.requires
+.PHONY : CMakeFiles/data_structures.dir/stack/stack.c.o.requires
 
-CMakeFiles/data_structures.dir/queue/main.c.o.provides: CMakeFiles/data_structures.dir/queue/main.c.o.requires
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.o.provides.build
-.PHONY : CMakeFiles/data_structures.dir/queue/main.c.o.provides
+CMakeFiles/data_structures.dir/stack/stack.c.o.provides: CMakeFiles/data_structures.dir/stack/stack.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/stack/stack.c.o.provides
 
-CMakeFiles/data_structures.dir/queue/main.c.o.provides.build: CMakeFiles/data_structures.dir/queue/main.c.o
+CMakeFiles/data_structures.dir/stack/stack.c.o.provides.build: CMakeFiles/data_structures.dir/stack/stack.c.o
 
 
 CMakeFiles/data_structures.dir/queue/queue.c.o: CMakeFiles/data_structures.dir/flags.make
@@ -105,19 +105,97 @@ CMakeFiles/data_structures.dir/queue/queue.c.o.provides: CMakeFiles/data_structu
 CMakeFiles/data_structures.dir/queue/queue.c.o.provides.build: CMakeFiles/data_structures.dir/queue/queue.c.o
 
 
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o: ../tree/binary/binary_tree.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.c
+
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.c > CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.i
+
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.c -o CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.s
+
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.requires
+
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.provides: CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.provides
+
+CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.provides.build: CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o
+
+
+CMakeFiles/data_structures.dir/lists/list.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/lists/list.c.o: ../lists/list.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/data_structures.dir/lists/list.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/lists/list.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/lists/list.c
+
+CMakeFiles/data_structures.dir/lists/list.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/lists/list.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/lists/list.c > CMakeFiles/data_structures.dir/lists/list.c.i
+
+CMakeFiles/data_structures.dir/lists/list.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/lists/list.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/lists/list.c -o CMakeFiles/data_structures.dir/lists/list.c.s
+
+CMakeFiles/data_structures.dir/lists/list.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/lists/list.c.o.requires
+
+CMakeFiles/data_structures.dir/lists/list.c.o.provides: CMakeFiles/data_structures.dir/lists/list.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/lists/list.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/lists/list.c.o.provides
+
+CMakeFiles/data_structures.dir/lists/list.c.o.provides.build: CMakeFiles/data_structures.dir/lists/list.c.o
+
+
+CMakeFiles/data_structures.dir/tree/binary/main.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/tree/binary/main.c.o: ../tree/binary/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/data_structures.dir/tree/binary/main.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/tree/binary/main.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/main.c
+
+CMakeFiles/data_structures.dir/tree/binary/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/tree/binary/main.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/main.c > CMakeFiles/data_structures.dir/tree/binary/main.c.i
+
+CMakeFiles/data_structures.dir/tree/binary/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/tree/binary/main.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/main.c -o CMakeFiles/data_structures.dir/tree/binary/main.c.s
+
+CMakeFiles/data_structures.dir/tree/binary/main.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/tree/binary/main.c.o.requires
+
+CMakeFiles/data_structures.dir/tree/binary/main.c.o.provides: CMakeFiles/data_structures.dir/tree/binary/main.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/tree/binary/main.c.o.provides
+
+CMakeFiles/data_structures.dir/tree/binary/main.c.o.provides.build: CMakeFiles/data_structures.dir/tree/binary/main.c.o
+
+
 # Object files for target data_structures
 data_structures_OBJECTS = \
-"CMakeFiles/data_structures.dir/queue/main.c.o" \
-"CMakeFiles/data_structures.dir/queue/queue.c.o"
+"CMakeFiles/data_structures.dir/stack/stack.c.o" \
+"CMakeFiles/data_structures.dir/queue/queue.c.o" \
+"CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o" \
+"CMakeFiles/data_structures.dir/lists/list.c.o" \
+"CMakeFiles/data_structures.dir/tree/binary/main.c.o"
 
 # External object files for target data_structures
 data_structures_EXTERNAL_OBJECTS =
 
-data_structures: CMakeFiles/data_structures.dir/queue/main.c.o
+data_structures: CMakeFiles/data_structures.dir/stack/stack.c.o
 data_structures: CMakeFiles/data_structures.dir/queue/queue.c.o
+data_structures: CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o
+data_structures: CMakeFiles/data_structures.dir/lists/list.c.o
+data_structures: CMakeFiles/data_structures.dir/tree/binary/main.c.o
 data_structures: CMakeFiles/data_structures.dir/build.make
 data_structures: CMakeFiles/data_structures.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable data_structures"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable data_structures"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/data_structures.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -125,8 +203,11 @@ CMakeFiles/data_structures.dir/build: data_structures
 
 .PHONY : CMakeFiles/data_structures.dir/build
 
-CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/queue/main.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/stack/stack.c.o.requires
 CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/queue/queue.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/lists/list.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/tree/binary/main.c.o.requires
 
 .PHONY : CMakeFiles/data_structures.dir/requires
 

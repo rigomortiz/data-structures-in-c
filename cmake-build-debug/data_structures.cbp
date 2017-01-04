@@ -84,13 +84,31 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/main.c">
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/lists/list.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/lists/list.h">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.c">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/main.c">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/CMakeLists.txt">

@@ -5,7 +5,6 @@
  * @return Queue
  */
 Queue newQueue(){
-
     struct PrivateDataQueue* p = malloc(sizeof(struct PrivateDataQueue));
     p->size = 0;
     p->final = NULL;
@@ -28,11 +27,7 @@ Queue newQueue(){
  * @param queue1
  */
 void destroyQueue(Queue *this){
-    struct PrivateDataQueue *private = (struct PrivateDataQueue*)this->private;
-    unsigned int i = 0, l = private->size;
-    for (i = 0; i < l; i++) {
-        this->dequeue(this, NULL);
-    }
+    this->empty(this);
     free(this->private);
 }
 
@@ -43,8 +38,7 @@ void destroyQueue(Queue *this){
  * @param callback
  * @return
  */
-int _enqueue_queue(Queue *this, const void* d, void (*callback)(const void*))
-{
+int _enqueue_queue(Queue *this, const void* d, void(*const callback)(const void*)) {
     QueueADT new;
     struct PrivateDataQueue *private = (struct PrivateDataQueue*)this->private;
 
@@ -74,8 +68,7 @@ int _enqueue_queue(Queue *this, const void* d, void (*callback)(const void*))
  * @param callback
  * @return
  */
-int _dequeue_queue(Queue *this, const void (*callback)(const void*))
-{
+int _dequeue_queue(Queue *this, void(*const callback)(const void*)) {
     struct PrivateDataQueue *private = (struct PrivateDataQueue*)this->private;
     QueueADT p = private->queue_adt;
     if(private->size > 0){
@@ -114,8 +107,8 @@ void* _peek_queue(Queue *this) {
 int _empty_queue(Queue *this){
     struct PrivateDataQueue *private = (struct PrivateDataQueue*)this->private;
     if(private->size > 0){
-        long double i, l = private->size;
-        for (i = 0; i < l ; ++i) {
+        unsigned int i, l = private->size;
+        for (i = 0; i < l ; i++) {
             this->dequeue(this, NULL);
         }
         return 1;
@@ -129,7 +122,7 @@ int _empty_queue(Queue *this){
  * @param this_queue
  * @param callback
  */
-void _print_queue(Queue *this, const void (*callback)(const void*)) {
+void _print_queue(Queue *this, void(*const callback)(const void*)) {
     struct PrivateDataQueue *private = (struct PrivateDataQueue*)this->private;
     if( private->size > 0){
         Queue tmp = *this;
@@ -154,7 +147,7 @@ void _print_queue(Queue *this, const void (*callback)(const void*)) {
  * @param count
  * @return
  */
-int _enqueue_multiple_queue(Queue *this, const void (*callback)(const void*), int count, ... ){
+int _enqueue_multiple_queue(Queue *this, void(*const callback)(const void*), int count, ... ){
     int i=0;
     int r=1;
     va_list list;

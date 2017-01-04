@@ -6,25 +6,31 @@
  * @return BinaryTree
  */
 BinaryTree newBinaryTree(){
-    BinaryTree this_binary_tree;
-    this_binary_tree.binary_tree_adt = NULL;
-    this_binary_tree.number_elements = 0;
-    this_binary_tree.depth = 0;
-    this_binary_tree.empty = _empty_binary_tree;
-    this_binary_tree.insert = _insert_binary_tree;
-    this_binary_tree.insert_multiple = _insert_multiple_binary_tree;
-    this_binary_tree.print = _print_binary_tree;
-    this_binary_tree.find = _find_binary_tree;
-    this_binary_tree.get = _get_binary_tree;
-    return this_binary_tree;
+    struct PrivateDataBinaryTree *p = malloc(sizeof(struct PrivateDataBinaryTree));
+    p->binary_tree_adt = NULL;
+    p->depth = 0;
+    p->num_elements = 0;
+
+    BinaryTree this = {
+            .empty = _empty_binary_tree,
+            .find = _find_binary_tree,
+            .get = _get_binary_tree,
+            .insert = _insert_binary_tree,
+            .insert_multiple = _insert_multiple_binary_tree,
+            .print = _print_binary_tree,
+            .private = p,
+            .get_num_elements = _get_num_elements
+    };
+    return this;
 }
 
 /**
  * 
  * @param this_binary_tree 
  */
-void destroyBinaryTree(BinaryTree *this_binary_tree){
-    this_binary_tree->empty(this_binary_tree);
+void destroyBinaryTree(BinaryTree *this){
+    this->empty(this);
+    free(this->private);
 }
 
 /**
@@ -35,14 +41,14 @@ void destroyBinaryTree(BinaryTree *this_binary_tree){
  * @param callback_order 
  * @return 
  */
-int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted) ){
-
+int _insert_binary_tree(BinaryTree *this, const void* data_to_insert, void(*const callback_insert)(const void* d), int(*const callback_order)(const void* new, const void* inserted) ){
     int r;
     //first element
-    if( this_binary_tree->binary_tree_adt == NULL)
+    struct PrivateDataBinaryTree *private = (struct PrivateDataBinaryTree*)this->private;
+    if( private->binary_tree_adt == NULL)
     {
-        PBinaryTreeADT new;
-        new = (PBinaryTreeADT)malloc(sizeof(ELEMENT_BINARY_TREE));
+        BinaryTreeADT new;
+        new = (BinaryTreeADT)malloc(sizeof(ELEMENT_BINARY_TREE));
         if(callback_insert != NULL)
             callback_insert(data_to_insert);
         new->father = NULL;
@@ -51,19 +57,19 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
         new->left_leaf  = NULL;
         new->repeat = 0;
         new->level = 0;
-        this_binary_tree->binary_tree_adt = new;
-        this_binary_tree->number_elements++;
+        private->binary_tree_adt = new;
+        private->num_elements++;
         return 1;
     }else{
-        PBinaryTreeADT tmp = this_binary_tree->binary_tree_adt;
+        BinaryTreeADT tmp = private->binary_tree_adt;
         while(1){
             r = callback_order(data_to_insert, tmp->data);
             // less
             if( r == -1) {
                 if( tmp->left_leaf != NULL){
-                    tmp = (PBinaryTreeADT)tmp->left_leaf;
+                    tmp = (BinaryTreeADT)tmp->left_leaf;
                 }else{
-                    PBinaryTreeADT new = (PBinaryTreeADT)malloc(sizeof(ELEMENT_BINARY_TREE));
+                    BinaryTreeADT new = (BinaryTreeADT)malloc(sizeof(ELEMENT_BINARY_TREE));
                     if(callback_insert != NULL)
                         callback_insert(data_to_insert);
                     new->data = (void*)data_to_insert;
@@ -73,10 +79,10 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
                     tmp->left_leaf = new;
                     new->father = tmp;
                     new->level = tmp->level + 1;
-                    if(new->level > this_binary_tree->depth){
-                        this_binary_tree->depth = new->level;
+                    if(new->level > private->depth){
+                        private->depth = new->level;
                     }
-                    this_binary_tree->number_elements++;
+                    private->num_elements++;
                     return 1;
                 }
             }
@@ -85,7 +91,7 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
                 if( tmp->right_leaf != NULL){
                     tmp = tmp->right_leaf;
                 }else{
-                    PBinaryTreeADT new = (PBinaryTreeADT)malloc(sizeof(ELEMENT_BINARY_TREE));
+                    BinaryTreeADT new = (BinaryTreeADT)malloc(sizeof(ELEMENT_BINARY_TREE));
                     if(callback_insert != NULL)
                         callback_insert(data_to_insert);
                     new->data = (void*)data_to_insert;
@@ -95,10 +101,10 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
                     tmp->right_leaf = new;
                     new->father = tmp;
                     new->level = tmp->level + 1;
-                    if(new->level > this_binary_tree->depth){
-                        this_binary_tree->depth = new->level;
+                    if(new->level > private->depth){
+                        private->depth = new->level;
                     }
-                    this_binary_tree->number_elements++;
+                    private->num_elements++;
                     return 1;
                 }
             }
@@ -121,14 +127,14 @@ int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert
  * @param count
  * @return
  */
-int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted),  int count, ...){
+int _insert_multiple_binary_tree(BinaryTree *this, void(*const callback_insert)(const void* d), int(*const callback_order)(const void* new, const void* inserted),  int count, ...){
     int i = 0;
     int r = 1;
     va_list lt;
     va_start(lt, count);
 
     for (i = 0;i<count;i++)
-        r = r && this_binary_tree->insert( this_binary_tree, va_arg(lt, void*), callback_insert, callback_order);
+        r = r && this->insert( this, va_arg(lt, void*), callback_insert, callback_order);
     va_end(lt);
 
     return r;
@@ -139,233 +145,233 @@ int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, void(*callback_in
  * @param this_binary_tree
  * @return
  */
-ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree){
-    static ChainingGet methods;//Method chaining
+struct ChainingGet _get_binary_tree(const BinaryTree *this){
     //DATA STACK
-    typedef struct{ PBinaryTreeADT ptb; }struct_ptb;
-    static const BinaryTree* b;//copy BinaryTree
-    b = this_binary_tree;
+    typedef struct{ BinaryTreeADT ptb; }struct_ptb;
+    static struct PrivateDataBinaryTree *private;
 
-    PreorderGet preorder() {
-        static PreorderGet preorder;
+    private = (struct PrivateDataBinaryTree*)this->private;
 
+    struct PreorderGet preorder() {
         //NID: NODO RAIZ, NODO IZQUIERDO, NODO DERECHO
         void** left(void){
-            if(b->number_elements > 0) {
+            if(private->num_elements > 0) {
                 int i = 0;
-                void ** datas = calloc(sizeof(void*), b->number_elements);
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                while (stack1.size > 0) {
-                    PBinaryTreeADT pbinary_tree_adt1 = (PBinaryTreeADT)stack1.peek(&stack1);
-                    stack1.pop(&stack1, NULL);
-                    datas[i++] = pbinary_tree_adt1->data;
+                void** data = calloc(sizeof(void*), private->num_elements);
+                 Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                while (stack.get_size(&stack) > 0) {
+                    BinaryTreeADT pbinary_tree_adt1 = (BinaryTreeADT)stack.peek(&stack);
+                    stack.pop(&stack, NULL);
+                    data[i++] = pbinary_tree_adt1->data;
                     if (pbinary_tree_adt1->right_leaf != NULL) {
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->right_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->right_leaf, NULL);
                     }
                     if (pbinary_tree_adt1->left_leaf != NULL) {
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->left_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->left_leaf, NULL);
                     }
                 }
-                destroyStack(&stack1);
-                return datas;
+                destroyStack(&stack);
+                return data;
             }else
                 return NULL;
         }
 
         //DIN: NODO DERECHO, NODOD IZQUIERDO, NODOD RAIZ
         void** right(void) {
-            if (b->number_elements > 0) {
+            if (private->num_elements > 0) {
                 int i = 0;
-                void ** datas = calloc(sizeof(void*), b->number_elements);
-                PBinaryTreeADT currentNode = NULL;
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                PBinaryTreeADT prev = NULL;
+                void** data = calloc(sizeof(void*), private->num_elements);
+                BinaryTreeADT currentNode = NULL;
+                 Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                BinaryTreeADT prev = NULL;
 
-                while (stack1.size > 0) {
-                    currentNode = (PBinaryTreeADT) stack1.peek(&stack1);
+                while (stack.get_size(&stack) > 0) {
+                    currentNode = (BinaryTreeADT) stack.peek(&stack);
                     /* case 1. We are nmoving down the tree. */
                     if (prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode) {
                         if (currentNode->right_leaf)
-                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                            stack.push(&stack, currentNode->right_leaf, NULL);
                         else if (currentNode->left_leaf)
-                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                            stack.push(&stack, currentNode->left_leaf, NULL);
                         else {
                             /* If node is leaf node */
-                            datas[i++] = currentNode->data;
-                            stack1.pop(&stack1, NULL);
+                            data[i++] = currentNode->data;
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 2. We are moving up the tree from left child */
                     if (currentNode->right_leaf == prev) {
                         if (currentNode->left_leaf)
-                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                            stack.push(&stack, currentNode->left_leaf, NULL);
                         else {
-                            datas[i++] = currentNode->data;
-                            stack1.pop(&stack1, NULL);
+                            data[i++] = currentNode->data;
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 3. We are moving up the tree from right child */
                     if (currentNode->left_leaf == prev) {
-                        datas[i++] = currentNode->data;
-                        stack1.pop(&stack1, NULL);
+                        data[i++] = currentNode->data;
+                        stack.pop(&stack, NULL);
                     }
                     prev = currentNode;
                 }
 
-                destroyStack(&stack1);
-                return datas;
+                destroyStack(&stack);
+                return data;
             }else return NULL;
         }
-        preorder.left = left;
-        preorder.right = right;
+        struct PreorderGet preorder = {
+            .left = left,
+            .right = right
+        };
         return preorder;
     }
 
-    InorderGet inorder() {
-        static InorderGet inorder;
+    struct InorderGet inorder() {
 
         //IND: NODO IZQUIERDO, NODO RAIZ, NODO DERECHO
         void** asc(void){
-            if(b->number_elements > 0){
+            if(private->num_elements > 0){
                 int i = 0;
-                void** datas = calloc(sizeof(void*), b->number_elements);
-                static Stack stack1;
-                stack1 = newStack();
-                PBinaryTreeADT pbinary_tree_adt1 = b->binary_tree_adt;
-                while(stack1.size > 0 || pbinary_tree_adt1 ){
+                void** datas = calloc(sizeof(void*), private->num_elements);
+                Stack stack = newStack();
+                BinaryTreeADT pbinary_tree_adt1 = private->binary_tree_adt;
+                while(stack.get_size(&stack) > 0 || pbinary_tree_adt1 ){
                     if(pbinary_tree_adt1){
-                        stack1.push(&stack1, pbinary_tree_adt1, NULL);
-                        pbinary_tree_adt1 = (PBinaryTreeADT)pbinary_tree_adt1->left_leaf;
+                        stack.push(&stack, pbinary_tree_adt1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)pbinary_tree_adt1->left_leaf;
                     }
                     else {
-                        pbinary_tree_adt1 = (PBinaryTreeADT)stack1.peek(&stack1);
-                        stack1.pop(&stack1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)stack.peek(&stack);
+                        stack.pop(&stack, NULL);
                         datas[i++] = pbinary_tree_adt1->data;
-                        pbinary_tree_adt1 =(PBinaryTreeADT) pbinary_tree_adt1->right_leaf;
+                        pbinary_tree_adt1 =(BinaryTreeADT) pbinary_tree_adt1->right_leaf;
                     }
                 }
-                destroyStack(&stack1);
+                destroyStack(&stack);
                 return datas;
             }return NULL;
         }
 
         //DNI: NODO DERECHO, NODO RAIZ, NODO IZQUIERDO
         void** des(void){
-            if(b->number_elements > 0){
+            if(private->num_elements > 0){
                 int i = 0;
-                void **datas = calloc(sizeof(void*), b->number_elements);
-                static Stack stack1;
-                stack1 = newStack();
-                PBinaryTreeADT pbinary_tree_adt1 = b->binary_tree_adt;
-                while(stack1.size > 0 || pbinary_tree_adt1 ){
+                void **data = calloc(sizeof(void*), private->num_elements);
+                Stack stack = newStack();
+                BinaryTreeADT pbinary_tree_adt1 = private->binary_tree_adt;
+                while(stack.get_size(&stack) > 0 || pbinary_tree_adt1 ){
                     if(pbinary_tree_adt1){
-                        stack1.push(&stack1, pbinary_tree_adt1, NULL);
-                        pbinary_tree_adt1 = (PBinaryTreeADT)pbinary_tree_adt1->right_leaf;
+                        stack.push(&stack, pbinary_tree_adt1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)pbinary_tree_adt1->right_leaf;
                     }
                     else {
-                        pbinary_tree_adt1 = (PBinaryTreeADT)stack1.peek(&stack1);
-                        stack1.pop(&stack1, NULL);
-                        datas[i++] = pbinary_tree_adt1->data;
-                        pbinary_tree_adt1 =(PBinaryTreeADT) pbinary_tree_adt1->left_leaf;
+                        pbinary_tree_adt1 = (BinaryTreeADT)stack.peek(&stack);
+                        stack.pop(&stack, NULL);
+                        data[i++] = pbinary_tree_adt1->data;
+                        pbinary_tree_adt1 =(BinaryTreeADT) pbinary_tree_adt1->left_leaf;
                     }
                 }
-                destroyStack(&stack1);
-                return datas;
+                destroyStack(&stack);
+                return data;
             }else
                 return NULL;
         }
 
-        inorder.asc = asc;
-        inorder.des = des;
+        struct InorderGet inorder = {
+            .asc = asc,
+            .des = des
+        };
         return inorder;
     }
 
-    PostorderGet postorder() {
-        static PostorderGet postorder;
+    struct PostorderGet postorder() {
 
         //IDN: NODO IZQUIERDO, NODO DERECHO, NODO RAIZ
         void** left(void){
-            if(b->number_elements > 0) {
+            if(private->num_elements > 0) {
                 int i = 0;
-                void** datas = calloc(sizeof(void*), b->number_elements);
-                PBinaryTreeADT currentNode = NULL;
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                PBinaryTreeADT prev = NULL;
+                void** data = calloc(sizeof(void*), private->num_elements);
+                BinaryTreeADT currentNode = NULL;
+                Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                BinaryTreeADT prev = NULL;
 
-                while (stack1.size > 0) {
-                    currentNode = (PBinaryTreeADT) stack1.peek(&stack1);
+                while (stack.get_size(&stack) > 0) {
+                    currentNode = (BinaryTreeADT) stack.peek(&stack);
                     /* case 1. We are nmoving down the tree. */
                     if (prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode) {
                         if (currentNode->left_leaf)
-                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                            stack.push(&stack, currentNode->left_leaf, NULL);
                         else if (currentNode->right_leaf)
-                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                            stack.push(&stack, currentNode->right_leaf, NULL);
                         else {
                             /* If node is leaf node */
-                            datas[i++] = currentNode->data;
-                            stack1.pop(&stack1, NULL);
+                            data[i++] = currentNode->data;
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 2. We are moving up the tree from left child */
                     if (currentNode->left_leaf == prev) {
                         if (currentNode->right_leaf)
-                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                            stack.push(&stack, currentNode->right_leaf, NULL);
                         else {
-                            datas[i++] = currentNode->data;
-                            stack1.pop(&stack1, NULL);
+                            data[i++] = currentNode->data;
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 3. We are moving up the tree from right child */
                     if (currentNode->right_leaf == prev) {
-                        datas[i++] = currentNode->data;
-                        stack1.pop(&stack1, NULL);
+                        data[i++] = currentNode->data;
+                        stack.pop(&stack, NULL);
                     }
                     prev = currentNode;
                 }
-                destroyStack(&stack1);
-                return datas;
+                destroyStack(&stack);
+                return data;
             }else
                 return NULL;
         }
 
         //NDI: NODO RAIZ, NODO DERECHO, NODO IZQUIERDO
         void** right(void){
-            if(b->number_elements > 0) {
+            if(private->num_elements > 0) {
                 int i = 0;
-                void** datas = calloc(sizeof(void*), b->number_elements);
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                while (stack1.size > 0) {
-                    PBinaryTreeADT pbinary_tree_adt1 = (PBinaryTreeADT) stack1.peek(&stack1);
-                    stack1.pop(&stack1, NULL);
-                    datas[i++] = pbinary_tree_adt1->data;
+                void** data = calloc(sizeof(void*), private->num_elements);
+                Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                while (stack.get_size(&stack) > 0) {
+                    BinaryTreeADT pbinary_tree_adt1 = (BinaryTreeADT) stack.peek(&stack);
+                    stack.pop(&stack, NULL);
+                    data[i++] = pbinary_tree_adt1->data;
                     if (pbinary_tree_adt1->left_leaf != NULL)
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->left_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->left_leaf, NULL);
                     if (pbinary_tree_adt1->right_leaf != NULL)
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->right_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->right_leaf, NULL);
                 }
-                destroyStack(&stack1);
-                return datas;
+                destroyStack(&stack);
+                return data;
             }else
                 return NULL;
         }
 
-        postorder.left = left;
-        postorder.right = right;
+         struct PostorderGet postorder = {
+                .left = left,
+                .right = right
+        };
+
         return postorder;
     }
 
 
-    methods.inorder = inorder;
-    methods.postorder = postorder;
-    methods.preorder = preorder;
+    struct ChainingGet methods  = {
+        .inorder = inorder,
+        .postorder = postorder,
+        .preorder = preorder
+    };
+
 
     return methods;
 }
@@ -377,21 +383,19 @@ ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree){
  * @param callback
  * @return
  */
-Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callback)(const void* d1, const void* d2)){
-    Find find;
+struct Find _find_binary_tree(BinaryTree *this, const void* data, int(*const callback)(const void* d1, const void* d2)){
 
-    static BinaryTree* b;//copy BinaryTree
+    static struct PrivateDataBinaryTree *private;
     static int(*function)(const void* d1, const void* d2);
     static const void* data_to_find;
 
-
-    b = this_binary_tree;
+    private = (struct PrivateDataBinaryTree*)this->private;
     function = callback;
-    data_to_find = d;
+    data_to_find = data;
 
-    PBinaryTreeADT get(void){
-        if(b->number_elements>0){
-            PBinaryTreeADT pb = b->binary_tree_adt;
+    BinaryTreeADT get(void){
+        if(private->num_elements > 0){
+            BinaryTreeADT pb = private->binary_tree_adt;
             int i = 0;
             while(pb != NULL){
                 i = function(data_to_find, pb->data);
@@ -412,8 +416,8 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
     }
 
     int remove(){
-        if(b->number_elements>0){
-            PBinaryTreeADT pb = b->binary_tree_adt;
+        if(private->num_elements>0){
+            BinaryTreeADT pb = private->binary_tree_adt;
             int i = 0;
             while(pb != NULL){
                 i = function(data_to_find, pb->data);
@@ -431,8 +435,8 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
                         //raiz
                         if(pb->father == NULL){
                             free(pb);
-                            b->binary_tree_adt = NULL;
-                            b->number_elements = b->depth = 0;
+                            private->binary_tree_adt = NULL;
+                            private->num_elements = private->depth = 0;
                         }else{
                             if(pb->father->left_leaf == pb){
                                 pb->father->left_leaf = NULL;
@@ -440,7 +444,7 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
                                 pb->father->right_leaf = NULL;
                             }
                             free(pb);
-                            b->number_elements = b->number_elements-1;
+                            private->num_elements--;
                         }
                     }//hijo izquierdo
                     else if(pb->right_leaf == NULL && pb->left_leaf != NULL){
@@ -450,7 +454,7 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
                             pb->father->right_leaf = pb->left_leaf;
                         }
                         free(pb);
-                        b->number_elements = b->number_elements-1;
+                        private->num_elements--;
 
                     }//hijo derecho
                     else if(pb->right_leaf != NULL && pb->left_leaf == NULL){
@@ -460,11 +464,11 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
                             pb->father->right_leaf = pb->right_leaf;
                         }
                         free(pb);
-                        b->number_elements = b->number_elements-1;
+                        private->num_elements--;
                     }//two children
                     else if(pb->right_leaf == NULL && pb->left_leaf == NULL){
-                        PBinaryTreeADT tmp_left = pb->left_leaf;
-                        PBinaryTreeADT tmp_right = pb->right_leaf;
+                        BinaryTreeADT tmp_left = pb->left_leaf;
+                        BinaryTreeADT tmp_right = pb->right_leaf;
                         while(tmp_left != NULL || tmp_right != NULL) {
                             if (tmp_right->left_leaf != NULL) {
                                 tmp_right = tmp_right->left_leaf;
@@ -473,10 +477,10 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
                                 if (pb->father != NULL) {
                                     pb->father->left_leaf = tmp_right;
                                 } else {
-                                    b->binary_tree_adt = tmp_right;
+                                    private->binary_tree_adt = tmp_right;
                                 }
                                 free(pb);
-                                b->number_elements = b->number_elements-1;
+                                private->num_elements--;
                                 break;
                             }
 
@@ -487,10 +491,10 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
                                 if(pb->father != NULL){
                                     pb->father->right_leaf = tmp_left;
                                 }else{
-                                    b->binary_tree_adt = tmp_right;
+                                    private->binary_tree_adt = tmp_right;
                                 }
                                 free(pb);
-                                b->number_elements = b->number_elements-1;
+                                private->num_elements--;
                                 break;
                             }
                         }
@@ -504,8 +508,10 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
             return 0;
     }
 
-    find.get = get;
-    find.remove = remove;
+    struct Find find = {
+        .get = get,
+        .remove = remove
+    };
 
     return find;
 }
@@ -515,47 +521,48 @@ Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int(*callbac
  * @param this_binary_tree
  * @return
  */
-int _empty_binary_tree(BinaryTree *this_binary_tree){
-    Stack stack1 = newStack();
+int _empty_binary_tree(BinaryTree *this){
+    Stack stack = newStack();
+    struct PrivateDataBinaryTree *private = (struct PrivateDataBinaryTree*)this->private;
 
-    stack1.push(&stack1, this_binary_tree->binary_tree_adt, NULL);
-    PBinaryTreeADT currentNode = NULL;
-    PBinaryTreeADT prev = NULL;
-    while(stack1.size > 0){
-        currentNode = (PBinaryTreeADT)stack1.peek(&stack1);
+    stack.push(&stack, private->binary_tree_adt, NULL);
+    BinaryTreeADT currentNode = NULL;
+    BinaryTreeADT prev = NULL;
+    while(stack.get_size(&stack) > 0){
+        currentNode = (BinaryTreeADT)stack.peek(&stack);
         /* case 1. We are nmoving down the tree. */
         if(prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode){
             if(currentNode->left_leaf)
-                stack1.push(&stack1,currentNode->left_leaf, NULL);
+                stack.push(&stack, currentNode->left_leaf, NULL);
             else if(currentNode->right_leaf)
-                stack1.push(&stack1,currentNode->right_leaf, NULL);
+                stack.push(&stack, currentNode->right_leaf, NULL);
             else {
                 /* If node is leaf node */
                 free(currentNode);
-                stack1.pop(&stack1, NULL);
-                this_binary_tree->number_elements--;
+                stack.pop(&stack, NULL);
+                private->num_elements--;
             }
         }
         /* case 2. We are moving up the tree from left child */
         if(currentNode->left_leaf == prev){
             if(currentNode->right_leaf)
-                stack1.push(&stack1,currentNode->right_leaf, NULL);
+                stack.push(&stack,currentNode->right_leaf, NULL);
             else {
                 free(currentNode);
-                stack1.pop(&stack1, NULL);
-                this_binary_tree->number_elements--;
+                stack.pop(&stack, NULL);
+                private->num_elements--;
             }
         }
         /* case 3. We are moving up the tree from right child */
         if(currentNode->right_leaf == prev){
             free(currentNode);
-            stack1.pop(&stack1, NULL);
-            this_binary_tree->number_elements--;
+            stack.pop(&stack, NULL);
+            private->num_elements--;
         }
         prev = currentNode;
     }
 
-    destroyStack(&stack1);
+    destroyStack(&stack);
     return 1;
 }
 
@@ -564,235 +571,242 @@ int _empty_binary_tree(BinaryTree *this_binary_tree){
  * @param this_binary_tree
  * @param callback
  */
-ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree){
-    static ChainingPrint methods;//Method chaining
-    //DATA STACK
-    typedef struct{ PBinaryTreeADT ptb; }struct_ptb;
-    static const BinaryTree* b;//copy BinaryTree
-    b = this_binary_tree;
+struct ChainingPrint _print_binary_tree(const BinaryTree *this){
 
-    PreorderPrint preorder(void(*callback)(const void* d)) {
-        static PreorderPrint preorder;
+    //DATA STACK
+    typedef struct{BinaryTreeADT ptb; }struct_ptb;
+    static struct PrivateDataBinaryTree *private;
+
+    private = (struct PrivateDataBinaryTree*)this->private;
+
+    struct PreorderPrint preorder(void(*callback)(const void* d)) {
         static void(*f)(const void* d);
         f = callback;
 
         //NID: NODO RAIZ, NODO IZQUIERDO, NODO DERECHO
         void left(void){
-            if(b->number_elements > 0) {
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                while (stack1.size > 0) {
-                    PBinaryTreeADT pbinary_tree_adt1 = (PBinaryTreeADT)stack1.peek(&stack1);
-                    stack1.pop(&stack1, NULL);
-
+            if(private->num_elements > 0) {
+                Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                while (stack.get_size(&stack) > 0) {
+                    BinaryTreeADT pbinary_tree_adt1 = (BinaryTreeADT)stack.peek(&stack);
+                    stack.pop(&stack, NULL);
                     if (f != NULL)
                         f(pbinary_tree_adt1->data);
 
                     if (pbinary_tree_adt1->right_leaf != NULL) {
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->right_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->right_leaf, NULL);
                     }
                     if (pbinary_tree_adt1->left_leaf != NULL) {
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->left_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->left_leaf, NULL);
                     }
                 }
-                destroyStack(&stack1);
+                destroyStack(&stack);
             }
         }
 
         //DIN: NODO DERECHO, NODOD IZQUIERDO, NODOD RAIZ
         void right(void) {
-            if (b->number_elements > 0) {
-                PBinaryTreeADT currentNode = NULL;
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                PBinaryTreeADT prev = NULL;
+            if (private->num_elements > 0) {
+                BinaryTreeADT currentNode = NULL;
+                Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                BinaryTreeADT prev = NULL;
 
-                while (stack1.size > 0) {
-                    currentNode = (PBinaryTreeADT) stack1.peek(&stack1);
+                while (stack.get_size(&stack) > 0) {
+                    currentNode = (BinaryTreeADT) stack.peek(&stack);
                     /* case 1. We are nmoving down the tree. */
                     if (prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode) {
                         if (currentNode->right_leaf)
-                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                            stack.push(&stack, currentNode->right_leaf, NULL);
                         else if (currentNode->left_leaf)
-                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                            stack.push(&stack, currentNode->left_leaf, NULL);
                         else {
                             /* If node is leaf node */
                             if (f != NULL)
                                 f(currentNode->data);
-                            stack1.pop(&stack1, NULL);
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 2. We are moving up the tree from left child */
                     if (currentNode->right_leaf == prev) {
                         if (currentNode->left_leaf)
-                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                            stack.push(&stack, currentNode->left_leaf, NULL);
                         else {
                             if (f != NULL)
                                 f(currentNode->data);
-                            stack1.pop(&stack1, NULL);
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 3. We are moving up the tree from right child */
                     if (currentNode->left_leaf == prev) {
                         if (f != NULL)
                             f(currentNode->data);
-                        stack1.pop(&stack1, NULL);
+                        stack.pop(&stack, NULL);
                     }
                     prev = currentNode;
                 }
 
-                destroyStack(&stack1);
+                destroyStack(&stack);
             }
         }
-        preorder.left = left;
-        preorder.right = right;
+
+        struct PreorderPrint preorder  = {
+                .left = left,
+                .right = right
+        };
         return preorder;
     }
 
-    InorderPrint inorder(void(*callback)(const void* d)) {
-        static InorderPrint inorder;
+    struct InorderPrint inorder(void(*callback)(const void* d)) {
         static void(*f)(const void* d);
         f = callback;
 
         //IND: NODO IZQUIERDO, NODO RAIZ, NODO DERECHO
         void asc(void){
-            if(b->number_elements > 0){
-                static Stack stack1;
-                stack1 = newStack();
-                PBinaryTreeADT pbinary_tree_adt1 = b->binary_tree_adt;
-                while(stack1.size > 0 || pbinary_tree_adt1 ){
+            if(private->num_elements > 0){
+                Stack stack = newStack();
+                BinaryTreeADT pbinary_tree_adt1 = private->binary_tree_adt;
+                while(stack.get_size(&stack) > 0 || pbinary_tree_adt1 ){
                     if(pbinary_tree_adt1){
-                        stack1.push(&stack1, pbinary_tree_adt1, NULL);
-                        pbinary_tree_adt1 = (PBinaryTreeADT)pbinary_tree_adt1->left_leaf;
+                        stack.push(&stack, pbinary_tree_adt1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)pbinary_tree_adt1->left_leaf;
                     }
                     else {
-                        pbinary_tree_adt1 = (PBinaryTreeADT)stack1.peek(&stack1);
-                        stack1.pop(&stack1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)stack.peek(&stack);
+                        stack.pop(&stack, NULL);
                         if(f != NULL)
                             f(pbinary_tree_adt1->data);
-                        pbinary_tree_adt1 = (PBinaryTreeADT)pbinary_tree_adt1->right_leaf;
+                        pbinary_tree_adt1 = (BinaryTreeADT)pbinary_tree_adt1->right_leaf;
                     }
                 }
-                destroyStack(&stack1);
+                destroyStack(&stack);
             }
         }
 
         //DNI: NODO DERECHO, NODO RAIZ, NODO IZQUIERDO
         void des(void){
-            if(b->number_elements > 0){
-                static Stack stack1;
-                stack1 = newStack();
-                PBinaryTreeADT pbinary_tree_adt1 = b->binary_tree_adt;
-                while(stack1.size > 0 || pbinary_tree_adt1 ){
+            if(private->num_elements > 0){
+                Stack stack = newStack();
+                BinaryTreeADT pbinary_tree_adt1 = private->binary_tree_adt;
+                while(stack.get_size(&stack) > 0 || pbinary_tree_adt1 ){
                     if(pbinary_tree_adt1){
-                        stack1.push(&stack1, pbinary_tree_adt1, NULL);
-                        pbinary_tree_adt1 = (PBinaryTreeADT)pbinary_tree_adt1->right_leaf;
+                        stack.push(&stack, pbinary_tree_adt1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)pbinary_tree_adt1->right_leaf;
                     }
                     else {
-                        pbinary_tree_adt1 = (PBinaryTreeADT)stack1.peek(&stack1);
-                        stack1.pop(&stack1, NULL);
+                        pbinary_tree_adt1 = (BinaryTreeADT)stack.peek(&stack);
+                        stack.pop(&stack, NULL);
                         if(f != NULL)
                             f(pbinary_tree_adt1->data);
-                        pbinary_tree_adt1 =(PBinaryTreeADT)pbinary_tree_adt1->left_leaf;
+                        pbinary_tree_adt1 =(BinaryTreeADT)pbinary_tree_adt1->left_leaf;
                     }
                 }
-                destroyStack(&stack1);
+                destroyStack(&stack);
             }
         }
 
-        inorder.asc = asc;
-        inorder.des = des;
+        struct InorderPrint inorder = {
+            .asc = asc,
+            .des = des
+        };
+
         return inorder;
     }
 
-    PostorderPrint postorder(void(*callback)(const void* d)) {
-        static PostorderPrint postorder;
+    struct PostorderPrint postorder(void(*callback)(const void* d)) {
         static void(*f)(const void* d);
         f = callback;
 
         //IDN: NODO IZQUIERDO, NODO DERECHO, NODO RAIZ
         void left(void){
-            if(b->number_elements > 0) {
-                PBinaryTreeADT currentNode = NULL;
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                PBinaryTreeADT prev = NULL;
+            if(private->num_elements > 0) {
+                BinaryTreeADT currentNode = NULL;
+                Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                BinaryTreeADT prev = NULL;
 
-                while (stack1.size > 0) {
-                    currentNode = (PBinaryTreeADT) stack1.peek(&stack1);
+                while (stack.get_size(&stack) > 0) {
+                    currentNode = (BinaryTreeADT) stack.peek(&stack);
                     /* case 1. We are nmoving down the tree. */
                     if (prev == NULL || prev->left_leaf == currentNode || prev->right_leaf == currentNode) {
                         if (currentNode->left_leaf)
-                            stack1.push(&stack1, currentNode->left_leaf, NULL);
+                            stack.push(&stack, currentNode->left_leaf, NULL);
                         else if (currentNode->right_leaf)
-                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                            stack.push(&stack, currentNode->right_leaf, NULL);
                         else {
                             /* If node is leaf node */
                             if (f != NULL)
                                 f(currentNode->data);
-                            stack1.pop(&stack1, NULL);
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 2. We are moving up the tree from left child */
                     if (currentNode->left_leaf == prev) {
                         if (currentNode->right_leaf)
-                            stack1.push(&stack1, currentNode->right_leaf, NULL);
+                            stack.push(&stack, currentNode->right_leaf, NULL);
                         else {
                             if (f != NULL)
                                 f(currentNode->data);
-                            stack1.pop(&stack1, NULL);
+                            stack.pop(&stack, NULL);
                         }
                     }
                     /* case 3. We are moving up the tree from right child */
                     if (currentNode->right_leaf == prev) {
                         if (f != NULL)
                             f(currentNode->data);
-                        stack1.pop(&stack1, NULL);
+                        stack.pop(&stack, NULL);
                     }
                     prev = currentNode;
                 }
 
-                destroyStack(&stack1);
+                destroyStack(&stack);
             }
         }
 
         //NDI: NODO RAIZ, NODO DERECHO, NODO IZQUIERDO
         void right(void){
-            if(b->number_elements > 0) {
-                static Stack stack1;
-                stack1 = newStack();
-                stack1.push(&stack1, b->binary_tree_adt, NULL);
-                while (stack1.size > 0) {
-                    PBinaryTreeADT pbinary_tree_adt1 = (PBinaryTreeADT) stack1.peek(&stack1);
-                    stack1.pop(&stack1, NULL);
+            if(private->num_elements > 0) {
+                Stack stack = newStack();
+                stack.push(&stack, private->binary_tree_adt, NULL);
+                while (stack.get_size(&stack) > 0) {
+                    BinaryTreeADT pbinary_tree_adt1 = (BinaryTreeADT) stack.peek(&stack);
+                    stack.pop(&stack, NULL);
 
                     if (f != NULL)
                         f(pbinary_tree_adt1->data);
 
                     if (pbinary_tree_adt1->left_leaf != NULL) {
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->left_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->left_leaf, NULL);
                     }
                     if (pbinary_tree_adt1->right_leaf != NULL) {
-                        stack1.push(&stack1, (void *) pbinary_tree_adt1->right_leaf, NULL);
+                        stack.push(&stack, (void *) pbinary_tree_adt1->right_leaf, NULL);
                     }
                 }
-                destroyStack(&stack1);
+                destroyStack(&stack);
             }
         }
 
-        postorder.left = left;
-        postorder.right = right;
+        struct PostorderPrint postorder = {
+                .left = left,
+                .right= right
+        };
         return postorder;
     }
 
-    methods.inorder = inorder;
-    methods.postorder = postorder;
-    methods.preorder = preorder;
+    struct ChainingPrint methods = {
+        .inorder = inorder,
+        .postorder = postorder,
+        .preorder = preorder
+
+    };
 
     return methods;
+}
+
+unsigned int _get_num_elements(BinaryTree *this){
+    struct PrivateDataBinaryTree *private = (struct PrivateDataBinaryTree*)this->private;
+    return private->num_elements;
 }
 
 /*
@@ -1286,3 +1300,4 @@ void main()
 
 
 */
+

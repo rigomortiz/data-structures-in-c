@@ -26,27 +26,27 @@ int main(int argc, char** argv)
     int i = 0;
 
     //INSTANCE
-    Stack stack_numeros = newStack();
+    Stack stack = newStack();
 
     //PUSH DATA
     for(i=0; i<10; i++){
         n[i].number = i*i;
-        stack_numeros.push(&stack_numeros, &n[i], callback_push);
+        stack.push(&stack, &n[i], callback_push);
     }
 
     //PEEK DATA
-    struct_number *s_tmp = (struct_number *)stack_numeros.peek(&stack_numeros);
+    struct_number *s_tmp = (struct_number *)stack.peek(&stack);
     printf("Peek:%d\n", s_tmp->number);
 
     //SIZE STACK
-    printf("Size:%0.0Lf\n", stack_numeros.size);
+    printf("Size:%d\n", stack.get_size(&stack));
 
     //PRINT STACK
-    stack_numeros.print(&stack_numeros, callback_print);
+    stack.print(&stack, callback_print);
 
     //DESTROY STACK
-    destroyStack(&stack_numeros);
-    printf("Size:%0.0Lf\n", stack_numeros.size);
+    destroyStack(&stack);
+    printf("Size:%d\n", stack.get_size(&stack));
     return (EXIT_SUCCESS);
 }
 

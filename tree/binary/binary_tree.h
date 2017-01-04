@@ -42,85 +42,90 @@
 extern "C" {
 #endif
 typedef struct BinaryTree BinaryTree;
-typedef struct BinaryTreeADT* PBinaryTreeADT;
-typedef struct{
-    void (*asc)(void);
-    void (*des)(void);
-}InorderPrint;
+typedef struct BinaryTreeADT* BinaryTreeADT, ELEMENT_BINARY_TREE;
+struct InorderPrint{
+    void (*const asc)(void);
+    void (*const des)(void);
+};
 
-typedef struct{
-    void (*left)(void);
-    void (*right)(void);
-}PreorderPrint;
+struct PreorderPrint{
+    void (*const left)(void);
+    void (*const right)(void);
+};
 
-typedef struct{
-    void (*left)(void);
-    void (*right)(void);
-}PostorderPrint;
+struct PostorderPrint{
+    void (*const left)(void);
+    void (*const right)(void);
+};
 
-typedef struct{
-    void** (*asc)(void);
-    void** (*des)(void);
-}InorderGet;
+struct InorderGet{
+    void** (*const asc)(void);
+    void** (*const des)(void);
+};
 
-typedef struct{
-    void** (*left)(void);
-    void** (*right)(void);
-}PreorderGet;
+struct PreorderGet{
+    void** (*const left)(void);
+    void** (*const right)(void);
+};
 
-typedef struct{
-    void** (*left)(void);
-    void** (*right)(void);
-}PostorderGet;
+struct PostorderGet{
+    void** (*const left)(void);
+    void** (*const right)(void);
+};
 
-typedef struct {
-    InorderGet (*inorder)(void);
-    PostorderGet (*postorder)(void);
-    PreorderGet (*preorder)(void);
-}ChainingGet;
+struct ChainingGet{
+    struct InorderGet (*const inorder)(void);
+    struct PostorderGet (*const postorder)(void);
+    struct PreorderGet (*const preorder)(void);
+};
 
-typedef struct {
-    InorderPrint (*inorder)(void(*callback)(const void* d));
-    PostorderPrint (*postorder)(void(*callback_insert)(const void* d));
-    PreorderPrint (*preorder)(void(*callback_insert)(const void* d));
-}ChainingPrint;
+struct ChainingPrint{
+    struct InorderPrint (*const inorder)(void(*callback)(const void* data));
+    struct PostorderPrint (*const postorder)(void(*callback)(const void* data));
+    struct PreorderPrint (*const preorder)(void(*callback)(const void* data));
+};
 
-typedef struct BinaryTreeADT{
+struct BinaryTreeADT{
     void* data;
-    unsigned long int repeat;
-    unsigned long int level;
-    PBinaryTreeADT father;
-    PBinaryTreeADT left_leaf;
-    PBinaryTreeADT right_leaf;
-} ELEMENT_BINARY_TREE;
+    unsigned int repeat;
+    unsigned int level;
+    BinaryTreeADT father;
+    BinaryTreeADT left_leaf;
+    BinaryTreeADT right_leaf;
+};
 
-typedef struct{
-    PBinaryTreeADT (*get)(void);
-    int (*remove)(void);
-}Find;
+struct Find{
+    BinaryTreeADT (*const get)(void);
+    int (*const remove)(void);
+};
 
+struct PrivateDataBinaryTree{
+    BinaryTreeADT binary_tree_adt;
+    unsigned int num_elements;
+    unsigned int depth;
+};
 typedef struct BinaryTree{
-    PBinaryTreeADT binary_tree_adt;
-    long unsigned int number_elements;
-    unsigned long int depth;
-
-    int (*insert)(BinaryTree *this_binary_tree, const void* data_to_insert, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted) );
-    int (*insert_multiple)(BinaryTree *this_binary_tree, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted),  int count, ...);
-    Find (*find)(BinaryTree *this_binary_tree, const void* d, int(*callback)(const void* d1, const void* d2));
-    int (*empty)(BinaryTree *this_binary_tree);
-    ChainingGet (*get)(const BinaryTree* this_binary_tree);
-    ChainingPrint (*print)(const BinaryTree* this_binary_tree);
+    void* const private;
+    unsigned  int (*const get_num_elements)(BinaryTree *this);
+    int (*const insert)(BinaryTree *this, const void* data, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted));
+    int (*const insert_multiple)(BinaryTree *this, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted),  int count, ...);
+    struct Find (*const find)(BinaryTree *this, const void* data, int(*const callback)(const void* d1, const void* d2));
+    int (*const empty)(BinaryTree *this);
+    struct ChainingGet (*const get)(const BinaryTree* this);
+    struct ChainingPrint (*const print)(const BinaryTree* this);
 };
 
 BinaryTree newBinaryTree();
-void destroyBinaryTree(BinaryTree *this_binary_tree);
+void destroyBinaryTree(BinaryTree *this);
 
-static int _insert_binary_tree(BinaryTree *this_binary_tree, const void* data_to_insert, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted) );
-static int _insert_multiple_binary_tree(BinaryTree *this_binary_tree, void(*callback_insert)(const void* d), int(*callback_order)(const void* new, const void* inserted),  int count, ...);
-static ChainingGet _get_binary_tree(const BinaryTree *this_binary_tree);
-static ChainingPrint _print_binary_tree(const BinaryTree *this_binary_tree);
-static Find _find_binary_tree(BinaryTree *this_binary_tree, const void* d, int (*callback)(const void* d1, const void* d2));
-static int _empty_binary_tree(BinaryTree *this_binary_tree);
+static int _insert_binary_tree(BinaryTree *this, const void* data, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted) );
+static int _insert_multiple_binary_tree(BinaryTree *this, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted),  int count, ...);
+static struct ChainingGet _get_binary_tree(const BinaryTree *this);
+static struct ChainingPrint _print_binary_tree(const BinaryTree *this);
+static struct Find _find_binary_tree(BinaryTree *this, const void* data, int (*const callback)(const void* d1, const void* d2));
+static int _empty_binary_tree(BinaryTree *this);
+unsigned int _get_num_elements(BinaryTree *this);
+
 
 
 #ifdef __cplusplus

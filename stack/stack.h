@@ -8,33 +8,40 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+
+typedef struct StackADT* StackADT, ELEMENT_STACK;
 typedef struct Stack Stack;
 
-typedef struct Stack_ADT{
+struct StackADT{
     void* data;
-    struct Stack_ADT *next;
-}*pstack, ELEMENT_STACK;
+    StackADT next;
+};
+
+typedef struct PrivateDataStack{
+    StackADT stack_adt;
+    unsigned int size;
+};
 
 struct Stack{
-    pstack stack_adt;
-    long double size;
-    int (*push)(Stack *this_stack, void* d, const void (*callback)(const void*));
-    int (*pop)(Stack *this_stack, const void (*callback)(const void*));
-    void** (*peek)(Stack *this_stack);
-    int (*empty)(Stack *this_stack);
-    void (*print)(Stack *this_stack, const void (*callback)(const void*));
-    int (*push_multiple)(Stack *this_stack, const void (*callback)(const void*), int count, ... );
+    void* const private;
+    unsigned  int (*const get_size)(Stack *this);
+    int (*const push)(Stack *this, void* d, void(*const callback)(const void*));
+    int (*const pop)(Stack *this, void(*const callback)(const void*));
+    void* (*const peek)(Stack *this);
+    int (*const empty)(Stack *this);
+    void (*const print)(Stack *this, void(*const callback)(const void*));
+    int (*const push_multiple)(Stack *this, void(*const callback)(const void*), int count, ... );
 };
 
 Stack newStack();
-void destroyStack(Stack *stack1);
-static int _pop_stack(Stack *this_stack, const void (*callback)(const void*));
-static int _push_stack(Stack *this_stack, void* d, const void (*callback)(const void*));
-static void* *_peek_stack(Stack *this_stack);
-static int _empty_stack(Stack *this_stack);
-static void _print_stack(Stack *this_stack, const void (*callback)(const void*));
-static int _push_multiple_stack(Stack *this_stack, const void (*callback)(const void*), int count, ... );
-
+void destroyStack(Stack *this);
+static int _pop_stack(Stack *this, void(*const callback)(const void*));
+static int _push_stack(Stack *this, void* d, void(*const callback)(const void*));
+static void* _peek_stack(Stack *this);
+static int _empty_stack(Stack *this);
+static void _print_stack(Stack *this, void(*const callback)(const void*));
+static int _push_multiple_stack(Stack *this, void(*const callback)(const void*), int count, ... );
+unsigned int _get_size(Stack *this);
 #ifdef	__cplusplus
 }
 #endif

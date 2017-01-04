@@ -123,32 +123,32 @@ data_structures/fast:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/build
 .PHONY : data_structures/fast
 
-queue/main.o: queue/main.c.o
+lists/list.o: lists/list.c.o
 
-.PHONY : queue/main.o
+.PHONY : lists/list.o
 
 # target to build an object file
-queue/main.c.o:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.o
-.PHONY : queue/main.c.o
+lists/list.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/lists/list.c.o
+.PHONY : lists/list.c.o
 
-queue/main.i: queue/main.c.i
+lists/list.i: lists/list.c.i
 
-.PHONY : queue/main.i
+.PHONY : lists/list.i
 
 # target to preprocess a source file
-queue/main.c.i:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.i
-.PHONY : queue/main.c.i
+lists/list.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/lists/list.c.i
+.PHONY : lists/list.c.i
 
-queue/main.s: queue/main.c.s
+lists/list.s: lists/list.c.s
 
-.PHONY : queue/main.s
+.PHONY : lists/list.s
 
 # target to generate assembly for a file
-queue/main.c.s:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/main.c.s
-.PHONY : queue/main.c.s
+lists/list.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/lists/list.c.s
+.PHONY : lists/list.c.s
 
 queue/queue.o: queue/queue.c.o
 
@@ -177,6 +177,87 @@ queue/queue.c.s:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/queue/queue.c.s
 .PHONY : queue/queue.c.s
 
+stack/stack.o: stack/stack.c.o
+
+.PHONY : stack/stack.o
+
+# target to build an object file
+stack/stack.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.o
+.PHONY : stack/stack.c.o
+
+stack/stack.i: stack/stack.c.i
+
+.PHONY : stack/stack.i
+
+# target to preprocess a source file
+stack/stack.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.i
+.PHONY : stack/stack.c.i
+
+stack/stack.s: stack/stack.c.s
+
+.PHONY : stack/stack.s
+
+# target to generate assembly for a file
+stack/stack.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/stack/stack.c.s
+.PHONY : stack/stack.c.s
+
+tree/binary/binary_tree.o: tree/binary/binary_tree.c.o
+
+.PHONY : tree/binary/binary_tree.o
+
+# target to build an object file
+tree/binary/binary_tree.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o
+.PHONY : tree/binary/binary_tree.c.o
+
+tree/binary/binary_tree.i: tree/binary/binary_tree.c.i
+
+.PHONY : tree/binary/binary_tree.i
+
+# target to preprocess a source file
+tree/binary/binary_tree.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.i
+.PHONY : tree/binary/binary_tree.c.i
+
+tree/binary/binary_tree.s: tree/binary/binary_tree.c.s
+
+.PHONY : tree/binary/binary_tree.s
+
+# target to generate assembly for a file
+tree/binary/binary_tree.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.s
+.PHONY : tree/binary/binary_tree.c.s
+
+tree/binary/main.o: tree/binary/main.c.o
+
+.PHONY : tree/binary/main.o
+
+# target to build an object file
+tree/binary/main.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.o
+.PHONY : tree/binary/main.c.o
+
+tree/binary/main.i: tree/binary/main.c.i
+
+.PHONY : tree/binary/main.i
+
+# target to preprocess a source file
+tree/binary/main.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.i
+.PHONY : tree/binary/main.c.i
+
+tree/binary/main.s: tree/binary/main.c.s
+
+.PHONY : tree/binary/main.s
+
+# target to generate assembly for a file
+tree/binary/main.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.s
+.PHONY : tree/binary/main.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -186,12 +267,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... data_structures"
-	@echo "... queue/main.o"
-	@echo "... queue/main.i"
-	@echo "... queue/main.s"
+	@echo "... lists/list.o"
+	@echo "... lists/list.i"
+	@echo "... lists/list.s"
 	@echo "... queue/queue.o"
 	@echo "... queue/queue.i"
 	@echo "... queue/queue.s"
+	@echo "... stack/stack.o"
+	@echo "... stack/stack.i"
+	@echo "... stack/stack.s"
+	@echo "... tree/binary/binary_tree.o"
+	@echo "... tree/binary/binary_tree.i"
+	@echo "... tree/binary/binary_tree.s"
+	@echo "... tree/binary/main.o"
+	@echo "... tree/binary/main.i"
+	@echo "... tree/binary/main.s"
 .PHONY : help
 
 
