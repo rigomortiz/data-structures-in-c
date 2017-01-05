@@ -62,7 +62,11 @@ InsertList _insert_list(List *this){
                 if (new_simple != NULL) {
                     if (callback != NULL)
                         callback(data_to_insert);
-                    new_simple->next = NULL;
+                    if( static_this->linkType == CIRCULAR ){
+                        new_simple->next = private->bottom;
+                    } else if(static_this->linkType == LINEAL){
+                        new_simple->next = NULL;
+                    }
                     new_simple->data = (void *) data_to_insert;
                     if(private->listADT == NULL){
                         private->listADT = new_simple;
@@ -82,7 +86,11 @@ InsertList _insert_list(List *this){
                 if (new_double != NULL) {
                     if (callback != NULL)
                         callback(data_to_insert);
-                    new_double->next = NULL;
+                    if( static_this->linkType == CIRCULAR ){
+                        new_double->next = private->bottom;
+                    } else if(static_this->linkType == LINEAL){
+                        new_double->next = NULL;
+                    }
                     new_double->prev = private->top;
                     new_double->data = (void *) data_to_insert;
                     if(private->listADT == NULL){
@@ -127,7 +135,11 @@ InsertList _insert_list(List *this){
                     if (callback != NULL)
                         callback(data_to_insert);
                     new_double->next = private->bottom;
-                    new_double->prev = NULL;
+                    if( static_this->linkType == CIRCULAR ){
+                        new_double->prev = private->top;
+                    } else if(static_this->linkType == LINEAL){
+                        new_double->prev = NULL;
+                    }
                     new_double->data = (void *) data_to_insert;
                     private->listADT = new_double;
                     private->bottom = new_double;
@@ -146,14 +158,16 @@ InsertList _insert_list(List *this){
         switch(static_this->linkType){
             case SIMPLE: {
                 struct PrivateDataListSimple *private = (struct PrivateDataListSimple*)static_this->private;
-                if(pos<0 || pos>private->size){
+                if(p<0 || p>private->size){
                     return 0;
-                }else if(pos == 0){
+                }else if(p == private->size-1){
+                    return static_this->insert(static_this).top(data_to_insert, callback);
+                }else if(p == 0){
                     return static_this->insert(static_this).bottom(data_to_insert, callback);
                 }else {
                     SimpleADT simpleADT = private->listADT;
                     int i = 1;
-                    while (i < pos) {
+                    while (i < p) {
                         simpleADT = simpleADT->next;
                         i++;
                     }
@@ -173,14 +187,14 @@ InsertList _insert_list(List *this){
             }
             case DOUBLE: {
                 struct PrivateDataListDouble *private = (struct PrivateDataListDouble*)static_this->private;
-                if(pos<0 || pos>private->size){
+                if(p<0 || p>private->size){
                     return 0;
-                }else if(pos == 0){
+                }else if(p == 0){
                     return static_this->insert(static_this).bottom(data_to_insert, callback);
                 }else {
                     DoubleADT doubleADT = private->listADT;
                     int i = 1;
-                    while (i < pos) {
+                    while (i < p) {
                         doubleADT = doubleADT->next;
                         i++;
                     }
