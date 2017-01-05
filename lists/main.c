@@ -19,7 +19,12 @@ int main(int argc, char** argv)
     int i = 0;
 
     //INSTANCE= newList(LINEAL || DOUBLE, SIMPLE || CIRCULAR);
-    List list = newList(LINEAL, SIMPLE);
+    List list = newList(LINEAL, DOUBLE);
+
+    //list.this->delete()
+
+
+
 
     for(i = 0; i <10; i++) {
         n[i].number = i * i;

@@ -36,7 +36,6 @@ typedef enum ListType{ LINEAL, CIRCULAR }ListType;
 typedef enum LinkType{ SIMPLE, DOUBLE }LinkType;
 
 typedef struct PrivateDataListSimple{
-
     SimpleADT bottom;
     SimpleADT top;
     SimpleADT listADT;
@@ -44,28 +43,29 @@ typedef struct PrivateDataListSimple{
 };
 
 typedef struct PrivateDataListDouble{
-    SimpleADT bottom;
+    DoubleADT bottom;
     DoubleADT top;
     DoubleADT listADT;
     unsigned int size;
 };
 
 typedef struct {
-    int (*top)(const void* data_to_insert, void(*callback)(const void* d));
-    int (*bottom)(const void* data_to_insert, void(*callback)(const void* d));
-    int (*pos)(unsigned int pos, const void* data_to_insert, void(*callback)(const void* d));
+    int (*const top)(const void* data_to_insert, void(*callback)(const void* d));
+    int (*const bottom)(const void* data_to_insert, void(*callback)(const void* d));
+    int (*const pos)(unsigned int p, const void* data_to_insert, void(*callback)(const void* d));
 }InsertList;
 
 typedef struct {
-    int (*top)(void(*callback)(const void* d));
-    int (*bottom)(void(*callback)(const void* d));
-    int (*pos)(unsigned int pos, void(*callback)(const void* d));
+    int (*const top)(void(*callback)(const void* d));
+    int (*const bottom)(void(*callback)(const void* d));
+    int (*const pos)(unsigned int p, void(*callback)(const void* d));
 }DeleteList;
 
 typedef struct{
-    void* (*pos)(unsigned int pos);
-    void** (*all)(void);
+    void* (*const pos)(unsigned int p);
+    void** (*const all)(void);
 }GetList;
+
 
 typedef struct List{
     const ListType listType;
@@ -93,6 +93,8 @@ static DeleteList _delete_list(List *this);
 static int _empty_list(List *this);
 static int _replace_list(List *this, void* data, unsigned int pos, void(*callback_delete)(const void* d), void(*callback_insert)(const void* d));
 static GetList _get_list(List *list);
+
+
 
 #ifdef  __cplusplus
 }
