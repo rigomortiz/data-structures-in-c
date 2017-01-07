@@ -68,22 +68,22 @@ typedef struct{
 
 
 typedef struct List{
-    const ListType listType;
-    const LinkType linkType;
-    void* const private;
-    unsigned  int (*const get_size)(List *this);
-    InsertList (*const insert)(List *this);
-    void (*const print)(List *this, void(*callback)(const void* d));
-    int (*const empty)(List *this);
-    DeleteList (*const delete)(List *this);
-    int (*const replace)(List *this, void* data, unsigned int pos, void(*callback_delete)(const void* d), void(*callback_insert)(const void* d));
-    GetList (*const get)(List *list);
+    ListType listType;
+    LinkType linkType;
+    void* private;
+    unsigned  int (*get_size)(List *this);
+    InsertList (*insert)(List *this);
+    void (*print)(List *this, void(*callback)(const void* d));
+    int (*empty)(List *this);
+    DeleteList (*delete)(List *this);
+    int (*update)(List *this, void *data, unsigned int pos, void(*callback_delete)(const void *d), void(*callback_insert)(const void *d));
+    GetList (*get)(List *list);
 
     //Find (*find)(BinaryTree *this_binary_tree, const void* d, int(*callback)(const void* d1, const void* d2));
     //ChainingGet (*get)(const BinaryTree* this_binary_tree);
     //ChainingPrint (*print)(const BinaryTree* this_binary_tree);
 };
-
+List* newListPtr(ListType listType, LinkType linkType);
 List newList(ListType list_type, LinkType linkType);
 void destroyList(List *list);
 static InsertList _insert_list(List *this);
@@ -91,7 +91,7 @@ static void _print_list(List *this, void(*callback)(const void* d));
 static unsigned int _get_size(List *this);
 static DeleteList _delete_list(List *this);
 static int _empty_list(List *this);
-static int _replace_list(List *this, void* data, unsigned int pos, void(*callback_delete)(const void* d), void(*callback_insert)(const void* d));
+static int _update_list(List *this, void *data, unsigned int pos, void(*callback_delete)(const void *d), void(*callback_insert)(const void *d));
 static GetList _get_list(List *list);
 
 

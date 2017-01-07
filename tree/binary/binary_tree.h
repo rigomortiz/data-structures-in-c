@@ -33,11 +33,6 @@
 #ifndef BINARY_TREE_H_
 #define BINARY_TREE_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <search.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -104,7 +99,8 @@ struct PrivateDataBinaryTree{
     unsigned int num_elements;
     unsigned int depth;
 };
-typedef struct BinaryTree{
+
+struct BinaryTree{
     void* const private;
     unsigned  int (*const get_num_elements)(BinaryTree *this);
     int (*const insert)(BinaryTree *this, const void* data, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted));

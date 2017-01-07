@@ -2,6 +2,55 @@
 // Created by regoeco on 29/12/16.
 //
 #include "list.h"
+static struct PrivateDataListSimple* createPrivateDataListSimple(){
+    struct PrivateDataListSimple *ps = malloc(sizeof(struct PrivateDataListSimple));
+    ps->size = 0,
+    ps->listADT = NULL,
+    ps->bottom = NULL,
+    ps->top = NULL;
+    return ps;
+}
+
+static struct PrivateDataListDouble* createPrivateDataListDouble(){
+    struct PrivateDataListDouble *ps = malloc(sizeof(struct PrivateDataListDouble));
+    ps->size = 0,
+            ps->listADT = NULL,
+            ps->bottom = NULL,
+            ps->top = NULL;
+    return ps;
+}
+
+static List* createList(ListType listType, LinkType linkType, void *private){
+    List *listSimple = malloc(sizeof(List));
+    listSimple->insert = _insert_list,
+    listSimple->print = _print_list,
+    listSimple->get_size = _get_size,
+    listSimple->delete = _delete_list,
+    listSimple->empty = _empty_list,
+    listSimple->update = _update_list,
+    listSimple->get = _get_list,
+    listSimple->listType = listType,
+    listSimple->linkType = linkType,
+    listSimple->private = private;
+
+    return listSimple;
+}
+
+List* newListPtr(ListType listType, LinkType linkType){
+    switch (linkType){
+        case SIMPLE:{
+            struct PrivateDataListSimple *ps = createPrivateDataListSimple();
+            List *listSimple = createList(listType, linkType, ps);
+            return listSimple;
+        }
+
+        case DOUBLE:{
+            struct PrivateDataListDouble *ps = createPrivateDataListDouble();
+            List *listSimple = createList(listType, linkType, ps);
+            return listSimple;
+        }
+    }
+}
 
 List newList(ListType listType, LinkType linkType){
 
@@ -14,7 +63,7 @@ List newList(ListType listType, LinkType linkType){
                     .get_size = _get_size,
                     .delete = _delete_list,
                     .empty = _empty_list,
-                    .replace = _replace_list,
+                    .update = _update_list,
                     .get = _get_list,
                     .listType = listType,
                     .linkType = linkType,
@@ -39,7 +88,7 @@ List newList(ListType listType, LinkType linkType){
                     .get_size = _get_size,
                     .delete = _delete_list,
                     .empty = _empty_list,
-                    .replace = _replace_list,
+                    .update = _update_list,
                     .get = _get_list,
                     .listType = listType,
                     .linkType = linkType,
@@ -235,10 +284,11 @@ void _print_list(List *this, void(*callback)(const void* d)){
 
             if(private->size > 0) {
                 SimpleADT simpleADT = private->listADT;
-                while (simpleADT != NULL) {
-                    if (callback != NULL) {
+                unsigned int size = private->size;
+                unsigned int i;
+                for(i=0; i< size; i++){
+                    if (callback != NULL)
                         callback(simpleADT->data);
-                    }
                     simpleADT = simpleADT->next;
                 }
             }
@@ -248,10 +298,11 @@ void _print_list(List *this, void(*callback)(const void* d)){
             struct PrivateDataListDouble *private = (struct PrivateDataListDouble*)this->private;
             if(private->size > 0) {
                 DoubleADT doubleADT = private->listADT;
-                while (doubleADT != NULL) {
-                    if (callback != NULL) {
+                unsigned int size = private->size;
+                unsigned int i;
+                for(i=0; i< size; i++){
+                    if (callback != NULL)
                         callback(doubleADT->data);
-                    }
                     doubleADT = doubleADT->next;
                 }
             }
@@ -439,7 +490,7 @@ int _empty_list(List *this){
     }
 }
 
-int _replace_list(List *this, void* data, unsigned int p, void(*callback_delete)(const void* d), void(*callback_insert)(const void* d)){
+int _update_list(List *this, void *data, unsigned int p, void(*callback_delete)(const void *d), void(*callback_insert)(const void *d)){
     this->delete(this).pos(p, callback_delete);
     this->insert(this).pos(p, data, callback_insert);
     return 1;
@@ -468,8 +519,12 @@ GetList _get_list(List *list){
                 struct PrivateDataListDouble *private = (struct PrivateDataListDouble*)this->private;
                 if(private->size > 0) {
                     DoubleADT doubleADT = private->listADT;
+                    unsigned int size = private->size;
                     int i;
-                    for (i = 0; i < p; doubleADT = doubleADT->next, i++);
+                    if(p>size/2){
+                        for (i = 0; i < p; doubleADT = doubleADT->prev, i++);
+                    }else
+                        for (i = 0; i < p; doubleADT = doubleADT->next, i++);
                     return doubleADT->data;
                 }else{
                     return data;
@@ -485,28 +540,26 @@ GetList _get_list(List *list){
             case SIMPLE: {
                 struct PrivateDataListSimple *private = (struct PrivateDataListSimple*)this->private;
                 void** data  = calloc(private->size , sizeof(void*));
-                unsigned int i = 0;
-                if(private->size > 0){
-                    SimpleADT simpleADT = private->listADT;
-                    while (simpleADT != NULL) {
-                        data[i++] = simpleADT->data;
-                        simpleADT = simpleADT->next;
-                    }
-                    return data;
+                SimpleADT simpleADT = private->listADT;
+                unsigned int size = private->size;
+                unsigned int i;
+                for(i=0; i< size; i++){
+                    data[i] = simpleADT->data;
+                    simpleADT = simpleADT->next;
                 }
+                return data;
             }
             case DOUBLE: {
-                struct PrivateDataListDouble *private = (struct PrivateDataListDouble*)this->private;
-                void** data  = calloc(private->size , sizeof(void*));
-                unsigned int i = 0;
-                if(private->size > 0){
-                    DoubleADT doubleADT = private->listADT;
-                    while (doubleADT != NULL) {
-                        data[i++] = doubleADT->data;
-                        doubleADT = doubleADT->next;
-                    }
-                    return data;
+                struct PrivateDataListDouble *private = (struct PrivateDataListDouble *) this->private;
+                void **data = calloc(private->size, sizeof(void *));
+                DoubleADT doubleADT = private->listADT;
+                unsigned int size = private->size;
+                unsigned int i;
+                for (i = 0; i < size; i++) {
+                    data[i] = doubleADT->data;
+                    doubleADT = doubleADT->next;
                 }
+                return data;
             }
             default:
                 return NULL;

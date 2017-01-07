@@ -41,7 +41,7 @@ int main(int argc, char** argv)
     list.print(&list, callback_print);
     //list.delete(&list).pos(5, NULL);
     //list.insert(&list).pos(5, &n[0], NULL);
-    list.replace(&list, &n[0], 5, NULL, NULL);
+    list.update(&list, &n[0], 5, NULL, NULL);
     //list.delete(&list).top(NULL);
     //list.delete(&list).bottom(NULL);
     printf("\n");
