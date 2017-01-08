@@ -7,24 +7,15 @@
 
 
 #include "../lists/list.h"
+#include <memory.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct Graph Graph;
-typedef struct GraphADT* GraphADT, ELEMENT_GRAPH;
 typedef struct Edge Edge, ELEMENT_EDGE;
 typedef struct Node Node, ELEMENT_NODE;
-typedef struct NodeADT* NodeADT ;
-
-struct NodeADT{
-    List* edgesADT;
-};
-
-struct GraphADT{
-    List* list_nodesADT;
-};
 
 struct Edge{
     unsigned int id;
@@ -32,8 +23,6 @@ struct Edge{
     void* properties;
     void* data;
 };
-
-
 
 struct Node{
     unsigned int id;
@@ -43,40 +32,36 @@ struct Node{
 };
 
 struct PrivateDataGraph{
-    void* properties;
-    unsigned int num_elements;
+    unsigned int num_nodes;
+    unsigned int num_edges;
     void* data;
-    GraphADT graphADT;
+    void* properties;
+    List* list_nodesADT;
 };
 
 struct Graph{
     const void* private;
     unsigned int (*const get_num_nodes)(Graph *this);
     unsigned int (*const get_num_edges)(Graph *this);
-    int (*const create_node)(Graph *this, Node node);
-    int (*const create_edge)(Graph *this, Node node);
-
-    int (*const insert_multiples)(Graph *this, Node *node, Edge *edge);
-    int (*const insert_node)(Graph *this, Node *node);
-    int (*const insert_edge)(Graph *this, Edge *edge);
+    Node* (*const get_node)(Graph *this, unsigned int id);
+    Edge* (*const get_edge)(Graph *this, unsigned int dest_node, unsigned int src_node);
+    int (*const create_edge)(Graph *this, unsigned int id, void* properties, void* data, unsigned int dest, unsigned int src);
+    int (*const create_node)(Graph *this, unsigned int id, void* properties, void* data);
+    void (*const print)(Graph *this);
 };
 
 
 
-static Graph* new_graph(struct PrivateDataGraph *privateDataGraph);
+Graph* new_graph(struct PrivateDataGraph *privateDataGraph);
 Graph newGraph(void* data, void* properties);
 
-static int _create_node(Graph *this, Node node);
-static int _create_edge(Graph *this, Edge edge);
-
-
-
+static int _create_node(Graph *this, unsigned int id, void* properties, void* data);
+static int  _create_edge(Graph *this, unsigned int id, void* properties, void* data, unsigned int dest, unsigned src);
 static unsigned int _get_num_nodes(Graph *this);
 static unsigned int _get_num_edges(Graph *this);
-static int _insert_multiples(Graph *this, Node *node, Edge *edge);
-static int _insert_node(Graph *this, Node *node);
-static int _insert_edge(Graph *this, Edge *edge);
-
+static Node* _get_node(Graph *this, unsigned int id);
+static Edge* _get_edge(Graph *this, unsigned int dest_node, unsigned int src_node);
+static void _print(Graph* this);
 /*
 
  InsertNode:

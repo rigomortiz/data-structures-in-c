@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <memory.h>
 #include "graph.h"
 #include "../lists/list.h"
 
@@ -15,23 +16,22 @@
  * E3[ 3, 2 ]
  * LG = { N1(N2, N3), N2(N1, N3), N3(N1, N2) }
  */
+void* create(void* data);
 int main(int argc, char** argv)
 {
-    Node nodes[3];
-    nodes[0].id = 1, nodes[0].data = NULL, nodes[0].properties = NULL;
-    nodes[1].id = 2, nodes[1].data = NULL, nodes[1].properties = NULL;
-    nodes[2].id = 3, nodes[2].data = NULL, nodes[2].properties = NULL;
+    int data = 10;
+    int pro = 0;
+    Graph grap = newGraph(&data, &pro);
+    grap.create_node(&grap, 1, &pro, &data);
+    grap.create_node(&grap, 2, &pro, &data);
+    grap.create_node(&grap, 1, &pro, &data);
+    grap.create_edge(&grap, 1, &pro, &data, 1, 2);
+    grap.create_edge(&grap, 2, &pro, &data, 2, 3);
+    grap.create_edge(&grap, 3, &pro, &data, 3, 1);
+    grap.create_edge(&grap, 4, &pro, &data, 2, 1);
+    grap.create_edge(&grap, 5, &pro, &data, 1, 3);
 
-    List listNodes = newList(LINEAL, DOUBLE);
-    List listEdges = newList(LINEAL, DOUBLE);
-    listNodes.insert(&listNodes).top(&nodes[0], NULL);
-    listNodes.insert(&listNodes).top(&nodes[1], NULL);
-    listNodes.insert(&listNodes).top(&nodes[2], NULL);
-
-
-    Graph grap = newGraph(listNodes, listEdges, NULL, NULL);
-
+    grap.print(&grap);
 
     return (EXIT_SUCCESS);
 }
-
