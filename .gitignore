@@ -55,3 +55,4 @@ dkms.conf
 .gitignore
 cmake-build-debug/*
 .idea/*
+/cmake-build-debug/
