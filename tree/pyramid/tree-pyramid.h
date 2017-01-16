@@ -4,57 +4,121 @@
 
 #ifndef TREE_PYRAMID_H
 #define TREE_PYRAMID_H
+#include <memory.h>
+#include <malloc.h>
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 typedef struct PyramidTree PyramidTree;
 typedef struct PyramidTreeADT* PyramidTreeADT, ELEMENT_PYRAMID_TREE;
 
+struct RightPrint{
+    void (*const asc)();
+    void (*const dee)();
+};
+
+struct DepthPrint{
+    struct LeftPrint (*const left)();
+    struct Rightrint (*const right)();
+};
+
+struct WidthPrint{
+    struct LeftPrint (*const left)();
+    struct Rightrint (*const right)();
+};
+
 struct ChainingPrint{
-    struct InorderPrint (*const inorder)(void(*callback)(const void* data));
+    struct DepthPrint (*const depth)(void(*callback)(const void* data));
+    struct WidthPrint (*const width)(void(*callback)(const void* data));
 };
 
 struct PyramidTreeADT{
     void* data;
     unsigned int level;
-    PyramidTreeADT father;
-    PyramidTreeADT left_leaf;
-    PyramidTreeADT right_leaf;
+    PyramidTreeADT left_father;
+    PyramidTreeADT right_father;
+    PyramidTreeADT left_son;
+    PyramidTreeADT right_son;
 };
 
 struct PrivateDataPyramidTree{
-    PyramidTreeADT pyramid_tree_adt;
+    PyramidTreeADT first_node;
+    PyramidTreeADT last_node;
     unsigned int num_elements;
     unsigned int height;
 };
 
 struct PyramidTree{
-    void* const private;
-    unsigned  int (*const get_num_elements)(PyramidTree *this);
-/*
-    int (*const insert)(BinaryTree *this, const void* data, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted));
-    int (*const insert_multiple)(BinaryTree *this, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted),  int count, ...);
-    struct Find (*const find)(BinaryTree *this, const void* data, int(*const callback)(const void* d1, const void* d2));
-    int (*const empty)(BinaryTree *this);
-    struct ChainingGet (*const get)(const BinaryTree* this);
-    struct ChainingPrint (*const print)(const BinaryTree* this);
-*/
+    void* private;
+    unsigned int(*get_num_elements)(PyramidTree *this);
+    int (*insert)(PyramidTree *this, const void* data, void(*const callback_insert)(const void* data));
+    int (*insert_multiple)(PyramidTree *this, void(*const callback_insert)(const void* data),  int count, ...);
+    int (*empty)(PyramidTree *this);
+    struct ChainingGet (*get)(const PyramidTree* this);
+    struct ChainingPrint (*print)(const PyramidTree* this);
 };
 
 PyramidTree newPyramidTree();
 PyramidTree *newPtrPyramidTree();
-void destroyBinaryTree(PyramidTree *this);
+void destroyPyramidTree(PyramidTree *this);
 
+/**
+ *
+ * @param this
+ * @param data
+ * @param callback_insert
+ * @return
+ */
 static int _insert_pyramid_tree(PyramidTree *this, const void* data, void(*const callback_insert)(const void* data) );
 
-/*
-static int _insert_multiple_binary_tree(BinaryTree *this, void(*const callback_insert)(const void* data), int(*const callback_order)(const void* new, const void* inserted),  int count, ...);
-static struct ChainingGet _get_binary_tree(const BinaryTree *this);
-static struct ChainingPrint _print_binary_tree(const BinaryTree *this);
-static struct Find _find_binary_tree(BinaryTree *this, const void* data, int (*const callback)(const void* d1, const void* d2));
-static int _empty_binary_tree(BinaryTree *this);
-unsigned int _get_num_elements(BinaryTree *this);
-*/
+/**
+ *
+ * @param this
+ * @return
+ */
+static unsigned int _get_num_elements_pyramid_tree(PyramidTree *this);
+
+/**
+ *
+ * @param this
+ * @param data
+ * @param callback_insert
+ * @return
+ */
+static int _insert_pyramid_tree(PyramidTree *this, const void* data, void(*const callback_insert)(const void* data));
+
+/**
+ *
+ * @param this
+ * @param callback_insert
+ * @param count
+ * @return
+ */
+static int _insert_multiple_pyramid_tree(PyramidTree *this, void(*const callback_insert)(const void* data),  int count, ...);
+
+/**
+ *
+ * @param this
+ * @return
+ */
+static int _empty_pyramid_tree(PyramidTree *this);
+
+/**
+ *
+ * @param this
+ * @return
+ */
+static struct ChainingGet _get_pyramid_tree(const PyramidTree* this);
+
+/**
+ *
+ * @param this
+ * @return
+ */
+static struct ChainingPrint _print_pyramid_tree(const PyramidTree* this);
 
 
 #ifdef __cplusplus

@@ -120,7 +120,7 @@ static struct ChainingGet _get_binary_tree(const BinaryTree *this);
 static struct ChainingPrint _print_binary_tree(const BinaryTree *this);
 static struct Find _find_binary_tree(BinaryTree *this, const void* data, int (*const callback)(const void* d1, const void* d2));
 static int _empty_binary_tree(BinaryTree *this);
-unsigned int _get_num_elements(BinaryTree *this);
+static unsigned int _get_num_elements(BinaryTree *this);
 
 
 

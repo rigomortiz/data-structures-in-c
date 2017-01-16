@@ -160,6 +160,11 @@ int _enqueue_multiple_queue(Queue *this, void(*const callback)(const void*), int
     return r;
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 unsigned int _get_size(Queue *this){
     struct PrivateDataQueue *private = (struct PrivateDataQueue*)this->private;
     return private->size;

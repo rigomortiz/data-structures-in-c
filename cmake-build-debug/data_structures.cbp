@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/graph/graph.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/graph/graph.h">
+			<Option target="data_structures"/>
+		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/lists/list.c">
 			<Option target="data_structures"/>
 		</Unit>
@@ -94,6 +100,9 @@
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/queue/queue.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/size/size.h">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/stack/stack.c">
@@ -108,7 +117,13 @@
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.h">
 			<Option target="data_structures"/>
 		</Unit>
-		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/main.c">
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/main.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/tree-pyramid.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/tree-pyramid.h">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/CMakeLists.txt">

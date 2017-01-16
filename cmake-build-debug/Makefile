@@ -123,6 +123,33 @@ data_structures/fast:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/build
 .PHONY : data_structures/fast
 
+graph/graph.o: graph/graph.c.o
+
+.PHONY : graph/graph.o
+
+# target to build an object file
+graph/graph.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/graph/graph.c.o
+.PHONY : graph/graph.c.o
+
+graph/graph.i: graph/graph.c.i
+
+.PHONY : graph/graph.i
+
+# target to preprocess a source file
+graph/graph.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/graph/graph.c.i
+.PHONY : graph/graph.c.i
+
+graph/graph.s: graph/graph.c.s
+
+.PHONY : graph/graph.s
+
+# target to generate assembly for a file
+graph/graph.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/graph/graph.c.s
+.PHONY : graph/graph.c.s
+
 lists/list.o: lists/list.c.o
 
 .PHONY : lists/list.o
@@ -231,32 +258,59 @@ tree/binary/binary_tree.c.s:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.s
 .PHONY : tree/binary/binary_tree.c.s
 
-tree/binary/main.o: tree/binary/main.c.o
+tree/pyramid/main.o: tree/pyramid/main.c.o
 
-.PHONY : tree/binary/main.o
+.PHONY : tree/pyramid/main.o
 
 # target to build an object file
-tree/binary/main.c.o:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.o
-.PHONY : tree/binary/main.c.o
+tree/pyramid/main.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.o
+.PHONY : tree/pyramid/main.c.o
 
-tree/binary/main.i: tree/binary/main.c.i
+tree/pyramid/main.i: tree/pyramid/main.c.i
 
-.PHONY : tree/binary/main.i
+.PHONY : tree/pyramid/main.i
 
 # target to preprocess a source file
-tree/binary/main.c.i:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.i
-.PHONY : tree/binary/main.c.i
+tree/pyramid/main.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.i
+.PHONY : tree/pyramid/main.c.i
 
-tree/binary/main.s: tree/binary/main.c.s
+tree/pyramid/main.s: tree/pyramid/main.c.s
 
-.PHONY : tree/binary/main.s
+.PHONY : tree/pyramid/main.s
 
 # target to generate assembly for a file
-tree/binary/main.c.s:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/main.c.s
-.PHONY : tree/binary/main.c.s
+tree/pyramid/main.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.s
+.PHONY : tree/pyramid/main.c.s
+
+tree/pyramid/tree-pyramid.o: tree/pyramid/tree-pyramid.c.o
+
+.PHONY : tree/pyramid/tree-pyramid.o
+
+# target to build an object file
+tree/pyramid/tree-pyramid.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o
+.PHONY : tree/pyramid/tree-pyramid.c.o
+
+tree/pyramid/tree-pyramid.i: tree/pyramid/tree-pyramid.c.i
+
+.PHONY : tree/pyramid/tree-pyramid.i
+
+# target to preprocess a source file
+tree/pyramid/tree-pyramid.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.i
+.PHONY : tree/pyramid/tree-pyramid.c.i
+
+tree/pyramid/tree-pyramid.s: tree/pyramid/tree-pyramid.c.s
+
+.PHONY : tree/pyramid/tree-pyramid.s
+
+# target to generate assembly for a file
+tree/pyramid/tree-pyramid.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.s
+.PHONY : tree/pyramid/tree-pyramid.c.s
 
 # Help Target
 help:
@@ -267,6 +321,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... data_structures"
+	@echo "... graph/graph.o"
+	@echo "... graph/graph.i"
+	@echo "... graph/graph.s"
 	@echo "... lists/list.o"
 	@echo "... lists/list.i"
 	@echo "... lists/list.s"
@@ -279,9 +336,12 @@ help:
 	@echo "... tree/binary/binary_tree.o"
 	@echo "... tree/binary/binary_tree.i"
 	@echo "... tree/binary/binary_tree.s"
-	@echo "... tree/binary/main.o"
-	@echo "... tree/binary/main.i"
-	@echo "... tree/binary/main.s"
+	@echo "... tree/pyramid/main.o"
+	@echo "... tree/pyramid/main.i"
+	@echo "... tree/pyramid/main.s"
+	@echo "... tree/pyramid/tree-pyramid.o"
+	@echo "... tree/pyramid/tree-pyramid.i"
+	@echo "... tree/pyramid/tree-pyramid.s"
 .PHONY : help
 
 

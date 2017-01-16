@@ -2,6 +2,10 @@
 // Created by regoeco on 29/12/16.
 //
 #include "list.h"
+/**
+ *
+ * @return struct PrivateDataListSimple*
+ */
 static struct PrivateDataListSimple* createPrivateDataListSimple(){
     struct PrivateDataListSimple *ps = malloc(sizeof(struct PrivateDataListSimple));
     ps->size = 0,
@@ -11,6 +15,10 @@ static struct PrivateDataListSimple* createPrivateDataListSimple(){
     return ps;
 }
 
+/**
+ *
+ * @return struct PrivateDataListDouble*
+ */
 static struct PrivateDataListDouble* createPrivateDataListDouble(){
     struct PrivateDataListDouble *ps = malloc(sizeof(struct PrivateDataListDouble));
     ps->size = 0,
@@ -20,6 +28,13 @@ static struct PrivateDataListDouble* createPrivateDataListDouble(){
     return ps;
 }
 
+/**
+ *
+ * @param listType
+ * @param linkType
+ * @param private
+ * @return
+ */
 static List* createList(ListType listType, LinkType linkType, void *private){
     List *listSimple = malloc(sizeof(List));
     listSimple->insert = _insert_list,
@@ -36,6 +51,12 @@ static List* createList(ListType listType, LinkType linkType, void *private){
     return listSimple;
 }
 
+/**
+ *
+ * @param listType
+ * @param linkType
+ * @return
+ */
 List* newListPtr(ListType listType, LinkType linkType){
     switch (linkType){
         case SIMPLE:{
@@ -52,6 +73,12 @@ List* newListPtr(ListType listType, LinkType linkType){
     }
 }
 
+/**
+ *
+ * @param listType
+ * @param linkType
+ * @return
+ */
 List newList(ListType listType, LinkType linkType){
 
     switch (linkType){
@@ -99,6 +126,11 @@ List newList(ListType listType, LinkType linkType){
     }
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 InsertList _insert_list(List *this){
     static  List* static_this;
     static_this = this;
@@ -276,6 +308,11 @@ InsertList _insert_list(List *this){
     return insert;
 }
 
+/**
+ *
+ * @param this
+ * @param callback
+ */
 void _print_list(List *this, void(*callback)(const void* d)){
 
     switch (this->linkType){
@@ -312,6 +349,11 @@ void _print_list(List *this, void(*callback)(const void* d)){
 
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 unsigned int _get_size(List *this){
     switch(this->linkType){
         case SIMPLE:{
@@ -328,6 +370,11 @@ unsigned int _get_size(List *this){
     }
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 DeleteList _delete_list(List *this){
 
     static List* static_this;
@@ -459,6 +506,11 @@ DeleteList _delete_list(List *this){
     return deleteList;
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 int _empty_list(List *this){
     switch (this->linkType){
         case SIMPLE:{
@@ -490,12 +542,26 @@ int _empty_list(List *this){
     }
 }
 
+/**
+ *
+ * @param this
+ * @param data
+ * @param p
+ * @param callback_delete
+ * @param callback_insert
+ * @return
+ */
 int _update_list(List *this, void *data, unsigned int p, void(*callback_delete)(const void *d), void(*callback_insert)(const void *d)){
     this->delete(this).pos(p, callback_delete);
     this->insert(this).pos(p, data, callback_insert);
     return 1;
 }
 
+/**
+ *
+ * @param list
+ * @return
+ */
 GetList _get_list(List *list){
     static List *this;
     this = list;
@@ -574,6 +640,10 @@ GetList _get_list(List *list){
     return getList;
 }
 
+/**
+ *
+ * @param this
+ */
 void destroyList(List *this){
     this->empty(this);
     free(this->private);

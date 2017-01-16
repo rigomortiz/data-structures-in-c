@@ -2,7 +2,11 @@
 // Created by regoeco on 5/01/17.
 //
 #include "graph.h"
-
+/**
+ *
+ * @param privateDataGraph
+ * @return
+ */
 Graph* new_graph(struct PrivateDataGraph *privateDataGraph){
     Graph *g, graph = {
             .private = privateDataGraph,
@@ -13,6 +17,12 @@ Graph* new_graph(struct PrivateDataGraph *privateDataGraph){
     return g;
 }
 
+/**
+ *
+ * @param data
+ * @param properties
+ * @return
+ */
 Graph newGraph( void* data, void* properties){
     struct PrivateDataGraph *privateDataGraph = malloc(sizeof(struct PrivateDataGraph));
     privateDataGraph->data = data;
@@ -34,10 +44,23 @@ Graph newGraph( void* data, void* properties){
     return graph;
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 static struct PrivateDataGraph* get_private(Graph *this){
     return (struct PrivateDataGraph*)this->private;
 }
 
+/**
+ *
+ * @param id
+ * @param data
+ * @param properties
+ * @param edges
+ * @return
+ */
 static Node* newNode(unsigned int id, void* data, void* properties, List *edges){
     Node *new_node = malloc(sizeof(Node));
     new_node->id = id;
@@ -50,6 +73,14 @@ static Node* newNode(unsigned int id, void* data, void* properties, List *edges)
     return new_node;
 }
 
+/**
+ *
+ * @param id
+ * @param properties
+ * @param data
+ * @param node
+ * @return
+ */
 static Edge* newEdge(unsigned int id, void* properties, void* data, Node* node){
     Edge *new_edge = malloc(sizeof(Edge));
     new_edge->id = id;
@@ -62,6 +93,13 @@ static Edge* newEdge(unsigned int id, void* properties, void* data, Node* node){
     return new_edge;
 }
 
+/**
+ *
+ * @param this
+ * @param dest_node
+ * @param src_node
+ * @return
+ */
 static Edge* _get_edge(Graph *this, unsigned int dest_node, unsigned int src_node){
     Node *dest = this->get_node(this, dest_node);
     Edge** edges = (Edge**)dest->edges->get(dest->edges).all();
@@ -75,6 +113,12 @@ static Edge* _get_edge(Graph *this, unsigned int dest_node, unsigned int src_nod
     return NULL;
 }
 
+/**
+ *
+ * @param this
+ * @param id
+ * @return
+ */
 static Node* _get_node(Graph *this, unsigned int id){
     struct PrivateDataGraph *private = get_private(this);
     Node ** nodes = (Node**)private->list_nodesADT->get(private->list_nodesADT).all();
@@ -88,6 +132,14 @@ static Node* _get_node(Graph *this, unsigned int id){
     return NULL;
 }
 
+/**
+ *
+ * @param this
+ * @param id
+ * @param properties
+ * @param data
+ * @return
+ */
 static int _create_node(Graph *this, unsigned int id, void* properties, void* data){
     struct PrivateDataGraph *private = get_private(this);
     Node *new_node = newNode(id, data, properties, newListPtr(LINEAL, DOUBLE));
@@ -96,6 +148,16 @@ static int _create_node(Graph *this, unsigned int id, void* properties, void* da
     return 1;
 }
 
+/**
+ *
+ * @param this
+ * @param id
+ * @param properties
+ * @param data
+ * @param dest
+ * @param src
+ * @return
+ */
 static int _create_edge(Graph *this, unsigned int id, void* properties, void* data, unsigned int dest, unsigned int src){
     struct PrivateDataGraph *private = get_private(this);
     Node *node_dest = this->get_node(this, dest);
@@ -106,16 +168,36 @@ static int _create_edge(Graph *this, unsigned int id, void* properties, void* da
     return 1;
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 unsigned int _get_num_nodes(Graph *this){
     struct PrivateDataGraph *private = (struct PrivateDataGraph*)this->private;
     return private->num_nodes;
 }
 
+/**
+ *
+ * @param this
+ * @return
+ */
 unsigned int _get_num_edges(Graph *this){
     struct PrivateDataGraph *private = (struct PrivateDataGraph*)this->private;
     return private->num_edges;
 }
+
+/**
+ *
+ * @param d
+ */
 void callback_print(void *d);
+
+/**
+ *
+ * @param this
+ */
 static void _print(Graph *this){
     struct PrivateDataGraph *private = get_private(this);
     Node ** nodes = (Node**)private->list_nodesADT->get(private->list_nodesADT).all();
@@ -128,6 +210,11 @@ static void _print(Graph *this){
 
     }
 }
+
+/**
+ *
+ * @param d
+ */
 void callback_print(void *d){
     Edge *edge = d;
     Node *node = edge->node;
