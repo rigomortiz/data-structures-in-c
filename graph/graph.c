@@ -192,7 +192,7 @@ unsigned int _get_num_edges(Graph *this){
  *
  * @param d
  */
-void callback_print(void *d);
+static void callback_print(void *d);
 
 /**
  *
@@ -215,7 +215,7 @@ static void _print(Graph *this){
  *
  * @param d
  */
-void callback_print(void *d){
+static void callback_print(void *d){
     Edge *edge = d;
     Node *node = edge->node;
     printf("  %d",node->id);

@@ -16,24 +16,55 @@ typedef struct PyramidTree PyramidTree;
 typedef struct PyramidTreeADT* PyramidTreeADT, ELEMENT_PYRAMID_TREE;
 
 struct RightPrint{
-    void (*const asc)();
-    void (*const dee)();
+    void (*const asc)(void);
+    void (*const des)(void);
+};
+
+struct LeftPrint{
+    void (*const asc)(void);
+    void (*const des)(void);
 };
 
 struct DepthPrint{
-    struct LeftPrint (*const left)();
-    struct Rightrint (*const right)();
+    struct LeftPrint (*const left)(void);
+    struct RightPrint (*const right)(void);
 };
 
 struct WidthPrint{
-    struct LeftPrint (*const left)();
-    struct Rightrint (*const right)();
+    struct LeftPrint (*const left)(void);
+    struct RightPrint (*const right)(void);
 };
 
 struct ChainingPrint{
-    struct DepthPrint (*const depth)(void(*callback)(const void* data));
-    struct WidthPrint (*const width)(void(*callback)(const void* data));
+    struct DepthPrint (*const depth)(void(*const callback)(const void* data));
+    struct WidthPrint (*const width)(void(*const callback)(const void* data));
 };
+
+struct RightGet{
+    void (*const asc)(void);
+    void (*const des)(void);
+};
+
+struct LeftGet{
+    void (*const asc)(void);
+    void (*const des)(void);
+};
+
+struct DepthGet{
+    struct LeftGet (*const left)(void);
+    struct RightGet (*const right)(void);
+};
+
+struct WidthGet{
+    struct LeftGet (*const left)(void);
+    struct RightGet (*const right)(void);
+};
+
+struct ChainingGet{
+    struct DepthGet (*const depth)(void(*const callback)(const void* data));
+    struct WidthGet (*const width)(void(*const callback)(const void* data));
+};
+
 
 struct PyramidTreeADT{
     void* data;
@@ -51,18 +82,32 @@ struct PrivateDataPyramidTree{
     unsigned int height;
 };
 
+
 struct PyramidTree{
     void* private;
     unsigned int(*get_num_elements)(PyramidTree *this);
     int (*insert)(PyramidTree *this, const void* data, void(*const callback_insert)(const void* data));
-    int (*insert_multiple)(PyramidTree *this, void(*const callback_insert)(const void* data),  int count, ...);
     int (*empty)(PyramidTree *this);
     struct ChainingGet (*get)(const PyramidTree* this);
     struct ChainingPrint (*print)(const PyramidTree* this);
 };
 
+/**
+ *
+ * @return
+ */
 PyramidTree newPyramidTree();
+
+/**
+ *
+ * @return
+ */
 PyramidTree *newPtrPyramidTree();
+
+/**
+ *
+ * @param this
+ */
 void destroyPyramidTree(PyramidTree *this);
 
 /**
@@ -89,15 +134,6 @@ static unsigned int _get_num_elements_pyramid_tree(PyramidTree *this);
  * @return
  */
 static int _insert_pyramid_tree(PyramidTree *this, const void* data, void(*const callback_insert)(const void* data));
-
-/**
- *
- * @param this
- * @param callback_insert
- * @param count
- * @return
- */
-static int _insert_multiple_pyramid_tree(PyramidTree *this, void(*const callback_insert)(const void* data),  int count, ...);
 
 /**
  *
