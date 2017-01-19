@@ -177,33 +177,9 @@ CMakeFiles/data_structures.dir/graph/graph.c.o.provides: CMakeFiles/data_structu
 CMakeFiles/data_structures.dir/graph/graph.c.o.provides.build: CMakeFiles/data_structures.dir/graph/graph.c.o
 
 
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.o: CMakeFiles/data_structures.dir/flags.make
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.o: ../tree/pyramid/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/data_structures.dir/tree/pyramid/main.c.o"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/tree/pyramid/main.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/main.c
-
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/tree/pyramid/main.c.i"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/main.c > CMakeFiles/data_structures.dir/tree/pyramid/main.c.i
-
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/tree/pyramid/main.c.s"
-	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/main.c -o CMakeFiles/data_structures.dir/tree/pyramid/main.c.s
-
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.requires:
-
-.PHONY : CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.requires
-
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.provides: CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.requires
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.provides.build
-.PHONY : CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.provides
-
-CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.provides.build: CMakeFiles/data_structures.dir/tree/pyramid/main.c.o
-
-
 CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o: CMakeFiles/data_structures.dir/flags.make
 CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o: ../tree/pyramid/tree-pyramid.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o"
 	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/tree-pyramid.c
 
 CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.i: cmake_force
@@ -225,6 +201,102 @@ CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o.provides: CMakeFile
 CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o.provides.build: CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o
 
 
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o: ../cube/data_structure/ADT/cube.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/ADT/cube.c
+
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/ADT/cube.c > CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.i
+
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/ADT/cube.c -o CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.s
+
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.requires
+
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.provides: CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.provides
+
+CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.provides.build: CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o
+
+
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o: ../cube/data_structure/query/query.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/query/query.c
+
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/query/query.c > CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.i
+
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/query/query.c -o CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.s
+
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.requires
+
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.provides: CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.provides
+
+CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.provides.build: CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o
+
+
+CMakeFiles/data_structures.dir/cube/main.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/cube/main.c.o: ../cube/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/data_structures.dir/cube/main.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/cube/main.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/cube/main.c
+
+CMakeFiles/data_structures.dir/cube/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/cube/main.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/cube/main.c > CMakeFiles/data_structures.dir/cube/main.c.i
+
+CMakeFiles/data_structures.dir/cube/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/cube/main.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/cube/main.c -o CMakeFiles/data_structures.dir/cube/main.c.s
+
+CMakeFiles/data_structures.dir/cube/main.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/cube/main.c.o.requires
+
+CMakeFiles/data_structures.dir/cube/main.c.o.provides: CMakeFiles/data_structures.dir/cube/main.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/main.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/cube/main.c.o.provides
+
+CMakeFiles/data_structures.dir/cube/main.c.o.provides.build: CMakeFiles/data_structures.dir/cube/main.c.o
+
+
+CMakeFiles/data_structures.dir/cube/cube_summation.c.o: CMakeFiles/data_structures.dir/flags.make
+CMakeFiles/data_structures.dir/cube/cube_summation.c.o: ../cube/cube_summation.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/data_structures.dir/cube/cube_summation.c.o"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/data_structures.dir/cube/cube_summation.c.o   -c /home/regoeco/Documentos/projects/data-structures-in-C/cube/cube_summation.c
+
+CMakeFiles/data_structures.dir/cube/cube_summation.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/data_structures.dir/cube/cube_summation.c.i"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/regoeco/Documentos/projects/data-structures-in-C/cube/cube_summation.c > CMakeFiles/data_structures.dir/cube/cube_summation.c.i
+
+CMakeFiles/data_structures.dir/cube/cube_summation.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/data_structures.dir/cube/cube_summation.c.s"
+	/usr/bin/cc  $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/regoeco/Documentos/projects/data-structures-in-C/cube/cube_summation.c -o CMakeFiles/data_structures.dir/cube/cube_summation.c.s
+
+CMakeFiles/data_structures.dir/cube/cube_summation.c.o.requires:
+
+.PHONY : CMakeFiles/data_structures.dir/cube/cube_summation.c.o.requires
+
+CMakeFiles/data_structures.dir/cube/cube_summation.c.o.provides: CMakeFiles/data_structures.dir/cube/cube_summation.c.o.requires
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/cube_summation.c.o.provides.build
+.PHONY : CMakeFiles/data_structures.dir/cube/cube_summation.c.o.provides
+
+CMakeFiles/data_structures.dir/cube/cube_summation.c.o.provides.build: CMakeFiles/data_structures.dir/cube/cube_summation.c.o
+
+
 # Object files for target data_structures
 data_structures_OBJECTS = \
 "CMakeFiles/data_structures.dir/stack/stack.c.o" \
@@ -232,8 +304,11 @@ data_structures_OBJECTS = \
 "CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o" \
 "CMakeFiles/data_structures.dir/lists/list.c.o" \
 "CMakeFiles/data_structures.dir/graph/graph.c.o" \
-"CMakeFiles/data_structures.dir/tree/pyramid/main.c.o" \
-"CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o"
+"CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o" \
+"CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o" \
+"CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o" \
+"CMakeFiles/data_structures.dir/cube/main.c.o" \
+"CMakeFiles/data_structures.dir/cube/cube_summation.c.o"
 
 # External object files for target data_structures
 data_structures_EXTERNAL_OBJECTS =
@@ -243,11 +318,14 @@ data_structures: CMakeFiles/data_structures.dir/queue/queue.c.o
 data_structures: CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o
 data_structures: CMakeFiles/data_structures.dir/lists/list.c.o
 data_structures: CMakeFiles/data_structures.dir/graph/graph.c.o
-data_structures: CMakeFiles/data_structures.dir/tree/pyramid/main.c.o
 data_structures: CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o
+data_structures: CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o
+data_structures: CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o
+data_structures: CMakeFiles/data_structures.dir/cube/main.c.o
+data_structures: CMakeFiles/data_structures.dir/cube/cube_summation.c.o
 data_structures: CMakeFiles/data_structures.dir/build.make
 data_structures: CMakeFiles/data_structures.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable data_structures"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable data_structures"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/data_structures.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -260,8 +338,11 @@ CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/queue/qu
 CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o.requires
 CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/lists/list.c.o.requires
 CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/graph/graph.c.o.requires
-CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/tree/pyramid/main.c.o.requires
 CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/cube/main.c.o.requires
+CMakeFiles/data_structures.dir/requires: CMakeFiles/data_structures.dir/cube/cube_summation.c.o.requires
 
 .PHONY : CMakeFiles/data_structures.dir/requires
 

@@ -4,8 +4,11 @@ file(REMOVE_RECURSE
   "CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.o"
   "CMakeFiles/data_structures.dir/lists/list.c.o"
   "CMakeFiles/data_structures.dir/graph/graph.c.o"
-  "CMakeFiles/data_structures.dir/tree/pyramid/main.c.o"
   "CMakeFiles/data_structures.dir/tree/pyramid/tree-pyramid.c.o"
+  "CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o"
+  "CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o"
+  "CMakeFiles/data_structures.dir/cube/main.c.o"
+  "CMakeFiles/data_structures.dir/cube/cube_summation.c.o"
   "data_structures.pdb"
   "data_structures"
 )

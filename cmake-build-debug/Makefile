@@ -123,6 +123,114 @@ data_structures/fast:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/build
 .PHONY : data_structures/fast
 
+cube/cube_summation.o: cube/cube_summation.c.o
+
+.PHONY : cube/cube_summation.o
+
+# target to build an object file
+cube/cube_summation.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/cube_summation.c.o
+.PHONY : cube/cube_summation.c.o
+
+cube/cube_summation.i: cube/cube_summation.c.i
+
+.PHONY : cube/cube_summation.i
+
+# target to preprocess a source file
+cube/cube_summation.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/cube_summation.c.i
+.PHONY : cube/cube_summation.c.i
+
+cube/cube_summation.s: cube/cube_summation.c.s
+
+.PHONY : cube/cube_summation.s
+
+# target to generate assembly for a file
+cube/cube_summation.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/cube_summation.c.s
+.PHONY : cube/cube_summation.c.s
+
+cube/data_structure/ADT/cube.o: cube/data_structure/ADT/cube.c.o
+
+.PHONY : cube/data_structure/ADT/cube.o
+
+# target to build an object file
+cube/data_structure/ADT/cube.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.o
+.PHONY : cube/data_structure/ADT/cube.c.o
+
+cube/data_structure/ADT/cube.i: cube/data_structure/ADT/cube.c.i
+
+.PHONY : cube/data_structure/ADT/cube.i
+
+# target to preprocess a source file
+cube/data_structure/ADT/cube.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.i
+.PHONY : cube/data_structure/ADT/cube.c.i
+
+cube/data_structure/ADT/cube.s: cube/data_structure/ADT/cube.c.s
+
+.PHONY : cube/data_structure/ADT/cube.s
+
+# target to generate assembly for a file
+cube/data_structure/ADT/cube.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/ADT/cube.c.s
+.PHONY : cube/data_structure/ADT/cube.c.s
+
+cube/data_structure/query/query.o: cube/data_structure/query/query.c.o
+
+.PHONY : cube/data_structure/query/query.o
+
+# target to build an object file
+cube/data_structure/query/query.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o
+.PHONY : cube/data_structure/query/query.c.o
+
+cube/data_structure/query/query.i: cube/data_structure/query/query.c.i
+
+.PHONY : cube/data_structure/query/query.i
+
+# target to preprocess a source file
+cube/data_structure/query/query.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.i
+.PHONY : cube/data_structure/query/query.c.i
+
+cube/data_structure/query/query.s: cube/data_structure/query/query.c.s
+
+.PHONY : cube/data_structure/query/query.s
+
+# target to generate assembly for a file
+cube/data_structure/query/query.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.s
+.PHONY : cube/data_structure/query/query.c.s
+
+cube/main.o: cube/main.c.o
+
+.PHONY : cube/main.o
+
+# target to build an object file
+cube/main.c.o:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/main.c.o
+.PHONY : cube/main.c.o
+
+cube/main.i: cube/main.c.i
+
+.PHONY : cube/main.i
+
+# target to preprocess a source file
+cube/main.c.i:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/main.c.i
+.PHONY : cube/main.c.i
+
+cube/main.s: cube/main.c.s
+
+.PHONY : cube/main.s
+
+# target to generate assembly for a file
+cube/main.c.s:
+	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/cube/main.c.s
+.PHONY : cube/main.c.s
+
 graph/graph.o: graph/graph.c.o
 
 .PHONY : graph/graph.o
@@ -258,33 +366,6 @@ tree/binary/binary_tree.c.s:
 	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/binary/binary_tree.c.s
 .PHONY : tree/binary/binary_tree.c.s
 
-tree/pyramid/main.o: tree/pyramid/main.c.o
-
-.PHONY : tree/pyramid/main.o
-
-# target to build an object file
-tree/pyramid/main.c.o:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.o
-.PHONY : tree/pyramid/main.c.o
-
-tree/pyramid/main.i: tree/pyramid/main.c.i
-
-.PHONY : tree/pyramid/main.i
-
-# target to preprocess a source file
-tree/pyramid/main.c.i:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.i
-.PHONY : tree/pyramid/main.c.i
-
-tree/pyramid/main.s: tree/pyramid/main.c.s
-
-.PHONY : tree/pyramid/main.s
-
-# target to generate assembly for a file
-tree/pyramid/main.c.s:
-	$(MAKE) -f CMakeFiles/data_structures.dir/build.make CMakeFiles/data_structures.dir/tree/pyramid/main.c.s
-.PHONY : tree/pyramid/main.c.s
-
 tree/pyramid/tree-pyramid.o: tree/pyramid/tree-pyramid.c.o
 
 .PHONY : tree/pyramid/tree-pyramid.o
@@ -321,6 +402,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... data_structures"
+	@echo "... cube/cube_summation.o"
+	@echo "... cube/cube_summation.i"
+	@echo "... cube/cube_summation.s"
+	@echo "... cube/data_structure/ADT/cube.o"
+	@echo "... cube/data_structure/ADT/cube.i"
+	@echo "... cube/data_structure/ADT/cube.s"
+	@echo "... cube/data_structure/query/query.o"
+	@echo "... cube/data_structure/query/query.i"
+	@echo "... cube/data_structure/query/query.s"
+	@echo "... cube/main.o"
+	@echo "... cube/main.i"
+	@echo "... cube/main.s"
 	@echo "... graph/graph.o"
 	@echo "... graph/graph.i"
 	@echo "... graph/graph.s"
@@ -336,9 +429,6 @@ help:
 	@echo "... tree/binary/binary_tree.o"
 	@echo "... tree/binary/binary_tree.i"
 	@echo "... tree/binary/binary_tree.s"
-	@echo "... tree/pyramid/main.o"
-	@echo "... tree/pyramid/main.i"
-	@echo "... tree/pyramid/main.s"
 	@echo "... tree/pyramid/tree-pyramid.o"
 	@echo "... tree/pyramid/tree-pyramid.i"
 	@echo "... tree/pyramid/tree-pyramid.s"

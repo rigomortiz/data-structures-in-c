@@ -84,6 +84,27 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/cube_summation.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/cube_summation.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/ADT/cube.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/ADT/cube.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/query/query.c">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/data_structure/query/query.h">
+			<Option target="data_structures"/>
+		</Unit>
+		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/cube/main.c">
+			<Option target="data_structures"/>
+		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/graph/graph.c">
 			<Option target="data_structures"/>
 		</Unit>
@@ -115,9 +136,6 @@
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/binary/binary_tree.h">
-			<Option target="data_structures"/>
-		</Unit>
-		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/main.c">
 			<Option target="data_structures"/>
 		</Unit>
 		<Unit filename="/home/regoeco/Documentos/projects/data-structures-in-C/tree/pyramid/tree-pyramid.c">
