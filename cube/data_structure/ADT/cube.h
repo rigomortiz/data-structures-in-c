@@ -4,18 +4,8 @@
 
 #ifndef DATA_STRUCTURES_CUBE_H
 #define DATA_STRUCTURES_CUBE_H
-/**
+#include <malloc.h>
 
-
-
-    0 0 0 0
-    0 0 0 0
-    0 0 0 0
-    0 0 0 0
-
-
-
- */
 typedef struct Cube Cube;
 typedef struct Cube{
     int size;

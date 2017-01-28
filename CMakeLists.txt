@@ -19,6 +19,7 @@ tree/pyramid/tree-pyramid.c tree/pyramid/tree-pyramid.h
 size/size.h
 #CUBE
 cube/data_structure/ADT/cube.c cube/data_structure/ADT/cube.h cube/data_structure/query/query.c cube/data_structure/query/query.h
-cube/main.c cube/cube_summation.c cube/cube_summation.h)
+
+cube/main.c cube/cube_summation.c cube/cube_summation.h cube/file.c)
 #set(SOURCE_FILES test/main.c)
 add_executable(data_structures ${SOURCE_FILES})

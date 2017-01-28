@@ -52,7 +52,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-.gitignore
-cmake-build-debug/*
 .idea/*
 /cmake-build-debug/

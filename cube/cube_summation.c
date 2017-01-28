@@ -2,7 +2,6 @@
 // Created by regoeco on 18/01/17.
 //
 
-#include <malloc.h>
 #include "cube_summation.h"
 
 /**

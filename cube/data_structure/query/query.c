@@ -115,26 +115,9 @@ long double  _sum_query(Query *this, int x1, int y1, int z1, int x2, int y2, int
     if(this->cube != NULL){
         int num_elements = this->cube->get_num_elements(this->cube);
         int limit = this->cube->get_size(this->cube);
-        double max_value = this->max_value;
-        double min_value = this->min_value;
         if( num_elements >= 1){
-
             if( (1 <= x1 <= x2 <= limit) && (1 <= y1 <= y2 <= limit) && (1 <= z1 <= z2 <= limit) ){
                 int ***cube = this->cube->get_data(this->cube);
-
-                int I, J, K;
-                I = J = K = 0;
-                printf("\n\n\n");
-
-                //for(I=0; I<limit; I++)
-                    //for(J=0; J<limit; J++)
-                       // for(K=0; K<limit; K++)
-                          //  printf("[%d][%d][%d] = %d\n", I+1, J+1, K+1, cube[I][J][K]);
-
-
-
-
-
                 long double  sum = 0;
                 int x = 0;
                 int y = 0;
@@ -142,23 +125,8 @@ long double  _sum_query(Query *this, int x1, int y1, int z1, int x2, int y2, int
                 for(x = x1; x <= x2; x++)
                     for(y = y1; y <= y2; y++)
                         for(z = z1; z <= z2; z++) {
-                            printf("[%d][%d][%d] = %d\n", x, y, z, cube[x - 1][y - 1][z - 1]);
                             sum += cube[x-1][y-1][z-1];
-
                         }
-/*
-                    sum += cube[i-1][y1-1][z1-1];
-                    sum += cube[i-1][y2-1][z2-1];
-
-                for(i = y1; i < y2; i++){
-                    sum += cube[x1-1][i-1][z1-1];
-                    sum += cube[x2-1][i-1][z2-1];
-                }
-                for(i = z1; i < z2; i++){
-                    sum += cube[x1-1][y1-1][i-1];
-                    sum += cube[x2-1][y2-1][i-1];
-                }
-*/
                 return sum;
             }else{
                 printf("\nERROR IN ATTRIBUTES\n");
