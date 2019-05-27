@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     printf("\nposition 5 = %d", *data);
 
 
-    //list.print(&list, callback_print);
+    list.print(&list, callback_print);
     free(d);
     destroyList(&list);
 

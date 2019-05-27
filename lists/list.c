@@ -390,6 +390,7 @@ DeleteList _delete_list(List *this){
                     for (i = 1; i < private->size - 1; simpleADT = simpleADT->next, i++);
                     if (callback != NULL)
                         callback(simpleADT->data);
+                    free(private->top->data);
                     free(private->top);
                     simpleADT->next = NULL;
                     private->top = simpleADT;
@@ -404,6 +405,7 @@ DeleteList _delete_list(List *this){
                         callback(private->top->data);
                     private->top->prev->next = NULL;
                     private->top = private->top->prev;
+                    free(private->top->data);
                     free(private->top);
                     private->size--;
                     return 1;
@@ -423,6 +425,7 @@ DeleteList _delete_list(List *this){
                     if (callback != NULL)
                         callback(private->bottom->data);
                     private->listADT = private->bottom->next;
+                    free(private->bottom->data);
                     free(private->bottom);
                     private->bottom = private->listADT;
                     private->size--;
@@ -435,6 +438,7 @@ DeleteList _delete_list(List *this){
                     if (callback != NULL)
                         callback(private->bottom->data);
                     private->listADT = private->bottom->next;
+                    free(private->bottom->data);
                     free(private->bottom);
                     private->bottom = private->listADT;
                     private->size--;
@@ -464,6 +468,7 @@ DeleteList _delete_list(List *this){
                         for (i = 1; i < p; simpleADT = simpleADT->next, i++);
                         if (callback != NULL)
                             callback(simpleADT->next->data);
+                        free(simpleADT->data);
                         free(simpleADT->next);
                         simpleADT->next = simpleADT->next->next;
                         private->size--;
@@ -486,6 +491,7 @@ DeleteList _delete_list(List *this){
                         for (i = 1; i < p; doubleADT = doubleADT->next, i++);
                         if (callback != NULL)
                             callback(doubleADT->next->data);
+                        free(doubleADT->next->data);
                         free(doubleADT->next);
                         doubleADT->next = doubleADT->next->next;
                         private->size--;
@@ -601,7 +607,7 @@ GetList _get_list(List *list){
         }
     }
 
-    void** all(void){
+    void** all(void) {
         switch (this->linkType) {
             case SIMPLE: {
                 struct PrivateDataListSimple *private = (struct PrivateDataListSimple*)this->private;

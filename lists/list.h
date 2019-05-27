@@ -1,16 +1,6 @@
 #ifndef LIST_H
 #define LIST_H
-/*
- * Lista simple
- *
- *  adt -->  A1 --> A2 --> ... --> An --> NULL
- *           |                     |
- *           Bottom                Top
- *
- * Insert Top                      An --> new --> NULL;   Top = new
- *
- * Insert Bottom                  adt == new --> bottom; Bottom = new
- */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -78,11 +68,8 @@ typedef struct List{
     DeleteList (*delete)(List *this);
     int (*update)(List *this, void *data, unsigned int pos, void(*callback_delete)(const void *d), void(*callback_insert)(const void *d));
     GetList (*get)(List *list);
-
-    //Find (*find)(BinaryTree *this_binary_tree, const void* d, int(*callback)(const void* d1, const void* d2));
-    //ChainingGet (*get)(const BinaryTree* this_binary_tree);
-    //ChainingPrint (*print)(const BinaryTree* this_binary_tree);
 };
+
 List* newListPtr(ListType listType, LinkType linkType);
 List newList(ListType list_type, LinkType linkType);
 void destroyList(List *list);
@@ -93,8 +80,6 @@ static DeleteList _delete_list(List *this);
 static int _empty_list(List *this);
 static int _update_list(List *this, void *data, unsigned int pos, void(*callback_delete)(const void *d), void(*callback_insert)(const void *d));
 static GetList _get_list(List *list);
-
-
 
 #ifdef  __cplusplus
 }

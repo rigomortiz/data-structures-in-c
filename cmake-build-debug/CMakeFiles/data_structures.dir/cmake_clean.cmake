@@ -9,6 +9,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/data_structures.dir/cube/data_structure/query/query.c.o"
   "CMakeFiles/data_structures.dir/cube/main.c.o"
   "CMakeFiles/data_structures.dir/cube/cube_summation.c.o"
+  "CMakeFiles/data_structures.dir/cube/file.c.o"
   "data_structures.pdb"
   "data_structures"
 )

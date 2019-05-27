@@ -1,3 +1,3 @@
-/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/regoeco/Documentos/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/data_structures.dir
+/home/rigoberto/Descargas/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/rigoberto/Descargas/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/data_structures.dir
+/home/rigoberto/Descargas/projects/data-structures-in-C/cmake-build-debug/CMakeFiles/edit_cache.dir
